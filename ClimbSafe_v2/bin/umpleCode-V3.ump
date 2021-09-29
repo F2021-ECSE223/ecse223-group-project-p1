@@ -1,0 +1,222 @@
+class NMCP{
+    1 <@>-1..* Account accounts;
+  1 <@>-1 Admin admin;
+  1 <@>-* Equipment equipments;
+  1 <@>-1 ClimbingSeason climbingSeason;
+  1 <@>-* Hotel hotels;
+  1 <@>-* MountainGuide mountainGuides;  
+  1 <@>-* Member members;
+  1 <@>-* Bundle bundles;
+  1 <@>-1..* ClimbingWeek climbingWeeks;  
+  1 <@>-* UserRegistration userRegistrations;
+  1 <@>-* Assignment assignments;
+}
+class Account{
+  String name;
+  String password;
+  Boolean isLogged;
+1 account--1 UserRegistration userRegistration;
+  
+  1 account--1 Admin adminUser;
+  
+}
+
+
+class Admin{
+  String name ="admin@nmc.nt";
+  String password = "admin";
+  
+}
+
+class Equipment{
+  Integer weight;
+  String name;
+  Integer price;
+  
+}
+
+class Assignment{
+  Date date;
+  * assignments--1 Admin assigner;
+  * reservations->1 MountainGuide guide;
+  * reservations--1..* ClimbingWeek climbingWeeks;
+  * bookings--0..1 Hotel hotel;
+  0..1 reservation->1 Member assignedTo;
+  
+ * assignments--* Bundle bundles; 
+  
+  }
+
+class ClimbingSeason{
+  Date startDate;
+  Date endDate;
+  1 climbingSeason<@>-1..* ClimbingWeek climbingWeeks;
+  1 climbingSeason--1 Admin seasonDefiner;
+  
+  
+  
+
+}
+
+class Hotel{
+  Integer starClass;
+  String name;
+  String address;
+}
+
+class MountainGuide{
+  Integer weeklyCost;
+  
+}
+
+class Bundle{
+  Boolean onDiscount;
+  String name;
+  Integer percentageDiscount;
+0..1 bundle--2..* Equipment equipments;
+
+  * bundles-- * Member bundleHolders;
+}
+
+class Member{
+  Boolean isStaying;
+  Boolean willHireAGuide;
+  
+  
+  
+  Integer numberOfWeeks;
+  * equipmentHolders-- * Equipment equipments;
+  
+}
+
+class UserRegistration{
+  String name;
+  immutable String email;
+  String emergencyPhone;
+  Boolean isRegistered;
+  Boolean isMember;
+  1 registration--1 MountainGuide registeredGuide;
+  1 registration--1 Member registeredMember;
+}
+
+
+class ClimbingWeek{
+  unique Integer number;
+
+}
+
+namespace -;
+
+
+class Account
+{
+  position 9 18 146.979 92.6979;
+  position.association Account:account__Member:memberUser 95,0 0,23;
+  position.association Account:account__MountainGuide:guideUser 147,93 0,57;
+  position.association Account:account__Admin:adminUser 59,93 0,5;
+  position.association Account:account__UserRegistration:userRegistration 147,36 0,10;
+}
+
+class Admin
+{
+  position 161 417 138.292 75.6979;
+}
+
+class Equipment
+{
+  position 618 182 128.323 92.6979;
+}
+
+class Assignment
+{
+  position 582 346 109 58.6979;
+  position.association Admin:reservationAssigner__Reservation:assignments 0,44 110,7;
+  position.association MountainGuide:currentGuide__Assignment 0,10 144,54;
+  position.association MountainGuide:currentGuide__Reservation:reservations 0,0 144,54;
+  position.association ClimbingWeek:climbingWeeks__Reservation:reservations 110,58 50,0;
+  position.association MountainGuide:guide__Reservation:reservations 0,5 144,54;
+  position.association Hotel:hotel__Reservation:bookings 110,32 0,10;
+  position.association Member:member__Reservation:reservations 28,0 104,55;
+  position.association Member:assignedTo__Reservation:reservations 8,0 104,45;
+  position.association Bundle:bundles__Reservation:rentals 109,7 0,60;
+  position.association PieceOfEquipment:equipments__Reservation:rentals 89,0 21,150;
+  position.association Member:assignedTo__Reservation:reservation 18,0 50,108;
+  position.association Admin:assigner__Assignment:assignments 32,59 132,0;
+  position.association Assignment:rentals__PieceOfEquipment:equipments 30,0 0,71;
+  position.association Assignment:reservations__MountainGuide:guide 0,41 134,59;
+  position.association Assignment:reservations__ClimbingWeek:climbingWeeks 110,52 47,0;
+  position.association Assignment:bookings__Hotel:hotel 110,17 0,30;
+  position.association Assignment:reservation__Member:assignedTo 0,6 0,92;
+    position.association Assignment:assignments__Bundle:bundles 97,0 98,125;
+}
+
+class ClimbingSeason
+{
+  position 413 447 130.042 75.6979;
+  position.association ClimbingSeason:climbingSeason__ClimbingWeek:climbingWeeks 131,52 0,32;
+  position.association Admin:climbingSeasonDefiner__ClimbingSeason 3,0 72,42;
+  position.association Admin:climbingSeasonDefiner__ClimbingSeason:climbingSeasons 3,0 109,10;
+  position.association ClimbingSeason:climbingSeasons__Reservation:climbingSeasonDefiner 12,0 10,59;
+  position.association ClimbingSeason:climbingSeasons__Reservation:reservations 85,0 24,59;
+  position.association Admin:seasonDefiner__ClimbingSeason:climbingSeasons 3,0 73,42;
+  position.association Admin:seasonDefiner__ClimbingSeason:climbingSeason 0,50 139,40;
+}
+
+class Hotel
+{
+  position 912 263 144.573 174.698;
+}
+
+class MountainGuide
+{
+  position 219 289 159.646 58.6979;
+}
+
+class Bundle
+{
+  position 852 65 205.323 124.698;
+  position.association Bundle__PieceOfEquipment:equipments 0,10 159,37;
+  position.association Bundle:bundle__PieceOfEquipment:equipments 0,93 159,33;
+  position.association Bundle__Member 0,22 195,11;
+  position.association Bundle:bundles__Member:bundleHolders 14,0 195,9;
+  position.association Bundle:bundle__Equipment:equipments 0,52 129,6;
+}
+
+class Member
+{
+  position 494 16 194.031 117.698;
+  position.association Member__Equipment 195,36 0,28;
+  position.association Member:equipmentHolders__PieceOfEquipment:equipments 195,35 116,0;
+  position.association Equipment:equipments__Member:equipmentHolders 136,93 26,0;
+}
+
+class ClimbingWeek
+{
+  position 800 452 109 89.5;
+}
+
+class UserRegistration
+{
+  position 227 110 190.104 126.698;
+  position.association MountainGuide:registeredGuide__UserRegistration:registration 95,110 46,0;
+  position.association Member:registeredMember__UserRegistration:registration 70,0 0,20;
+}
+
+namespace -;
+
+//$?[End_of_model]$?
+
+namespace -;
+
+
+class NMCP
+{
+  position.association Equipment:equipments__NMCP 110,10 0,10;
+  position.association Assignment:assignments__NMCP 110,10 0,10;
+  position.association ClimbingSeason:climbingSeason__NMCP 110,11 0,10;
+  position.association Hotel:hotels__NMCP 110,10 0,10;
+  position.association MountainGuide:mountainGuides__NMCP 110,12 0,10;
+  position.association Bundle:bundles__NMCP 110,10 0,10;
+  position.association Member:members__NMCP 110,10 0,10;
+  position.association NMCP__UserRegistration:userRegistrations 110,11 0,10;
+}
