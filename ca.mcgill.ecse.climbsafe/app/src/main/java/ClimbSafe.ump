@@ -84,4 +84,69 @@ class Assignment {
   0..1 -- 1 Member member;
   * -- 0..1 Guide guide;
   * -- 0..1 Hotel hotel;
+  
+  public int getTotalCostForGuide(){
+	 int totalCostForGuide = 0;
+	 
+	 // If no guide, then total cost = 0
+	 if(this.hasGuide()){
+	 
+		 int nbrWeek = endWeek - startWeek + 1;
+		 	
+		 	// Compute total cost
+		  	totalCostForGuide += this.getClimbSafe().getPriceOfGuidePerWeek()*nbrWeek;
+		 
+	 }
+	  return totalCostForGuide;
+  }
+  
+  public int getTotalCostForEquipment(){
+  	 int totalCostForEquipment = 0;
+	 
+	 if(this.getMember().hasBookedItems()){
+	 	int nbrWeek = endWeek - startWeek + 1;
+	 	
+	 	// Iterating over the booked items of the member
+	 	for(BookedItem bookedItem: this.getMember().getBookedItems()){
+	 	
+	 		// If the current item is an equipment not in a bundle
+	 		if(bookedItem.getItem() instanceof Equipment){
+	 		
+	 			// Then the cost is the equipment's price per week times the number of weeks
+	  			totalCostForEquipment += ((Equipment) bookedItem.getItem()).getPricePerWeek() * nbrWeek;
+	  			
+	  		// If the current item is a bundle
+	  		}else if(bookedItem.getItem() instanceof EquipmentBundle){
+	  		
+	  				// Then we get the bundle
+	  				EquipmentBundle bundle = (EquipmentBundle) bookedItem.getItem();
+	  				
+	  				
+					// And we iterate over the items of equipment bundle
+					for(BundleItem item: bundle.getBundleItems()){
+					
+						// We check if a guide is hired
+						if(this.getMember().isGuideRequired()){
+						
+							// If so, the discount is applied on the equipments
+							totalCostForEquipment += item.getQuantity() * 
+								item.getEquipment().getPricePerWeek() * ( (100-bundle.getDiscount()) /100 )* nbrWeek;
+						}else{
+						
+							// If not, the equipments are rented at regular price
+							totalCostForEquipment += item.getQuantity() * 
+								item.getEquipment().getPricePerWeek()* nbrWeek;
+						}
+					
+					}
+	  		
+	  		}
+	  		
+	  		
+	  	}
+	 }
+	 return totalCostForEquipment;
+  
+  }
+  
 }
