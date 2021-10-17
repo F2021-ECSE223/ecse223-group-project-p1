@@ -26,10 +26,10 @@ public class P1StepDefinitions {
   public void the_following_climb_safe_system_exists_p1(io.cucumber.datatable.DataTable dataTable) {
     
     List<Object> columns = (dataTable.asLists(Object.class)).get(1);
-
-    assertEquals(((java.sql.Date)columns.get(0)), climbSafe.getStartDate());
-    assertEquals(((int) columns.get(1)), climbSafe.getNrWeeks());
-    assertEquals(((int) columns.get(2)), climbSafe.getPriceOfGuidePerWeek());
+    
+    climbSafe.setStartDate((java.sql.Date) columns.get(0));
+    climbSafe.setNrWeeks((int) columns.get(1));
+    climbSafe.setPriceOfGuidePerWeek((int) columns.get(2));
 
     error = "";
     errorCount = 0;
