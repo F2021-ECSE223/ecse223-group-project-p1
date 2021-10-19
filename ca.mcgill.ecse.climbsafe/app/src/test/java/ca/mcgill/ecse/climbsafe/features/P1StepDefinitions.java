@@ -67,17 +67,8 @@ public class P1StepDefinitions {
   public void the_administator_attempts_to_update_the_piece_of_equipment_in_the_system_with_name_to_have_name_weight_and_price_per_week_p1(
       String string, String string2, String string3, String string4) {
     
-    
-    try {
-     
-      ClimbSafeFeatureSet4Controller.updateEquipment(string, string2, Integer.parseInt(string3),
-          Integer.parseInt(string4));
-          
-      
-    } catch(InvalidInputException e) { // Is raised if weight or price <=0, if name length ==0
-        error += e.getMessage();
-        errorCount++;
-    }
+    callController(() -> ClimbSafeFeatureSet4Controller.updateEquipment(string, string2,
+        Integer.parseInt(string3), Integer.parseInt(string4)));
     
   }
 
