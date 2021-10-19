@@ -125,16 +125,30 @@ public class P1StepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+ /**
+   * @author Atreyi Srivastava
+   */
+	
   @Then("the following pieces of equipment shall exist in the system: \\(p1)")
   public void the_following_pieces_of_equipment_shall_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
+      var table= dataTable.asMaps();
+      Boolean alreadyExist=false;  
+	  for(var val: table) {
+		  String name=val.get("name");
+		  int weight= Integer.parseInt(val.get("weight"));
+		  int pricePerWeek=Integer.parseInt(val.get("pricePerWeek"));
+		  
+		  for(Equipment equipments: climbSafe.getEquipment()) {
+			  if(equipments.getName()==name && equipments.getWeight()==weight && equipments.getPricePerWeek()==pricePerWeek) {
+				  alreadyExist=true;
+			  }
+		  }  
+	  }
+	  assertEquals(true, alreadyExist);
+	  assertEquals("", error);
+	  assertEquals(0,errorCount);
+	  
     throw new io.cucumber.java.PendingException();
   }
 
@@ -150,16 +164,27 @@ public class P1StepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+ /**
+   * @author Atreyi Srivastava
+   */
+	
   @Then("the following equipment bundles shall exist in the system: \\(p1)")
   public void the_following_equipment_bundles_shall_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
+      var table= dataTable.asMaps();
+      Boolean alreadyExist=false;
+	  for(var val: table) {
+		  String nameBundle=val.get("name");
+		  int discount= Integer.parseInt(val.get("discount"));
+		  for(EquipmentBundle bundle: climbSafe.getBundles()) {
+			  if(bundle.getName()==nameBundle && bundle.getDiscount()==discount) {
+				  alreadyExist=true;
+			  }
+		  }  
+	  }
+	  assertEquals(true, alreadyExist);
+	  assertEquals("", error);
+	  assertEquals(0,errorCount);
     throw new io.cucumber.java.PendingException();
   }
   
