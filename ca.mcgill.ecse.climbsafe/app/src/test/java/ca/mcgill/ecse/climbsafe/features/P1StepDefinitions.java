@@ -21,7 +21,10 @@ public class P1StepDefinitions {
   private ClimbSafe climbSafe;
   private String error;
   private int errorCount;
-  
+	
+  /**
+   * @author Asma Gandour
+   */
   @Given("the following ClimbSafe system exists: \\(p1)")
   public void the_following_climb_safe_system_exists_p1(io.cucumber.datatable.DataTable dataTable) {
     
@@ -62,7 +65,10 @@ public class P1StepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
-
+	
+  /**
+   * @author Asma Gandour
+   */
   @When("the administator attempts to update the piece of equipment in the system with name {string} to have name {string}, weight {string}, and price per week {string} \\(p1)")
   public void the_administator_attempts_to_update_the_piece_of_equipment_in_the_system_with_name_to_have_name_weight_and_price_per_week_p1(
       String string, String string2, String string3, String string4) {
