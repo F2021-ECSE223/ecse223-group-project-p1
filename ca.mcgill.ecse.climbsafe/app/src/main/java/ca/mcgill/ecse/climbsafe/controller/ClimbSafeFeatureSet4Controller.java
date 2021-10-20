@@ -15,6 +15,8 @@ public class ClimbSafeFeatureSet4Controller {
       int newPricePerWeek) throws InvalidInputException {
 
     var error = "";
+    Equipment foundEquipment = null;
+    
     if (newWeight <= 0) {
       error += "The weight must be greater than zero";
     }
@@ -24,29 +26,45 @@ public class ClimbSafeFeatureSet4Controller {
     if (newName.isEmpty()) {
       error += "The name must not be empty";
     }
+    
+
+
+    for (Equipment equipment : climbSafe.getEquipment()) {
+      
+      if (equipment.getName().equals(oldName)) {
+        
+        if(oldName.equals(newName)) {
+          error = "The piece of equipment already exists";
+          break;
+        }
+        
+        foundEquipment = equipment;
+        
+        
+        break;
+      }
+
+    }
+    
+    if(foundEquipment == null) {
+      error = "The piece of equipment does not exist";
+    }
+    
     if (!error.isEmpty()) {
       throw new InvalidInputException(error.trim());
     }
 
+    
     try {
 
-
-
-      for (Equipment equipment : climbSafe.getEquipment()) {
-        if (equipment.getName().equals(oldName)) {
-
-          equipment.setName(newName);
-          equipment.setWeight(newWeight);
-          equipment.setPricePerWeek(newPricePerWeek);
-
-        }
-
-      }
-
+      foundEquipment.setName(newName);
+      foundEquipment.setWeight(newWeight);
+      foundEquipment.setPricePerWeek(newPricePerWeek);
+      
 
     } catch (RuntimeException e) {
-      throw new InvalidInputException("Doesn't work");
-
+      
+      throw new InvalidInputException(error);
     }
 
 
