@@ -80,7 +80,7 @@ public class P1StepDefinitions {
 			  String items=values.get("items");
 			  String quantity=values.get("discount");
 			  List<String> itemList = Arrays.asList(items.split(","));
-			  List<Integer> quantityList = Arrays.asList(Integer.parseInt(quantity.split(",")));
+			  List<Integer> quantityList = Arrays.asList(Integer.parseInt(quantity.split(","))); //you have to convert each parsed String individually
 			  var Bundle = new EquipmentBundle(nameBundle, discount, climbSafe);
 			  var climbSafeEquipmentList=climbSafe.getEquipment();
 			  for (var equipment : climbSafeEquipmentList)
