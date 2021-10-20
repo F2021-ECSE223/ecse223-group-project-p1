@@ -48,10 +48,9 @@ public class P1StepDefinitions {
     
     
   }
-/**
- * 
- * @author Haroun Guessous
- */
+   /**
+   * @author Alexandre Chiasera
+   */
   @Given("the following pieces of equipment exist in the system: \\(p1)")
   public void the_following_pieces_of_equipment_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
@@ -65,8 +64,12 @@ public class P1StepDefinitions {
 	  
     throw new io.cucumber.java.PendingException();
   }
-
-  @Given("the following equipment bundles exist in the system: \\(p1)")
+	
+/**
+ * 
+ * @author Haroun Guessous
+ */
+  /*@Given("the following equipment bundles exist in the system: \\(p1)")
   public void the_following_equipment_bundles_exist_in_the_system_p1(
 	      io.cucumber.datatable.DataTable dataTable) {
 		  var DataTables=dataTable.asMaps();
@@ -94,7 +97,50 @@ public class P1StepDefinitions {
 			  climbSafe.addBundle(nameBundle, discount);
 		  }
 		  throw new io.cucumber.java.PendingException();
+	  } */ //-----> Code does not compile
+	
+ // @author Haroun , reviewed by @Alexandre_Chiasera because of compilation error
+  @Given("the following equipment bundles exist in the system: \\(p1)")
+  public void the_following_equipment_bundles_exist_in_the_system_p1(
+      io.cucumber.datatable.DataTable dataTable) {
+	  var rows = dataTable.asMaps();
+	  
+	  for (var row : rows)
+	  {
+		  String nameBundle = row.get("name");
+		  int discount =Integer.parseInt(row.get("discount"));
+		  String bundleItems= row.get("items");
+		  String bundleItemsQuantity= row.get("quantity");
+		  
+		  var newBundle = new EquipmentBundle(nameBundle, discount, climbSafe); //create empty Bundle
+		  
+		  List<Integer> quantityList = new ArrayList<Integer>();
+		  List<BookableItem> bufferItemList = new ArrayList<BookableItem>();
+		  		  
+		  for(var item : Arrays.asList(bundleItems.split(","))) {
+			  var existingItem = Equipment.getWithName(item);			  
+			  bufferItemList.add(existingItem);			  
+		  }	
+		  	  
+		  for(var bufferItemQuantity: Arrays.asList(bundleItemsQuantity.split(","))) {
+			  var itemQuantity = Integer.parseInt(bufferItemQuantity); 
+			  quantityList.add(itemQuantity);
+		  }
+				  
+		  for(int i = 0; i<climbSafe.getEquipment().size(); i++) {
+			  for(int x = 0; x < bufferItemList.size(); x++) {
+				  var existingEquipmentName = climbSafe.getEquipment(i).getName();
+				  var addedItemName = bufferItemList.get(x).getName();
+				  var itemQuantity = quantityList.get(x);
+				  if(existingEquipmentName == addedItemName) {
+					  newBundle.addBundleItem(itemQuantity, climbSafe, climbSafe.getEquipment(i)); //add to empty Bundle pieces of equipments already existing 
+				  }
+				  
+			  }
+		  }		  
 	  }
+  }	
+	
 	
   /**
    * @author Asma Gandour
@@ -117,6 +163,11 @@ public class P1StepDefinitions {
 	  throw new io.cucumber.java.PendingException();
   }
 
+  /**
+ * 
+ * @author Alexandre Chiasera
+ */	
+
   @Then("the piece of equipment with name {string}, weight {string}, and price per week {string} shall not exist in the system \\(p1)")
   public void the_piece_of_equipment_with_name_weight_and_price_per_week_shall_not_exist_in_the_system_p1(
       String string, String string2, String string3) {
@@ -133,7 +184,11 @@ public class P1StepDefinitions {
 	  }
     throw new io.cucumber.java.PendingException();
   }
-
+	
+ /**
+ * 
+ * @author Alexandre Chiasera
+ */
   @Then("the piece of equipment with name {string}, weight {string}, and price per week {string} shall exist in the system \\(p1)")
   public void the_piece_of_equipment_with_name_weight_and_price_per_week_shall_exist_in_the_system_p1(
       String string, String string2, String string3) {
