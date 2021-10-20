@@ -31,14 +31,21 @@ public class P1StepDefinitions {
   @Given("the following ClimbSafe system exists: \\(p1)")
   public void the_following_climb_safe_system_exists_p1(io.cucumber.datatable.DataTable dataTable) {
     
-    List<Object> columns = (dataTable.asLists(Object.class)).get(1);
-    
-    climbSafe.setStartDate((java.sql.Date) columns.get(0));
-    climbSafe.setNrWeeks((int) columns.get(1));
-    climbSafe.setPriceOfGuidePerWeek((int) columns.get(2));
+   List<Object> columns = (dataTable.asLists(Object.class)).get(1);
+	    
+	  
+	String date = (String)columns.get(0);
+	Date.valueOf(date);
 
-    error = "";
-    errorCount = 0;
+	    var startDate = Date.valueOf(date);
+	    int nrWeeks = Integer.parseInt((String)columns.get(1));
+	    int priceGuidePerWeek = Integer.parseInt((String)columns.get(2));
+
+	    climbSafe = new ClimbSafe(startDate, nrWeeks, priceGuidePerWeek);
+
+	    error = "";
+	    errorCount = 0;
+    
     
   }
 /**
