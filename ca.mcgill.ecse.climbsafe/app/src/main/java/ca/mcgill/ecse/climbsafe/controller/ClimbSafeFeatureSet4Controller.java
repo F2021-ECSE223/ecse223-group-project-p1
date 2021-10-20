@@ -1,8 +1,10 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
+import ca.mcgill.ecse.climbsafe.model.BookableItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Equipment;
+import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
 
 public class ClimbSafeFeatureSet4Controller {
 
@@ -18,15 +20,24 @@ public class ClimbSafeFeatureSet4Controller {
     Equipment foundEquipment = null;
     
     if (newWeight <= 0) {
-      error += "The weight must be greater than zero";
+      error += "The weight must be greater than 0";
     }
     if (newPricePerWeek < 0) {
-      error += "The price per week must be greater than or equal to zero";
+      error += "The price per week must be greater than or equal to 0";
     }
     if (newName.isEmpty()) {
       error += "The name must not be empty";
     }
     
+    if(BookableItem.hasWithName(newName)) {
+      
+      if(BookableItem.getWithName(newName) instanceof EquipmentBundle) {
+        error = "An equipment bundle with the same name already exists";
+      }
+      else {
+        error = "The piece of equipment already exists";
+      }
+    }
 
     foundEquipment = (Equipment) Equipment.getWithName(oldName);
 
@@ -37,11 +48,6 @@ public class ClimbSafeFeatureSet4Controller {
     }
     
     
-    if(foundEquipment != null) {
-      if(oldName.equals(newName)) {
-        error = "The piece of equipment already exists";
-      }
-    }
     if (!error.isEmpty()) {
       throw new InvalidInputException(error.trim());
     }
