@@ -28,31 +28,24 @@ public class ClimbSafeFeatureSet4Controller {
     }
     
 
+    foundEquipment = (Equipment) Equipment.getWithName(oldName);
 
-    for (Equipment equipment : climbSafe.getEquipment()) {
-      
-      if (equipment.getName().equals(oldName)) {
-        
-        if(oldName.equals(newName)) {
-          error = "The piece of equipment already exists";
-          break;
-        }
-        
-        foundEquipment = equipment;
-        
-        
-        break;
-      }
-
-    }
+    
     
     if(foundEquipment == null) {
       error = "The piece of equipment does not exist";
     }
     
+    
+    if(foundEquipment != null) {
+      if(oldName.equals(newName)) {
+        error = "The piece of equipment already exists";
+      }
+    }
     if (!error.isEmpty()) {
       throw new InvalidInputException(error.trim());
     }
+    
 
     
     try {
@@ -64,7 +57,7 @@ public class ClimbSafeFeatureSet4Controller {
 
     } catch (RuntimeException e) {
       
-      throw new InvalidInputException(error);
+      throw new InvalidInputException(e.getMessage());
     }
 
 
