@@ -28,10 +28,10 @@ public class P1StepDefinitions {
   private ClimbSafe climbSafe;
   private String error;
   private int errorCount;
-  
+
   @Before
   public static void setUp() {
-    
+
     // clear all data
     ClimbSafeApplication.getClimbSafe().delete();
   }
@@ -61,14 +61,14 @@ public class P1StepDefinitions {
   public void the_following_pieces_of_equipment_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
-    
-    for(var row: rows) {
-      climbSafe.addEquipment(new Equipment(row.get("name"), Integer.parseInt(row.get("weight")), 
-          Integer.parseInt(row.get("pricePerWeek")), climbSafe)) ;
+
+    for (var row : rows) {
+      climbSafe.addEquipment(new Equipment(row.get("name"), Integer.parseInt(row.get("weight")),
+          Integer.parseInt(row.get("pricePerWeek")), climbSafe));
     }
-    
-    
-      
+
+
+
   }
 
   /**
@@ -123,7 +123,7 @@ public class P1StepDefinitions {
           var existingEquipmentName = climbSafe.getEquipment(i).getName();
           var addedItemName = bufferItemList.get(x).getName();
           var itemQuantity = quantityList.get(x);
-          if (existingEquipmentName.equals(addedItemName) ) {
+          if (existingEquipmentName.equals(addedItemName)) {
             newBundle.addBundleItem(itemQuantity, climbSafe, climbSafe.getEquipment(i)); // add to
                                                                                          // empty
                                                                                          // Bundle
@@ -150,6 +150,7 @@ public class P1StepDefinitions {
     callController(() -> ClimbSafeFeatureSet4Controller.updateEquipment(string, string2,
         Integer.parseInt(string3), Integer.parseInt(string4)));
 
+
   }
 
   /**
@@ -158,9 +159,9 @@ public class P1StepDefinitions {
    */
   @Then("the number of pieces of equipment in the system shall be {string} \\(p1)")
   public void the_number_of_pieces_of_equipment_in_the_system_shall_be_p1(String string) {
-    
+
     assertEquals(Integer.parseInt(string), climbSafe.getEquipment().size());
-    
+
   }
 
   /**
@@ -172,7 +173,7 @@ public class P1StepDefinitions {
   public void the_piece_of_equipment_with_name_weight_and_price_per_week_shall_not_exist_in_the_system_p1(
       String string, String string2, String string3) {
 
-    
+
     Integer weight = Integer.parseInt(string2);
     Integer pricePerWeek = Integer.parseInt(string3);
 
@@ -213,8 +214,8 @@ public class P1StepDefinitions {
     assertEquals(true, isEquipmentInTheSystem);
     assertEquals("", error);
     assertEquals(0, errorCount);
-    
-    
+
+
   }
 
   /**
@@ -224,7 +225,7 @@ public class P1StepDefinitions {
   @Then("the following pieces of equipment shall exist in the system: \\(p1)")
   public void the_following_pieces_of_equipment_shall_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
-    
+
     var table = dataTable.asMaps();
     Boolean alreadyExist = false;
     for (var val : table) {
@@ -240,8 +241,6 @@ public class P1StepDefinitions {
       }
     }
     assertEquals(true, alreadyExist);
-    assertEquals("", error);
-    assertEquals(0, errorCount);
   }
 
   @Then("the system shall raise the error {string} \\(p1)")
@@ -265,13 +264,13 @@ public class P1StepDefinitions {
   @Then("the following equipment bundles shall exist in the system: \\(p1)")
   public void the_following_equipment_bundles_shall_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
-    
+
     var table = dataTable.asMaps();
     Boolean alreadyExist = false;
     for (var val : table) {
       String nameBundle = val.get("name");
       int discount = Integer.parseInt(val.get("discount"));
-      
+
       for (EquipmentBundle bundle : climbSafe.getBundles()) {
         if (bundle.getName().equals(nameBundle) && bundle.getDiscount() == discount) {
           alreadyExist = true;
@@ -279,10 +278,9 @@ public class P1StepDefinitions {
       }
     }
     assertEquals(true, alreadyExist);
-    assertEquals("", error);
-    assertEquals(0, errorCount);
+    
   }
-  
+
   @After
   public void tearDown() {
     climbSafe.delete();
