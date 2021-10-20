@@ -28,6 +28,7 @@ public class P1StepDefinitions {
   private ClimbSafe climbSafe;
   private String error;
   private int errorCount;
+  boolean oldIsNewName = false;
 
   @Before
   public static void setUp() {
@@ -146,6 +147,10 @@ public class P1StepDefinitions {
   @When("the administator attempts to update the piece of equipment in the system with name {string} to have name {string}, weight {string}, and price per week {string} \\(p1)")
   public void the_administator_attempts_to_update_the_piece_of_equipment_in_the_system_with_name_to_have_name_weight_and_price_per_week_p1(
       String string, String string2, String string3, String string4) {
+    
+    if(string.equals(string2)) {
+      oldIsNewName = true;
+    }
 
     callController(() -> ClimbSafeFeatureSet4Controller.updateEquipment(string, string2,
         Integer.parseInt(string3), Integer.parseInt(string4)));
@@ -180,13 +185,14 @@ public class P1StepDefinitions {
     for (Equipment pieceOfEquipment : climbSafe.getEquipment()) { // for each piece of equipment in
                                                                   // the climbSafe system (for the
                                                                   // admin)
-      if (pieceOfEquipment.getName().equals(string) && pieceOfEquipment.getWeight() == weight
+      if (pieceOfEquipment.getName().equals(string) && !oldIsNewName && pieceOfEquipment.getWeight() == weight
           && pieceOfEquipment.getPricePerWeek() == pricePerWeek) {
         fail("The piece of equipment <" + pieceOfEquipment.getName()
             + "> has not been deleted from the system"); // if everything matches, it means the
                                                          // object is not deleted.
       }
     }
+    oldIsNewName = false;
   }
 
   /**
@@ -210,10 +216,11 @@ public class P1StepDefinitions {
         isEquipmentInTheSystem = true;// if everything matches --> object in the system.
       }
     }
+    
+    assertEquals("", error);
 
     assertEquals(true, isEquipmentInTheSystem);
-    assertEquals("", error);
-    assertEquals(0, errorCount);
+    
 
 
   }
