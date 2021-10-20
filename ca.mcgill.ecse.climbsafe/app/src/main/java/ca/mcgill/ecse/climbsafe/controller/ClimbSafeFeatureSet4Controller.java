@@ -29,7 +29,7 @@ public class ClimbSafeFeatureSet4Controller {
       error += "The name must not be empty";
     }
     
-    if(BookableItem.hasWithName(newName)) {
+    if( !newName.equals(oldName) && BookableItem.hasWithName(newName)) {
       
       if(BookableItem.getWithName(newName) instanceof EquipmentBundle) {
         error = "An equipment bundle with the same name already exists";
