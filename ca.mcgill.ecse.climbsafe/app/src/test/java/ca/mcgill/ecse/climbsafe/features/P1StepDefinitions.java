@@ -3,6 +3,8 @@ package ca.mcgill.ecse.climbsafe.features;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.function.Executable;
@@ -14,6 +16,7 @@ import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
 import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Equipment;
+import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
 import io.cucumber.java.an.E;
 
 public class P1StepDefinitions {
@@ -38,7 +41,10 @@ public class P1StepDefinitions {
     errorCount = 0;
     
   }
-
+/**
+ * 
+ * @author Haroun Guessous
+ */
   @Given("the following pieces of equipment exist in the system: \\(p1)")
   public void the_following_pieces_of_equipment_exist_in_the_system_p1(
       io.cucumber.datatable.DataTable dataTable) {
@@ -55,16 +61,33 @@ public class P1StepDefinitions {
 
   @Given("the following equipment bundles exist in the system: \\(p1)")
   public void the_following_equipment_bundles_exist_in_the_system_p1(
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
-  }
+	      io.cucumber.datatable.DataTable dataTable) {
+		  var DataTables=dataTable.asMaps();
+		  for (var values : DataTables)
+		  {
+			  String nameBundle =values.get("name");
+			  int discount =Integer.parseInt(values.get("discount"));
+			  String items=values.get("items");
+			  String quantity=values.get("discount");
+			  List<String> itemList = Arrays.asList(items.split(","));
+			  List<Integer> quantityList = Arrays.asList(Integer.parseInt(quantity.split(",")));
+			  var Bundle = new EquipmentBundle(nameBundle, discount, climbSafe);
+			  var climbSafeEquipmentList=climbSafe.getEquipment();
+			  for (var equipment : climbSafeEquipmentList)
+			  {
+				  int r=0;
+				  for (int i=0;i<itemList.size();i++)
+				  {
+					  if (equipment.getName()==itemList.get(i))
+					  {
+						  Bundle.addBundleItem(quantityList.get(i), climbSafe, equipment);
+					  }
+				  }
+			  }
+			  climbSafe.addBundle(nameBundle, discount);
+		  }
+		  throw new io.cucumber.java.PendingException();
+	  }
 	
   /**
    * @author Asma Gandour
@@ -77,12 +100,14 @@ public class P1StepDefinitions {
         Integer.parseInt(string3), Integer.parseInt(string4)));
     
   }
-
+/**
+ * 
+ * @author Haroun Guessous
+ */
   @Then("the number of pieces of equipment in the system shall be {string} \\(p1)")
   public void the_number_of_pieces_of_equipment_in_the_system_shall_be_p1(String string) {
-	  
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	  assertEquals(string,climbSafe.getEquipment().size());
+	  throw new io.cucumber.java.PendingException();
   }
 
   @Then("the piece of equipment with name {string}, weight {string}, and price per week {string} shall not exist in the system \\(p1)")
