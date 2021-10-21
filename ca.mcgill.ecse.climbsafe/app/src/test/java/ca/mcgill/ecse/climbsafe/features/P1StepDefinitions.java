@@ -39,8 +39,8 @@ public class P1StepDefinitions {
     var rows = dataTable.asMaps();
 
     for (var row : rows) {
-      climbSafe = new ClimbSafe(Date.valueOf(row.get("startDate")), Integer.parseInt(row.get("nrWeeks")),
-          Integer.parseInt(row.get("priceOfGuidePerWeek")));
+      climbSafe = new ClimbSafe(Date.valueOf(row.get("startDate")),
+          Integer.parseInt(row.get("nrWeeks")), Integer.parseInt(row.get("priceOfGuidePerWeek")));
     }
     error = "";
   }
@@ -49,7 +49,8 @@ public class P1StepDefinitions {
    * @author Alexandre Chiasera
    */
   @Given("the following pieces of equipment exist in the system: \\(p1)")
-  public void the_following_pieces_of_equipment_exist_in_the_system_p1(io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_pieces_of_equipment_exist_in_the_system_p1(
+      io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
 
     for (var row : rows) {
@@ -63,7 +64,8 @@ public class P1StepDefinitions {
    * @author Haroun Guessous
    */
   @Given("the following equipment bundles exist in the system: \\(p1)")
-  public void the_following_equipment_bundles_exist_in_the_system_p1(io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_equipment_bundles_exist_in_the_system_p1(
+      io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
 
     for (var row : rows) {
@@ -132,7 +134,7 @@ public class P1StepDefinitions {
     Integer pricePerWeek = Integer.parseInt(oldPricePerWeek);
     // for each piece of equipment in the climbSafe system (for the admin)
     for (Equipment equipment : climbSafe.getEquipment()) {
-      
+
       if (equipment.getName().equals(oldName) && equipment.getWeight() == weight
           && equipment.getPricePerWeek() == pricePerWeek) {
         // if everything matches, it means the object is not updated correctly
@@ -163,7 +165,8 @@ public class P1StepDefinitions {
    * @author Atreyi Srivastava
    */
   @Then("the following pieces of equipment shall exist in the system: \\(p1)")
-  public void the_following_pieces_of_equipment_shall_exist_in_the_system_p1(io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_pieces_of_equipment_shall_exist_in_the_system_p1(
+      io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
     for (var row : rows) {
       String name = row.get("name");
@@ -197,7 +200,8 @@ public class P1StepDefinitions {
    * @author Atreyi Srivastava
    */
   @Then("the following equipment bundles shall exist in the system: \\(p1)")
-  public void the_following_equipment_bundles_shall_exist_in_the_system_p1(io.cucumber.datatable.DataTable dataTable) {
+  public void the_following_equipment_bundles_shall_exist_in_the_system_p1(
+      io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
     for (var row : rows) {
       String nameBundle = row.get("name");
