@@ -12,6 +12,11 @@ public class ClimbSafeFeatureSet1Controller {
   public static void setup(Date startDate, int nrWeeks, int priceOfGuidePerWeek)
       throws InvalidInputException {}
 
+	
+ /**
+   * @author Alexandre Chiasera
+   */	
+	
   public static void deleteMember(String email) {
 	 
 	 User user = User.getWithEmail(email);
