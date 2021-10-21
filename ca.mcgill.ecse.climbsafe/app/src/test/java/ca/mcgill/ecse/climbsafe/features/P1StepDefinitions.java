@@ -73,7 +73,7 @@ public class P1StepDefinitions {
   }
 
   /**
-   * 
+   *
    * @author Haroun Guessous
    */
   @Given("the following equipment bundles exist in the system: \\(p1)")
@@ -234,7 +234,7 @@ public class P1StepDefinitions {
   }
 
   /**
-   * @author Mohammad Shaheer Bilal 
+   * @author Mohammad Shaheer Bilal
    */
 
   @Then("the system shall raise the error {string} \\(p1)")
@@ -244,6 +244,10 @@ public class P1StepDefinitions {
 
   }
 
+  /**
+   * 
+   * @author Haroun Guessous
+   */
   @Then("the number of equipment bundles in the system shall be {string} \\(p1)")
   public void the_number_of_equipment_bundles_in_the_system_shall_be_p1(String string) {
 
