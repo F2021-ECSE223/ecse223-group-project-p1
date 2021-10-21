@@ -73,8 +73,8 @@ public class P1StepDefinitions {
       int discount = Integer.parseInt(row.get("discount"));
       String bundleItems = row.get("items");
       String bundleItemQuantities = row.get("quantity");
-
-      var newBundle = new EquipmentBundle(nameBundle, discount, climbSafe); // create empty Bundle
+      // create empty Bundle
+      var newBundle = new EquipmentBundle(nameBundle, discount, climbSafe); 
 
       List<Integer> quantities = new ArrayList<Integer>();
       List<BookableItem> bookableItems = new ArrayList<BookableItem>();
@@ -155,10 +155,10 @@ public class P1StepDefinitions {
     Integer weight = Integer.parseInt(newWeight);
     Integer pricePerWeek = Integer.parseInt(newPricePerWeek);
 
-    var pieceOfEquipment = (Equipment) Equipment.getWithName(name);
+    var equipment = (Equipment) Equipment.getWithName(name);
     // for each piece of equipment in the climbSafe system (for the admin)
-    assertTrue(pieceOfEquipment.getName().equals(name) && pieceOfEquipment.getWeight() == weight
-        && pieceOfEquipment.getPricePerWeek() == pricePerWeek);
+    assertTrue(equipment.getName().equals(name) && equipment.getWeight() == weight
+        && equipment.getPricePerWeek() == pricePerWeek);
   }
 
   /**
