@@ -6,11 +6,14 @@ import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.BookableItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Member;
-
 public class ClimbSafeFeatureSet2Controller {
 	
 	private static ClimbSafe climbSafe = ClimbSafeApplication.getClimbSafe();
 
+ /**
+   * @author Alexandre Chiasera
+   */	
+	
   public static void registerMember(String email, String password, String name,
       String emergencyContact, int nrWeeks, boolean guideRequired, boolean hotelRequired,
       List<String> itemNames, List<Integer> itemQuantities) throws InvalidInputException {
@@ -21,6 +24,10 @@ public class ClimbSafeFeatureSet2Controller {
 	  }
   }
 
+ /**
+   * @author Alexandre Chiasera
+   */
+	
   public static void updateMember(String email, String newPassword, String newName,
       String newEmergencyContact, int newNrWeeks, boolean newGuideRequired,
       boolean newHotelRequired, List<String> newItemNames, List<Integer> newItemQuantities)
