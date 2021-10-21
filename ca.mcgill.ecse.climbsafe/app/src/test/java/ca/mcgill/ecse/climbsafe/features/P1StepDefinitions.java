@@ -97,10 +97,7 @@ public class P1StepDefinitions {
 					var addedItemName = bufferItemList.get(x).getName();
 					var itemQuantity = quantityList.get(x);
 					if (existingEquipmentName.equals(addedItemName)) {
-						newBundle.addBundleItem(itemQuantity, climbSafe, climbSafe.getEquipment(i)); // add to empty
-																										// Bundle
-																										// previously
-																										// created
+						newBundle.addBundleItem(itemQuantity, climbSafe, climbSafe.getEquipment(i)); // add to new Bundle
 					}
 				}
 			}
