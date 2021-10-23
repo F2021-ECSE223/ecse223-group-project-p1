@@ -84,8 +84,8 @@ public class P1StepDefinitions {
         bookableItems.add(existingItem);
       }
 
-      for (var bufferItemQuantity : Arrays.asList(bundleItemQuantities.split(","))) {
-        var itemQuantity = Integer.parseInt(bufferItemQuantity);
+      for (var tempItemQuantity : Arrays.asList(bundleItemQuantities.split(","))) {
+        var itemQuantity = Integer.parseInt(tempItemQuantity);
         quantities.add(itemQuantity);
       }
 
@@ -134,7 +134,6 @@ public class P1StepDefinitions {
     Integer pricePerWeek = Integer.parseInt(oldPricePerWeek);
     // for each piece of equipment in the climbSafe system (for the admin)
     for (Equipment equipment : climbSafe.getEquipment()) {
-
       if (equipment.getName().equals(oldName) && equipment.getWeight() == weight
           && equipment.getPricePerWeek() == pricePerWeek) {
         // if everything matches, it means the object is not updated correctly
@@ -173,7 +172,7 @@ public class P1StepDefinitions {
       int weight = Integer.parseInt(row.get("weight"));
       int pricePerWeek = Integer.parseInt(row.get("pricePerWeek"));
 
-      Equipment equipment = (Equipment) Equipment.getWithName(name);
+      var equipment = (Equipment) BookableItem.getWithName(name);
       assertTrue(equipment.getName().equals(name) && equipment.getWeight() == weight
           && equipment.getPricePerWeek() == pricePerWeek);
     }
@@ -206,8 +205,7 @@ public class P1StepDefinitions {
     for (var row : rows) {
       String nameBundle = row.get("name");
       int discount = Integer.parseInt(row.get("discount"));
-
-      EquipmentBundle bundle = (EquipmentBundle) EquipmentBundle.getWithName(nameBundle);
+      var bundle = (EquipmentBundle) BookableItem.getWithName(nameBundle);
       assertTrue(bundle.getName().equals(nameBundle) && bundle.getDiscount() == discount);
     }
   }
