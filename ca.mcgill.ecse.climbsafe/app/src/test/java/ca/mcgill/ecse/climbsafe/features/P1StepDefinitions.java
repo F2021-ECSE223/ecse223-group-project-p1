@@ -17,10 +17,28 @@ import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.function.Executable;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
+import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
+import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
+import ca.mcgill.ecse.climbsafe.model.BookableItem;
+import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
+import ca.mcgill.ecse.climbsafe.model.Equipment;
+import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 
 public class P1StepDefinitions {
   private ClimbSafe climbSafe;
   private String error;
+
 
   /**
    * @author Asma Gandour
@@ -65,6 +83,7 @@ public class P1StepDefinitions {
       String bundleItems = row.get("items");
       String bundleItemQuantities = row.get("quantity");
       // create empty Bundle
+
       var newBundle = new EquipmentBundle(nameBundle, discount, climbSafe);
 
       List<Integer> quantities = new ArrayList<Integer>();
@@ -77,6 +96,7 @@ public class P1StepDefinitions {
 
       for (var itemsQuantity : Arrays.asList(bundleItemQuantities.split(","))) {
         var itemQuantity = Integer.parseInt(itemsQuantity);
+
         quantities.add(itemQuantity);
       }
 
@@ -196,11 +216,11 @@ public class P1StepDefinitions {
     for (var row : rows) {
       String nameBundle = row.get("name");
       int discount = Integer.parseInt(row.get("discount"));
-
       var bundle = (EquipmentBundle) BookableItem.getWithName(nameBundle);
       assertTrue(bundle.getName().equals(nameBundle) && bundle.getDiscount() == discount);
     }
-  }
+ }
+ 
 
   private void callController(Executable executable) {
     try {
