@@ -1,5 +1,19 @@
 package ca.mcgill.ecse.climbsafe.features;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.junit.jupiter.api.function.Executable;
+import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
+import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
+import ca.mcgill.ecse.climbsafe.model.BookableItem;
+import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
+import ca.mcgill.ecse.climbsafe.model.Equipment;
+import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -25,11 +39,6 @@ public class P1StepDefinitions {
   private ClimbSafe climbSafe;
   private String error;
 
-  @Before
-  public static void setUp() {
-    // clear all data
-    ClimbSafeApplication.getClimbSafe().delete();
-  }
 
   /**
    * @author Asma Gandour
@@ -74,7 +83,8 @@ public class P1StepDefinitions {
       String bundleItems = row.get("items");
       String bundleItemQuantities = row.get("quantity");
       // create empty Bundle
-      var newBundle = new EquipmentBundle(nameBundle, discount, climbSafe); 
+
+      var newBundle = new EquipmentBundle(nameBundle, discount, climbSafe);
 
       List<Integer> quantities = new ArrayList<Integer>();
       List<BookableItem> bookableItems = new ArrayList<BookableItem>();
@@ -84,8 +94,9 @@ public class P1StepDefinitions {
         bookableItems.add(existingItem);
       }
 
-      for (var tempItemQuantity : Arrays.asList(bundleItemQuantities.split(","))) {
-        var itemQuantity = Integer.parseInt(tempItemQuantity);
+      for (var itemsQuantity : Arrays.asList(bundleItemQuantities.split(","))) {
+        var itemQuantity = Integer.parseInt(itemsQuantity);
+
         quantities.add(itemQuantity);
       }
 
@@ -208,12 +219,8 @@ public class P1StepDefinitions {
       var bundle = (EquipmentBundle) BookableItem.getWithName(nameBundle);
       assertTrue(bundle.getName().equals(nameBundle) && bundle.getDiscount() == discount);
     }
-  }
-
-  @After
-  public void tearDown() {
-    climbSafe.delete();
-  }
+ }
+ 
 
   private void callController(Executable executable) {
     try {
