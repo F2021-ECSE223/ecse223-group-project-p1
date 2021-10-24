@@ -39,7 +39,7 @@ public class P1StepDefinitions {
     climbSafe.setNrWeeks(Integer.parseInt(row.get("nrWeeks")));
     climbSafe.setPriceOfGuidePerWeek(Integer.parseInt(row.get("priceOfGuidePerWeek")));
     }
-    erro = "";
+    error = "";
   }
 
   /**
