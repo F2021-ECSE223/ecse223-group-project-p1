@@ -25,24 +25,21 @@ public class P1StepDefinitions {
   private ClimbSafe climbSafe;
   private String error;
 
-  @Before
-  public static void setUp() {
-    // clear all data
-    ClimbSafeApplication.getClimbSafe().delete();
-  }
-
   /**
    * @author Asma Gandour
    */
   @Given("the following ClimbSafe system exists: \\(p1)")
   public void the_following_climb_safe_system_exists_p1(io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
+    
+    climbSafe = ClimbSafeApplication.getClimbSafe();
 
     for (var row : rows) {
-      climbSafe = new ClimbSafe(Date.valueOf(row.get("startDate")),
-          Integer.parseInt(row.get("nrWeeks")), Integer.parseInt(row.get("priceOfGuidePerWeek")));
+    climbSafe.setStartDate(Date.valueOf(row.get("startDate")));
+    climbSafe.setNrWeeks(Integer.parseInt(row.get("nrWeeks")));
+    climbSafe.setPriceOfGuidePerWeek(Integer.parseInt(row.get("priceOfGuidePerWeek")));
     }
-    error = "";
+    erro = "";
   }
 
   /**
