@@ -55,24 +55,11 @@ public class ClimbSafeFeatureSet6Controller {
 
     var assignments = new ArrayList<TOAssignment>();
     for (var assignment : climbSafe.getAssignments()) {
-    	
-      var numberOfWeeks = assignment.getStartWeek() - assignment.getEndWeek();
-      var totalCostForGuide = assignment.getClimbSafe().getPriceOfGuidePerWeek() * numberOfWeeks;
-      var bookedItems = assignment.getMember().getBookedItems();
-      var totalCostForEquipment = 0;
-      
-      for(var item: bookedItems) {
-    	  var equipment = (Equipment)BookableItem.getWithName(item.getItem().getName());
-    	  var itemPricePerWeek = equipment.getPricePerWeek();
-    	  totalCostForEquipment += itemPricePerWeek * numberOfWeeks;
-      }
-    
       assignments
           .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
               assignment.getGuide().getEmail(), assignment.getGuide().getName(),
               assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
-              totalCostForGuide, totalCostForEquipment));
-     
+              assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
     }
     return assignments;
   }
