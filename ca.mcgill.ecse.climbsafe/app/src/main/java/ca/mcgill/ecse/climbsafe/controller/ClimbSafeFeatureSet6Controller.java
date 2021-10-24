@@ -48,7 +48,7 @@ public class ClimbSafeFeatureSet6Controller {
    * This method iterates over climbSafe's assignments, converts each one of them into a TO
    * assignment and returns a list of these TO assignments.
    * 
-   * @author Asma Gandour
+   * @author 
    * @return the list of TOAssignments for the current climbSafe
    */
   public static List<TOAssignment> getAssignments() {
