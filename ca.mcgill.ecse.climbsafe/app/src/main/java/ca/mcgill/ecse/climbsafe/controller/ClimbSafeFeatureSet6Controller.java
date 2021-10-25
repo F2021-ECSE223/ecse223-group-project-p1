@@ -51,18 +51,24 @@ public class ClimbSafeFeatureSet6Controller {
    * @author 
    * @return the list of TOAssignments for the current climbSafe
    */
-  public static List<TOAssignment> getAssignments() {
-
+public static List<TOAssignment> getAssignments()  throws InvalidInputException {
     var assignments = new ArrayList<TOAssignment>();
+    try {
     for (var assignment : climbSafe.getAssignments()) {
-      assignments
+    	if (assignment.getHotel()!=null && assignment.getGuide()!=null && assignment.getMember()!=null)
+    	{
+    	assignments
           .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
               assignment.getGuide().getEmail(), assignment.getGuide().getName(),
               assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
               assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
-    }
+    	}}
     return assignments;
-  }
+    }
+catch (RuntimeException e){
+	  throw new InvalidInputException(e.getMessage());}
+    }
+
 
   /**
    * 
