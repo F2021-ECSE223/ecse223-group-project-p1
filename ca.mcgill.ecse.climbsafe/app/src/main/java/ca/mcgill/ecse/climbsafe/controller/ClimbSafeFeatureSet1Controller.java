@@ -19,14 +19,14 @@ public class ClimbSafeFeatureSet1Controller {
    * @author Alexandre Chiasera
    */	
 	
-  public static void deleteMember(String email) {
+public static void deleteMember(String email) {
 	 
 	 User user = User.getWithEmail(email);
 	 if(user != null && !(user instanceof Guide)) {
 		 user.delete();
 	 }
 	  
-  } 
+  }
   
   public static void deleteGuide(String email) {}
 
