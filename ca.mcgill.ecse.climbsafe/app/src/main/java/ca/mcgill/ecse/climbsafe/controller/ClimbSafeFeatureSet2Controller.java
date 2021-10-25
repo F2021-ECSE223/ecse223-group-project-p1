@@ -1,58 +1,144 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.BookableItem;
+import ca.mcgill.ecse.climbsafe.model.BookedItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
+import ca.mcgill.ecse.climbsafe.model.Equipment;
 import ca.mcgill.ecse.climbsafe.model.Member;
+import ca.mcgill.ecse.climbsafe.model.User;
+
 public class ClimbSafeFeatureSet2Controller {
-	
+
 	private static ClimbSafe climbSafe = ClimbSafeApplication.getClimbSafe();
+	//regex to confirm email validity
+	public static final Pattern REGEX_EMAIL = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+			Pattern.CASE_INSENSITIVE);
 
- /**
-   * @author Alexandre Chiasera
-   */	
+	/*
+	 * 
+	 * @author Alexandre Chiasera
+	 */
+	public static void registerMember(String email, String password, String name, String emergencyContact, int nrWeeks,
+			boolean guideRequired, boolean hotelRequired, List<String> itemNames, List<Integer> itemQuantities)
+			throws InvalidInputException {
+		boolean isNewMember = true;
+
+		for (var itemName : itemNames) {
+			var item = BookableItem.getWithName(itemName);
+			if (item == null) {
+				throw new InvalidInputException("Unable to create bookedItem due to item");
+			}
+		}
+
+		for (var member : climbSafe.getMembers()) {
+			if (member.getEmail().equals(email)) {
+				isNewMember = false;
+				break;
+			}
+		}
+
+		for (var guide : climbSafe.getGuides()) {
+			if (guide.getEmail().equals(email)) {
+				isNewMember = false;
+				break;
+			}
+		}
+
+		Matcher matcher = REGEX_EMAIL.matcher(email);
+		if (!matcher.find()) {
+			throw new InvalidInputException("Please enter a valid email");
+		}
+
+		if (password.equals("") || name.equals("") || emergencyContact.equals("") || (Integer) nrWeeks == null
+				|| (Boolean) guideRequired == null || (Boolean) hotelRequired == null) {
+			throw new InvalidInputException("One or several omitted fields are required");
+		}
+
+		if (nrWeeks <= 0 || nrWeeks > climbSafe.getNrWeeks()) {
+			throw new InvalidInputException(
+					"The number of weeks must be greater than zero and less than or equal to the number of climbing weeks in the climbing season");
+		}
+
+		if (email.contains("admin")) {
+			throw new InvalidInputException("The email entered is not allowed for members");
+		}
+
+		if (isNewMember) {
+			climbSafe.addMember(email, password, name, emergencyContact, nrWeeks, guideRequired, hotelRequired);
+			var member = (Member) Member.getWithEmail(email);
+			for (int i = 0; i < itemNames.size(); i++) { // newItemNames and newItemQuantities should be the same size
+															// or an error will be thrown since each item booked has a
+															// size of at least 0
+				var bookableItem = BookableItem.getWithName(itemNames.get(i));
+				member.addBookedItem(itemQuantities.get(i), climbSafe, bookableItem);
+			}
+
+		} else {
+			throw new InvalidInputException(
+					"The member with email " + Member.getWithEmail(email) + " already exists in the system");
+		}
+	}
+
 	
-  public static void registerMember(String email, String password, String name,
-      String emergencyContact, int nrWeeks, boolean guideRequired, boolean hotelRequired,
-      List<String> itemNames, List<Integer> itemQuantities) throws InvalidInputException {
-	  try {
-		  climbSafe.addMember(email, password, name, emergencyContact, nrWeeks, guideRequired, hotelRequired);
-	  } catch (RuntimeException e){
-		  throw new InvalidInputException(e.getMessage());		  
-	  }
-  }
+	/**
+	 * @author Alexandre Chiasera
+	 */
+	public static void updateMember(String email, String newPassword, String newName, String newEmergencyContact,
+			int newNrWeeks, boolean newGuideRequired, boolean newHotelRequired, List<String> newItemNames,
+			List<Integer> newItemQuantities) throws InvalidInputException {
 
- /**
-   * @author Alexandre Chiasera
-   */
-	
-  public static void updateMember(String email, String newPassword, String newName,
-      String newEmergencyContact, int newNrWeeks, boolean newGuideRequired,
-      boolean newHotelRequired, List<String> newItemNames, List<Integer> newItemQuantities)
-      throws InvalidInputException {
-	  try {		  
-		  for(Member member: climbSafe.getMembers()) { //the email being unique and final, it is the element we will be querying 
-			  var memberEmail = member.getEmail();     // the same process is used in "forgot password" cases
-			  if(email == memberEmail) { //if found in Member List
-				  member.setPassword(newPassword);
-				  member.setName(newName);
-				  member.setEmergencyContact(newEmergencyContact);
-				  member.setNrWeeks(newNrWeeks);
-				  member.setGuideRequired(newGuideRequired);
-				  member.setHotelRequired(newHotelRequired);
-				  for(int i = 0; i < newItemNames.size(); i ++) { //newItemNames and newItemQuantities should be the same size or an error will be thrown since each item booked has a size of at least 0
-					  var bookableItem = BookableItem.getWithName(newItemNames.get(i));
-					  member.addBookedItem(newItemQuantities.get(i), climbSafe, bookableItem);					
-				  }
-			  }
-		  }
-		  
-		  
-	  } catch (RuntimeException e) {
-		  throw new InvalidInputException(e.getMessage());
-	  }
-  }
+		var member = (Member) User.getWithEmail(email);
 
+		if (member == null) {
+			throw new InvalidInputException("Member not found");
+		}
+		member.setPassword(newPassword);
+		member.setName(newName);
+		member.setEmergencyContact(newEmergencyContact);
+		member.setNrWeeks(newNrWeeks);
+		member.setGuideRequired(newGuideRequired);
+		member.setHotelRequired(newHotelRequired);
+
+		for (int i = member.getBookedItems().size() - 1; i >= 0; i--) {
+			// if we use for(item : member.getBookeItems()) our elements will be shifter to
+			// avoid gaps, and hence elements won't be deleted
+			member.getBookedItem(i).delete();
+		}
+
+		if (newPassword.equals("")) {
+			throw new InvalidInputException("The password cannot be empty");
+		}
+		if (newName.equals("")) {
+			throw new InvalidInputException("The name cannot be empty");
+		}
+		if (newEmergencyContact.equals("")) {
+			throw new InvalidInputException("The emergency contact cannot be empty");
+		}
+		if (newNrWeeks <= 0 || newNrWeeks > climbSafe.getNrWeeks()) {
+			throw new InvalidInputException(
+					"The number of weeks must be greater than zero and less than or equal to the number of climbing weeks in the climbing season");
+		}
+		member.setPassword(newPassword);
+		member.setName(newName);
+		member.setEmergencyContact(newEmergencyContact);
+		member.setNrWeeks(newNrWeeks);
+		member.setGuideRequired(newGuideRequired);
+		member.setHotelRequired(newHotelRequired);
+
+		for (int i = 0; i < newItemNames.size(); i++) { 
+			// newItemNames and newItemQuantities should be the same size or
+			// an error will be thrown since each item booked has a size of
+			// at least 0
+			var bookableItem = BookableItem.getWithName(newItemNames.get(i));
+			if (bookableItem == null) {
+				throw new InvalidInputException("Requested item not found");
+			}
+			member.addBookedItem(newItemQuantities.get(i), climbSafe, bookableItem);
+		}
+	}
 }
