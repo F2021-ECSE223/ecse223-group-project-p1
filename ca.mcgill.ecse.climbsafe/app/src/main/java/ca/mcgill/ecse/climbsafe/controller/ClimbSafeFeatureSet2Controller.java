@@ -19,9 +19,18 @@ public class ClimbSafeFeatureSet2Controller {
 	public static final Pattern REGEX_EMAIL = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);
 
-	/*
-	 * 
+	/** 
 	 * @author Alexandre Chiasera
+	 * @param email the user email
+	 * @param password the user password
+	 * @param name the user name
+	 * @param emergencyContact the user's emergency contact
+	 * @param nrWeeks the number of climbing weeks the user wishes to sign up for
+	 * @param guideRequired states whether the user will hire a guide or not
+	 * @param hotelRequired states whether the user will book a hotel or not
+	 * @param itemNames the items the user wishes to rent
+	 * @param itemQuantities the item quantities for the rented items respectively
+	 * 
 	 */
 	public static void registerMember(String email, String password, String name, String emergencyContact, int nrWeeks,
 			boolean guideRequired, boolean hotelRequired, List<String> itemNames, List<Integer> itemQuantities)
@@ -87,6 +96,16 @@ public class ClimbSafeFeatureSet2Controller {
 	
 	/**
 	 * @author Alexandre Chiasera
+	 * @param email the user email
+	 * @param newPassword the new password entered by the user
+	 * @param newName the new name entered by the user
+	 * @param newEmergencyContact the new emergency contact entered by the user
+	 * @param newNrWeeks the new number of weeks the user wishes to sign up for
+	 * @param newGuideRequired states whether the user requires a guide or not
+	 * @param newHotelRequired states whether the user requires to stay at a hotel or not
+	 * @param  newItemNames the new items the user wishes to rent 
+	 * @param newItemQuantities the quantities of the items newly added
+	 *  
 	 */
 	public static void updateMember(String email, String newPassword, String newName, String newEmergencyContact,
 			int newNrWeeks, boolean newGuideRequired, boolean newHotelRequired, List<String> newItemNames,
