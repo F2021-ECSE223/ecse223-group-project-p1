@@ -10,7 +10,15 @@ import ca.mcgill.ecse.climbsafe.model.User;
 public class ClimbSafeFeatureSet1Controller {
 	
 	private static ClimbSafe climbSafe = ClimbSafeApplication.getClimbSafe();
-
+ /**
+   * Corresponding Feature: SetupNMC
+   * 
+   * This method attempts setting up the NMC application, if it fails to it throws an exception.
+   * 
+   * @author Haroun
+   * @param Start Date, NumberOfweeks, Price of guide per week
+   * @throws InvalidInputException
+   */
     public static void setup(Date startDate, int nrWeeks, int priceOfGuidePerWeek)
       throws InvalidInputException {
 	  try {
