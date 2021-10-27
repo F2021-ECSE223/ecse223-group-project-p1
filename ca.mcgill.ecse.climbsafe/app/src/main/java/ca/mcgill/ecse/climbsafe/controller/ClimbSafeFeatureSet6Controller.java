@@ -54,7 +54,7 @@ public class ClimbSafeFeatureSet6Controller {
 public static List<TOAssignment> getAssignments() {
     var assignments = new ArrayList<TOAssignment>();
     for (var assignment : climbSafe.getAssignments()) {
-    	if (assignment.getHotel()!=null && assignment.getGuide()!=null && assignment.getMember()!=null)
+    	if (assignment.getHotel()!=null && assignment.getGuide()!=null)
     	{
     	assignments
           .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
@@ -62,9 +62,34 @@ public static List<TOAssignment> getAssignments() {
               assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
               assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
     	}
+    	if (assignment.getHotel()==null && assignment.getGuide()!=null)
+    	{
+    	assignments
+          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
+              assignment.getGuide().getEmail(), assignment.getGuide().getName(),
+              "null", assignment.getStartWeek(), assignment.getEndWeek(),
+              assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
+    	}
+    	if (assignment.getHotel()!=null && assignment.getGuide()==null)
+    	{
+    	assignments
+          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
+        		  "null", "null",
+              assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
+              0, assignment.getTotalCostForEquipment()));
+    	}
+    	if (assignment.getHotel()==null && assignment.getGuide()==null)
+    	{
+    	assignments
+          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
+        		  "null", "null",
+        		  "null", assignment.getStartWeek(), assignment.getEndWeek(),
+              0, assignment.getTotalCostForEquipment()));
+    	}
     	}
     return assignments;
     }
+
 
   /**
    * 
