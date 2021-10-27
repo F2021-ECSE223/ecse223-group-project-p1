@@ -44,7 +44,15 @@ public static void deleteMember(String email) {
 	  
   }
   
-  public static void deleteGuide(String email) {}
+ /**
+ * @author Mohammad Shaheer Bilal 
+ * @param email 
+ */	
+  public static void deleteGuide(String email) {
+	  var guide= (Guide) User.getWithEmail(email);
+	  if(guide != null && !(guide instanceof User)) {
+		  guide.delete();
+	  }
 
   // this method needs to be implemented only by teams with seven team members
   public static void deleteHotel(String name) {}
