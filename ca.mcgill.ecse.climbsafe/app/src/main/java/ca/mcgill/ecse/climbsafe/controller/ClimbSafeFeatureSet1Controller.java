@@ -32,6 +32,7 @@ public class ClimbSafeFeatureSet1Controller {
 	
  /**
    * @author Alexandre Chiasera
+   * @param email the user email
    */	
 	
 public static void deleteMember(String email) {
