@@ -1,15 +1,15 @@
 package ca.mcgill.ecse.climbsafe.controller;
-
 import java.sql.Date;
-
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
+import ca.mcgill.ecse.climbsafe.model.Member;
 import ca.mcgill.ecse.climbsafe.model.User;
 
 public class ClimbSafeFeatureSet1Controller {
 	
 	private static ClimbSafe climbSafe = ClimbSafeApplication.getClimbSafe();
+	
  /**
    * Corresponding Feature: SetupNMC
    * 
@@ -25,7 +25,6 @@ public class ClimbSafeFeatureSet1Controller {
 	  climbSafe.setStartDate(startDate);climbSafe.setNrWeeks(nrWeeks);climbSafe.setPriceOfGuidePerWeek(priceOfGuidePerWeek);
   }
 	  catch (RuntimeException e) {
-
 	      throw new InvalidInputException(e.getMessage());
 	    }
   }
@@ -40,22 +39,21 @@ public static void deleteMember(String email) {
 	 User user = User.getWithEmail(email);
 	 if(user != null && !(user instanceof Guide)) {
 		 user.delete();
-	 }
-	  
+	 }	  
   }
   
- 
+	/**
+	 * @author Mohammad Shaheer Bilal 
+	 * @param email the user email
+	 */	
     public static void deleteGuide(String email) {
 	  var guide= User.getWithEmail(email);
 	  if(guide != null && !(guide instanceof Member)) {
 		  guide.delete();
-	  }
-	  
-	  
-	  
-	  
+	  }	  
+   }
+	  	  
 
   // this method needs to be implemented only by teams with seven team members
   public static void deleteHotel(String name) {}
-
 }
