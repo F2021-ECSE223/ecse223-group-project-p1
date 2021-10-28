@@ -3,11 +3,8 @@ package ca.mcgill.ecse.climbsafe.controller;
 import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
-import ca.mcgill.ecse.climbsafe.model.BookableItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Equipment;
-import ca.mcgill.ecse.climbsafe.model.Member;
-
 
 public class ClimbSafeFeatureSet6Controller {
 
@@ -51,44 +48,37 @@ public class ClimbSafeFeatureSet6Controller {
    * @author Haroun Guessous
    * @return the list of TOAssignments for the current climbSafe
    */
-public static List<TOAssignment> getAssignments() {
+  public static List<TOAssignment> getAssignments() {
     var assignments = new ArrayList<TOAssignment>();
     for (var assignment : climbSafe.getAssignments()) {
-    	if (assignment.getHotel()!=null && assignment.getGuide()!=null)
-    	{
-    	assignments
-          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
-              assignment.getGuide().getEmail(), assignment.getGuide().getName(),
-              assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
-              assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
-    	}
-    	if (assignment.getHotel()==null && assignment.getGuide()!=null)
-    	{
-    	assignments
-          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
-              assignment.getGuide().getEmail(), assignment.getGuide().getName(),
-              "null", assignment.getStartWeek(), assignment.getEndWeek(),
-              assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
-    	}
-    	if (assignment.getHotel()!=null && assignment.getGuide()==null)
-    	{
-    	assignments
-          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
-        		  "null", "null",
-              assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
-              0, assignment.getTotalCostForEquipment()));
-    	}
-    	if (assignment.getHotel()==null && assignment.getGuide()==null)
-    	{
-    	assignments
-          .add(new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
-        		  "null", "null",
-        		  "null", assignment.getStartWeek(), assignment.getEndWeek(),
-              0, assignment.getTotalCostForEquipment()));
-    	}
-    	}
-    return assignments;
+      if (assignment.getHotel() != null && assignment.getGuide() != null) {
+        assignments.add(
+            new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
+                assignment.getGuide().getEmail(), assignment.getGuide().getName(),
+                assignment.getHotel().getName(), assignment.getStartWeek(), assignment.getEndWeek(),
+                assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
+      }
+      if (assignment.getHotel() == null && assignment.getGuide() != null) {
+        assignments.add(
+            new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
+                assignment.getGuide().getEmail(), assignment.getGuide().getName(), null,
+                assignment.getStartWeek(), assignment.getEndWeek(),
+                assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()));
+      }
+      if (assignment.getHotel() != null && assignment.getGuide() == null) {
+        assignments.add(
+            new TOAssignment(assignment.getMember().getEmail(), assignment.getMember().getName(),
+                null, null, assignment.getHotel().getName(), assignment.getStartWeek(),
+                assignment.getEndWeek(), 0, assignment.getTotalCostForEquipment()));
+      }
+      if (assignment.getHotel() == null && assignment.getGuide() == null) {
+        assignments.add(new TOAssignment(assignment.getMember().getEmail(),
+            assignment.getMember().getName(), null, null, null, assignment.getStartWeek(),
+            assignment.getEndWeek(), 0, assignment.getTotalCostForEquipment()));
+      }
     }
+    return assignments;
+  }
 
 
   /**
