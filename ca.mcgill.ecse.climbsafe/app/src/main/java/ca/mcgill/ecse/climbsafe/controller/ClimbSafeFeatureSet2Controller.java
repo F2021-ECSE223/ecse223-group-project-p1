@@ -1,14 +1,10 @@
 package ca.mcgill.ecse.climbsafe.controller;
-
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.BookableItem;
-import ca.mcgill.ecse.climbsafe.model.BookedItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
-import ca.mcgill.ecse.climbsafe.model.Equipment;
 import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
 import ca.mcgill.ecse.climbsafe.model.User;
@@ -53,7 +49,7 @@ public class ClimbSafeFeatureSet2Controller {
 		for (var itemName : itemNames) {
 			var item = BookableItem.getWithName(itemName);
 			if (item == null) {
-				throw new InvalidInputException("Unable to create bookedItem due to item");
+				throw new InvalidInputException("Requested item not found");
 			}
 		}
 		
@@ -106,17 +102,12 @@ public class ClimbSafeFeatureSet2Controller {
 			for (int i = 0; i < itemNames.size(); i++) { // newItemNames and newItemQuantities should be the same size															// or an error will be thrown since each item booked has a
 															// size of at least 0
 				var bookableItem = BookableItem.getWithName(itemNames.get(i));
-				
-				if (bookableItem == null) {
-					throw new InvalidInputException("Requested item not found");
-				}
-				
 				member.addBookedItem(itemQuantities.get(i), climbSafe, bookableItem);
 			}
 
 		} else {
 			throw new InvalidInputException(
-					"The member with email " + Member.getWithEmail(email) + " already exists in the system");
+					"A member with this email already exists");
 		}
 	}
 
@@ -137,7 +128,6 @@ public class ClimbSafeFeatureSet2Controller {
 	public static void updateMember(String email, String newPassword, String newName, String newEmergencyContact,
 			int newNrWeeks, boolean newGuideRequired, boolean newHotelRequired, List<String> newItemNames,
 			List<Integer> newItemQuantities) throws InvalidInputException {
-
 		var member = (Member) User.getWithEmail(email);
 
 		if (member == null) {
