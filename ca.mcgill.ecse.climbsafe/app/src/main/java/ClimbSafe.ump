@@ -3,6 +3,7 @@ namespace ca.mcgill.ecse.climbsafe.model;
 class ClimbSafe {
   Date startDate;
   Integer nrWeeks;
+  //BLABLA
   Integer priceOfGuidePerWeek;
   1 <@>- 0..1 Administrator adminstrator;
   1 <@>- * Guide guides;
