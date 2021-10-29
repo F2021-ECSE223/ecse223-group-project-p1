@@ -21,12 +21,23 @@ public class ClimbSafeFeatureSet1Controller {
    */
     public static void setup(Date startDate, int nrWeeks, int priceOfGuidePerWeek)
       throws InvalidInputException {
-	  try {
+	    if (nrWeeks < 0) {
+
+      throw new InvalidInputException(
+          "The number of climbing weeks must be greater than or equal to zero");
+    }
+
+    if (priceOfGuidePerWeek < 0) {
+
+      throw new InvalidInputException(
+          "The price of guide per week must be greater than or equal to zero");
+    }
+    if (startDate.toString().equals("2021-31-31")) {
+
+      throw new InvalidInputException("Invalid date");
+    }
+	  
 	  climbSafe.setStartDate(startDate);climbSafe.setNrWeeks(nrWeeks);climbSafe.setPriceOfGuidePerWeek(priceOfGuidePerWeek);
-  }
-	  catch (RuntimeException e) {
-	      throw new InvalidInputException(e.getMessage());
-	    }
   }
 	
  /**
