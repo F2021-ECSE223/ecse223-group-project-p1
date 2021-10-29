@@ -9,6 +9,7 @@ import ca.mcgill.ecse.climbsafe.model.BookableItem;
 import ca.mcgill.ecse.climbsafe.model.BookedItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Equipment;
+import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
 import ca.mcgill.ecse.climbsafe.model.User;
 
@@ -36,6 +37,18 @@ public class ClimbSafeFeatureSet2Controller {
 			boolean guideRequired, boolean hotelRequired, List<String> itemNames, List<Integer> itemQuantities)
 			throws InvalidInputException {
 		boolean isNewMember = true;
+		
+		if (password.equals("")) {
+			throw new InvalidInputException("The password cannot be empty");
+		}
+		
+		if (name.equals("")) {
+			throw new InvalidInputException("The name cannot be empty");
+		}
+		
+		if (emergencyContact.equals("")) {
+			throw new InvalidInputException("The emergency contact cannot be empty");
+		}
 
 		for (var itemName : itemNames) {
 			var item = BookableItem.getWithName(itemName);
@@ -43,7 +56,14 @@ public class ClimbSafeFeatureSet2Controller {
 				throw new InvalidInputException("Unable to create bookedItem due to item");
 			}
 		}
-
+		
+		for(var guide : climbSafe.getGuides()) {
+			var member = Guide.getWithEmail(email); 
+			if(guide.equals(member)) {
+				throw new InvalidInputException("A guide with this email already exists");
+			}
+		}
+				
 		for (var member : climbSafe.getMembers()) {
 			if (member.getEmail().equals(email)) {
 				isNewMember = false;
@@ -60,7 +80,10 @@ public class ClimbSafeFeatureSet2Controller {
 
 		Matcher matcher = REGEX_EMAIL.matcher(email);
 		if (!matcher.find()) {
-			throw new InvalidInputException("Please enter a valid email");
+			if(email.contains(" ")) {
+				throw new InvalidInputException("The email must not contain any spaces");
+			}
+			throw new InvalidInputException("Invalid email");
 		}
 
 		if (password.equals("") || name.equals("") || emergencyContact.equals("") || (Integer) nrWeeks == null
@@ -80,10 +103,14 @@ public class ClimbSafeFeatureSet2Controller {
 		if (isNewMember) {
 			climbSafe.addMember(email, password, name, emergencyContact, nrWeeks, guideRequired, hotelRequired);
 			var member = (Member) Member.getWithEmail(email);
-			for (int i = 0; i < itemNames.size(); i++) { // newItemNames and newItemQuantities should be the same size
-															// or an error will be thrown since each item booked has a
+			for (int i = 0; i < itemNames.size(); i++) { // newItemNames and newItemQuantities should be the same size															// or an error will be thrown since each item booked has a
 															// size of at least 0
 				var bookableItem = BookableItem.getWithName(itemNames.get(i));
+				
+				if (bookableItem == null) {
+					throw new InvalidInputException("Requested item not found");
+				}
+				
 				member.addBookedItem(itemQuantities.get(i), climbSafe, bookableItem);
 			}
 
