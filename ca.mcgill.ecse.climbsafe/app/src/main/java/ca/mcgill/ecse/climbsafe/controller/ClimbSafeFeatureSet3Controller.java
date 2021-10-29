@@ -3,6 +3,7 @@ package ca.mcgill.ecse.climbsafe.controller;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
+import ca.mcgill.ecse.climbsafe.model.Member;
 import ca.mcgill.ecse.climbsafe.model.User;
 
 public class ClimbSafeFeatureSet3Controller {
@@ -21,32 +22,36 @@ public class ClimbSafeFeatureSet3Controller {
   public static void registerGuide(String email, String password, String name,
       String emergencyContact) throws InvalidInputException {
 	  boolean alreadyExist=false;
+	  Member existingMember=null;
+	  Guide existingGuide=null;
 	  
 	  for(var guide:climbSafe.getGuides()) {
 		  if(guide.getEmail().equals(email)) {
 			  alreadyExist=true;
+			  existingGuide=guide;
 		  }
 	  }
 	  
 	  for(var member:climbSafe.getMembers()) {
 		  if(member.getEmail().equals(email)) {
 			  alreadyExist=true;
+			  existingMember=member;
 		  }
 	  }
 	  
-	  if(email.equals("")) {
+	  if(email.isEmpty()) {
 		  throw new InvalidInputException("Email cannot be empty");
 	  }
 	  
-	  if(password.equals("")) {
+	  if(password.isEmpty()) {
 		  throw new InvalidInputException("Password cannot be empty");
 	  }
 	  
-	  if(name.equals("")) {
+	  if(name.isEmpty()) {
 		  throw new InvalidInputException("Name cannot be empty");
 	  }
 	  
-	  if(emergencyContact.equals("")) {
+	  if(emergencyContact.isEmpty()) {
 		  throw new InvalidInputException("Emergency contact cannot be empty");
 	  }
 	  
@@ -61,15 +66,17 @@ public class ClimbSafeFeatureSet3Controller {
 	  }
 	  
 	
-	  if(!(email.equals(name+"@email.com"))) {
+	  if(!(email.equals(name.toLowerCase()+"@email.com"))) {
 		  throw new InvalidInputException("Invalid email");
 	  }
 	  
 	  
 	  if(alreadyExist==false) {
 		 climbSafe.addGuide(email, password, name, emergencyContact);
+	  }else if(existingGuide!=null) {
+		  throw new InvalidInputException("Email already linked to a guide account");
 	  }else {
-		  throw new InvalidInputException("Email already linked to a member/guide account");
+		  throw new InvalidInputException("Email already linked to a member account");
 	  }
 	  
   }
@@ -89,14 +96,14 @@ public class ClimbSafeFeatureSet3Controller {
 	  
 	  var guide= (Guide) User.getWithEmail(email);
 	  
-	  if (newPassword.equals("")) {
-			throw new InvalidInputException("The password cannot be empty");
+	  if (newPassword.isEmpty()) {
+			throw new InvalidInputException("Password cannot be empty");
 		}
-	  if (newName.equals("")) {
-			throw new InvalidInputException("The name cannot be empty");
+	  if (newName.isEmpty()) {
+			throw new InvalidInputException("Name cannot be empty");
 		}
-	  if (newEmergencyContact.equals("")) {
-			throw new InvalidInputException("The emergency contact cannot be empty");
+	  if (newEmergencyContact.isEmpty()) {
+			throw new InvalidInputException("Emergency contact cannot be empty");
 		}
 	    
 	  
@@ -107,3 +114,4 @@ public class ClimbSafeFeatureSet3Controller {
 	    
   }
   }
+
