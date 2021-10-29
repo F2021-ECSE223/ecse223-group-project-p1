@@ -15,7 +15,7 @@ public class ClimbSafeFeatureSet1Controller {
    * 
    * This method attempts setting up the NMC application, if it fails to it throws an exception.
    * 
-   * @author Haroun
+   * @author Haroun reviewed by Asma
    * @param Start Date, NumberOfweeks, Price of guide per week
    * @throws InvalidInputException
    */
