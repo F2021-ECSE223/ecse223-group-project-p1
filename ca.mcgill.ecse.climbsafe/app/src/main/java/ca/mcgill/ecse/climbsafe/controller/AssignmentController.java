@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
+
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
@@ -38,5 +39,6 @@ public class AssignmentController {
     public static void cancelTrip(Member member) {
       
     }
+
 
 }
