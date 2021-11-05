@@ -1,5 +1,6 @@
 namespace ca.mcgill.ecse.climbsafe.model;
 
+use ClimbSafeStates.ump;
 use ClimbSafePersistence.ump;
 
 class ClimbSafe {
@@ -36,6 +37,51 @@ class NamedUser {
 
 class Guide {
   isA NamedUser;
+  public boolean isAvailableFor(Integer nbrWeeks){
+    if(hasAssignments()){
+      Integer lastWeek = getAssignment(numberOfAssignments()-1).getEndWeek();
+      if(getClimbSafe().getNrWeeks()-lastWeek < nbrWeeks)
+        return false;
+    }
+    
+    return true;
+  }
+
+	public boolean performAssignmentToMembers(){
+		Integer startWeek = 1;
+		Integer endWeek;
+		for(Member member: climbSafe.getMembers()){
+		
+			if(member.getAssignementStatusFullName().equals("Unassigned")){
+				if(!member.isGuideRequired()){
+					
+	  	 			endWeek = startWeek + member.getNrWeeks() - 1;
+	  				Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
+	  				climbSafe.addAssignment(assignment);
+	  				member.toggleStatus();
+				
+				}else{
+					if(isAvailableFor(member.getNrWeeks())){
+			  			if(hasAssignments()){
+				  			startWeek = getAssignment(numberOfAssignments()-1).getEndWeek()+1;
+				  			
+			  			}
+			  			endWeek = startWeek + member.getNrWeeks() - 1;
+			  			Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
+			  			addAssignment(assignment);
+			  			climbSafe.addAssignment(assignment);
+			  			member.toggleStatus();
+			  			
+			  			
+		  			}
+				
+				}
+			}
+		}
+		
+		return true;
+	}
+  
 }
 
 class Member {
@@ -43,6 +89,10 @@ class Member {
   Integer nrWeeks;
   Boolean guideRequired;
   Boolean hotelRequired;
+  
+  
+  
+  
 }
 
 associationClass BookedItem {
@@ -87,7 +137,7 @@ class Assignment {
   * -- 0..1 Guide guide;
   * -- 0..1 Hotel hotel;
   
-  public int getTotalCostForGuide(){
+    public int getTotalCostForGuide(){
 	 int totalCostForGuide = 0;
 	 
 	 // If no guide, then total cost = 0
