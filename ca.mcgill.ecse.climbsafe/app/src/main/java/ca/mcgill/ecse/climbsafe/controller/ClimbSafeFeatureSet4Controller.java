@@ -4,6 +4,7 @@ import ca.mcgill.ecse.climbsafe.model.BookableItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Equipment;
 import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
+import ca.mcgill.ecse223.climbsafe.persistence.ClimbSafePersistence;
 
 public class ClimbSafeFeatureSet4Controller {
 
@@ -24,30 +25,35 @@ public class ClimbSafeFeatureSet4Controller {
 
   public static void addEquipment(String name, int weight, int pricePerWeek)
       throws InvalidInputException {
-	    
+        
 
-	    if (name.isEmpty()) {
-	    	throw new InvalidInputException("The name must not be empty") ;
-	    }
-	    if (pricePerWeek < 0) {
-	    	throw new InvalidInputException("The price per week must be greater than or equal to 0");
-	    }
-	    if (weight<=0) {
-	    	throw new InvalidInputException("The weight must be greater than 0");
-	    }
-	    
-	    if (BookableItem.hasWithName(name)) {
-	    	if (BookableItem.getWithName(name) instanceof EquipmentBundle) {
-	    		throw new InvalidInputException("The equipment bundle already exists")  ;
-	          } 
-	    	else {
-	        	  throw new InvalidInputException("The piece of equipment already exists");
-	          }
-	    } 
-	    
-	    Equipment newEquipment = new Equipment(name, weight, pricePerWeek, climbSafe);
+        if (name.isEmpty()) {
+            throw new InvalidInputException("The name must not be empty") ;
+        }
+        if (pricePerWeek < 0) {
+            throw new InvalidInputException("The price per week must be greater than or equal to 0");
+        }
+        if (weight<=0) {
+            throw new InvalidInputException("The weight must be greater than 0");
+        }
+        
+        if (BookableItem.hasWithName(name)) {
+            if (BookableItem.getWithName(name) instanceof EquipmentBundle) {
+                throw new InvalidInputException("The equipment bundle already exists")  ;
+              } 
+            else {
+                  throw new InvalidInputException("The piece of equipment already exists");
+              }
+        } 
+        
+        Equipment newEquipment = new Equipment(name, weight, pricePerWeek, climbSafe);
+        try {
+          ClimbSafePersistence.save();
+        } catch (RuntimeException e) {
+          throw new InvalidInputException(e.getMessage());
+        }
 
-	  
+      
   }
 
   /**
@@ -101,6 +107,8 @@ public class ClimbSafeFeatureSet4Controller {
       foundEquipment.setName(newName);
       foundEquipment.setWeight(newWeight);
       foundEquipment.setPricePerWeek(newPricePerWeek);
+      ClimbSafePersistence.save();
+      
 
     } catch (RuntimeException e) {
 

@@ -1,0 +1,13 @@
+class Member{
+
+assignementStatus{
+  	Unassigned{
+  		toggleStatus() -> Assigned;
+  		
+  	}Assigned{
+  		toggleStatus() -> Assigned;
+  	}
+  }
+
+
+}
