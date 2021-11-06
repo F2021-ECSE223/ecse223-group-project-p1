@@ -204,7 +204,7 @@ public class AssignmentFeatureStepDefinitions {
           temp=i;
         }
       }
-      assertEquals(string,climbSafe.getMembers().get(temp).getEmail());
+    assertFalse(string==climbSafe.getMembers().get(temp).getEmail());
     throw new io.cucumber.java.PendingException();
   }
 
