@@ -220,9 +220,9 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @When("the administrator attempts to cancel the trip for {string}")
-  public void the_administrator_attempts_to_cancel_the_trip_for(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_administrator_attempts_to_cancel_the_trip_for(String memberEmail) {
+	var member = (Member)Member.getWithEmail(memberEmail);
+    callController(() -> AssignmentController.cancelTrip(member));
   }
 
   @Given("the member with {string} has paid for their trip")
@@ -246,9 +246,9 @@ public class AssignmentFeatureStepDefinitions {
 
   @When("the administrator attempts to finish the trip for the member with email {string}")
   public void the_administrator_attempts_to_finish_the_trip_for_the_member_with_email(
-      String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      String memberEmail) {	  
+	  var member = (Member)Member.getWithEmail(memberEmail);
+	  callController(() -> AssignmentController.finishTrip(member));  
   }
 
   @Given("the member with {string} is banned")
@@ -264,9 +264,8 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @When("the administrator attempts to start the trips for week {string}")
-  public void the_administrator_attempts_to_start_the_trips_for_week(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_administrator_attempts_to_start_the_trips_for_week(String weekNb) {
+    callController(() -> AssignmentController.startTrips(Integer.parseInt(weekNb)));
   }
 
   @Given("the member with {string} has cancelled their trip")
