@@ -8,6 +8,31 @@ assignementStatus{
   		toggleStatus() -> Assigned;
   	}
   }
+  
+  class Assignment{
+
+    tripStatus{
+    
+    notStarted{
+     startTrip() -> Started; 
+     cancelTrip() -> Cancelled;  
+      
+    } Started {
+      startTrip() -> Started;
+      finishTrip() -> Finished;
+      cancelTrip() -> Cancelled;
+    
+    } Finished{
+      finishTrip() -> Finished;
+    }  
+    
+    Cancelled{
+     cancelTrip() -> Cancelled;    	
+    }
+  
+  }
+
+}
 
 
 }
