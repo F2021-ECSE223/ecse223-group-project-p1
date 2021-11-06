@@ -196,13 +196,21 @@ public class AssignmentFeatureStepDefinitions {
 
   @Then("the member account with the email {string} does not exist")
   public void the_member_account_with_the_email_does_not_exist(String string) {
-    // Write code here that turns the phrase above into concrete actions
+     int temp=0;
+      for (int i=0;i<climbSafe.getMembers().size();i++)
+      {
+        if (climbSafe.getMembers().get(i).getEmail()==string)
+        {
+          temp=i;
+        }
+      }
+      assertEquals(string,climbSafe.getMembers().get(temp).getEmail());
     throw new io.cucumber.java.PendingException();
   }
 
   @Then("there are {string} members in the system")
   public void there_are_members_in_the_system(String string) {
-    // Write code here that turns the phrase above into concrete actions
+     assertEquals(Integer.parseInt(string),climbSafe.getMembers().size());
     throw new io.cucumber.java.PendingException();
   }
 
