@@ -28,7 +28,24 @@ public class AssignmentController {
       
     }
     
-    public static void startTrips(Integer startingWeekNb) {
+      public static void startTrips(Integer startingWeekNb) throws InvalidInputException {  // start all trips for a specific week
+    	// retrieves all the members
+    	for(var member : climbSafe.getMembers()) {
+    		var memberAssignment = member.getAssignment();
+    		if(memberAssignment.getStartWeek() <= startingWeekNb && startingWeekNb <= memberAssignment.getEndWeek()) {
+    			//if at initial state then start the trip otherwise check for other conditions
+    			if(memberAssignment.getTripStatusFullName().equals("notStarted")) {
+    				memberAssignment.startTrip();	
+    			} 
+    			if(memberAssignment.getTripStatusFullName().equals("Cancelled")) {
+    	    		throw new InvalidInputException("Cannot start a trip which has been cancelled");
+    	    	}    			
+    			if(memberAssignment.getTripStatusFullName().equals("Finished")) {
+    				throw new InvalidInputException("Cannot start a trip which has finished");
+    			}    			 
+    		} else throw new InvalidInputException("The starting week must be comprised in the climbing weeks");
+    	}
+    	
       
     }
     
