@@ -17,15 +17,15 @@ public class ClimbSafePersistence {
     save(ClimbSafeApplication.getClimbSafe());
   }
 
-  public static void save(ClimbSafe btms) {
+  public static void save(ClimbSafe climbSafe) {
     PersistenceObjectStream.setFilename(filename);
-    PersistenceObjectStream.serialize(btms);
+    PersistenceObjectStream.serialize(climbSafe);
   }
 
   public static ClimbSafe load() {
     PersistenceObjectStream.setFilename(filename);
     var climbSafe = (ClimbSafe) PersistenceObjectStream.deserialize();
-    // model cannot be loaded - create empty BTMS
+    
     if (climbSafe == null) {
       climbSafe = new ClimbSafe(new Date(0), 0, 0);
     } else {
