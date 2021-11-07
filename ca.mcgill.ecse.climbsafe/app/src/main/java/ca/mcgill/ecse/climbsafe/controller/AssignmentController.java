@@ -49,8 +49,20 @@ public class AssignmentController {
       
     }
     
-    public static void finishTrip(Member member) {
-      
+    public static void finishTrip(Member member) throws InvalidInputException {
+      var assignment=member.getAssignment();
+      if(assignment.getTripStatusFullName().equals("Started")) {
+    	  assignment.finishTrip();
+      }
+      if(assignment.getTripStatusFullName().equals("notStarted")) {
+    	  throw new InvalidInputException("Cannot finish a trip which has not started");
+      }
+      if(assignment.getTripStatusFullName().equals("Cancelled")) {
+    	  throw new InvalidInputException("Cannot finish a trip which has been cancelled");
+      }
+      if(assignment.getTripStatusFullName().equals("Finished")) {
+    	  assignment.finishTrip();
+      }
     }
 
     public static void cancelTrip(Member member) {
