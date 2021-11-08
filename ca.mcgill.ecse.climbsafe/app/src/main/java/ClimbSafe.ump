@@ -37,50 +37,6 @@ class NamedUser {
 
 class Guide {
   isA NamedUser;
-  public boolean isAvailableFor(Integer nbrWeeks){
-    if(hasAssignments()){
-      Integer lastWeek = getAssignment(numberOfAssignments()-1).getEndWeek();
-      if(getClimbSafe().getNrWeeks()-lastWeek < nbrWeeks)
-        return false;
-    }
-    
-    return true;
-  }
-
-	public boolean performAssignmentToMembers(){
-		Integer startWeek = 1;
-		Integer endWeek;
-		for(Member member: climbSafe.getMembers()){
-		
-			if(member.getAssignementStatusFullName().equals("Unassigned")){
-				if(!member.isGuideRequired()){
-					
-	  	 			endWeek = startWeek + member.getNrWeeks() - 1;
-	  				Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
-	  				climbSafe.addAssignment(assignment);
-	  				member.toggleStatus();
-				
-				}else{
-					if(isAvailableFor(member.getNrWeeks())){
-			  			if(hasAssignments()){
-				  			startWeek = getAssignment(numberOfAssignments()-1).getEndWeek()+1;
-				  			
-			  			}
-			  			endWeek = startWeek + member.getNrWeeks() - 1;
-			  			Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
-			  			addAssignment(assignment);
-			  			climbSafe.addAssignment(assignment);
-			  			member.toggleStatus();
-			  			
-			  			
-		  			}
-				
-				}
-			}
-		}
-		
-		return true;
-	}
   
 }
 
