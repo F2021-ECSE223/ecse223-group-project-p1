@@ -142,7 +142,10 @@ public class AssignmentFeatureStepDefinitions {
   public void the_administrator_attempts_to_initiate_the_assignment_process() {
     callController(() -> AssignmentController.initiateAssignmentForAllMembers());
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Then("the following assignments shall exist in the system:")
   public void the_following_assignments_shall_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
