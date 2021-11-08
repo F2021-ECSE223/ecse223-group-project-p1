@@ -9,7 +9,16 @@ import ca.mcgill.ecse.climbsafe.model.Member;
 public class AssignmentController {
   
     private static ClimbSafe climbSafe = ClimbSafeApplication.getClimbSafe();
-    
+  
+    /**
+     * This method initiates the assignment between members,
+     * guides and climbing weeks. If there is a member that remains 
+     * unassigned at the end of the process, the method throws an
+     * InvalidInputException.
+     * 
+     * @author Asma Gandour
+     * @throws InvalidInputException
+     */
     public static void initiateAssignmentForAllMembers() throws InvalidInputException {
       
       for(Guide guide: climbSafe.getGuides()) {
