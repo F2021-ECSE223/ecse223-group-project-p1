@@ -238,7 +238,9 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has paid for their trip")
   public void the_member_with_has_paid_for_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
+    var member=(Member)Member.getWithEmail(string);
+    var assignment=member.getAssignment();
+    assertTrue(assignment.getAssignementStatusFullName().equals("Paid"));
     throw new io.cucumber.java.PendingException();
   }
 
@@ -251,7 +253,9 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has started their trip")
   public void the_member_with_has_started_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
+    var member=(Member)Member.getWithEmail(string);
+    var assignment=member.getAssignment();
+    assertTrue(assignment.getAssignementStatusFullName().equals("Started"));
     throw new io.cucumber.java.PendingException();
   }
 
@@ -264,7 +268,9 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} is banned")
   public void the_member_with_is_banned(String string) {
-    // Write code here that turns the phrase above into concrete actions
+    var member=(Member)Member.getWithEmail(string);
+    var assignment=member.getAssignment();
+    assertTrue(assignment.getAssignementStatusFullName().equals("Banned"));
     throw new io.cucumber.java.PendingException();
   }
 
@@ -281,13 +287,15 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has cancelled their trip")
   public void the_member_with_has_cancelled_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
+    var member=(Member)Member.getWithEmail(string);
+    var assignment=member.getAssignment();
+    assertTrue(assignment.getAssignementStatusFullName().equals("Cancelled"));
     throw new io.cucumber.java.PendingException();
   }
 
   @Given("the member with {string} has finished their trip")
   public void the_member_with_has_finished_their_trip(String string) {
-    // Write code here that turns the phrase above into concrete actions
+    
     throw new io.cucumber.java.PendingException();
   }
 
