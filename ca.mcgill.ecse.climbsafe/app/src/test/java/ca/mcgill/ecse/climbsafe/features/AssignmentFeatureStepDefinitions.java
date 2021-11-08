@@ -30,7 +30,11 @@ public class AssignmentFeatureStepDefinitions {
 
   private ClimbSafe climbSafe;
   private String error;
-
+	
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Given("the following ClimbSafe system exists:")
   public void the_following_climb_safe_system_exists(io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
@@ -42,7 +46,10 @@ public class AssignmentFeatureStepDefinitions {
     }
     error = "";
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Given("the following pieces of equipment exist in the system:")
   public void the_following_pieces_of_equipment_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -53,7 +60,10 @@ public class AssignmentFeatureStepDefinitions {
           Integer.parseInt(row.get("pricePerWeek")));
     }
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Given("the following equipment bundles exist in the system:")
   public void the_following_equipment_bundles_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -93,7 +103,10 @@ public class AssignmentFeatureStepDefinitions {
       }
     }
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> guideList = dataTable.asMaps();
@@ -104,10 +117,12 @@ public class AssignmentFeatureStepDefinitions {
       String guideEmergencyContact = guideList.get(i).get("emergencyContact");
 
       climbSafe.addGuide(guideEmail, guidePassword, guideName, guideEmergencyContact);
-
     }
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> memberList = dataTable.asMaps();
@@ -119,7 +134,10 @@ public class AssignmentFeatureStepDefinitions {
           parseBoolean(memberList.get(i).get("hotelRequired")));
     }
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @When("the administrator attempts to initiate the assignment process")
   public void the_administrator_attempts_to_initiate_the_assignment_process() {
     callController(() -> AssignmentController.initiateAssignmentForAllMembers());
@@ -128,16 +146,13 @@ public class AssignmentFeatureStepDefinitions {
   @Then("the following assignments shall exist in the system:")
   public void the_following_assignments_shall_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-
     List<Map<String, String>> outputDataList = dataTable.asMaps();
 
     for (int i = 0; i < outputDataList.size(); i++) {
 
       Assignment assignment = climbSafe.getAssignment(i);
 
-
       Map<String, String> assignmentData = outputDataList.get(i);
-
 
       assertEquals(assignmentData.get("memberEmail"), assignment.getMember().getEmail());
 
@@ -150,13 +165,18 @@ public class AssignmentFeatureStepDefinitions {
       assertEquals(Integer.parseInt(assignmentData.get("endWeek")), assignment.getEndWeek());
     }
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Then("the assignment for {string} shall be marked as {string}")
   public void the_assignment_for_shall_be_marked_as(String string, String string2) {
-
     assertEquals(string2, ((Member) User.getWithEmail(string)).getAssignementStatusFullName());
   }
-
+  /**
+   * 
+   * @author Asma Gandour
+   */
   @Then("the number of assignments in the system shall be {string}")
   public void the_number_of_assignments_in_the_system_shall_be(String string) {
     assertEquals(string, Integer.toString(climbSafe.numberOfAssignments()));
@@ -164,7 +184,8 @@ public class AssignmentFeatureStepDefinitions {
 
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String string) {
-    assertEquals(string, error);
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();	 
   }
 
   @Given("the following assignments exist in the system:")
