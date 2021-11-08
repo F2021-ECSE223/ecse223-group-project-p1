@@ -51,12 +51,6 @@ class Member {
   
 }
 
-associationClass BookedItem {
-  Integer quantity;
-  * Member member;
-  * BookableItem item;
-}
-
 class BookableItem {
   abstract;
   unique name;
@@ -71,12 +65,6 @@ class Equipment {
 class EquipmentBundle {
   isA BookableItem;
   Integer discount;
-}
-
-associationClass BundleItem {
-  Integer quantity;
-  * EquipmentBundle bundle;
-  * Equipment equipment;
 }
 
 class Hotel {
