@@ -29,11 +29,7 @@ public class AssignmentFeatureStepDefinitions {
 
   private ClimbSafe climbSafe;
   private String error;
-	
-  /**
-   * 
-   * @author Asma Gandour
-   */
+
   @Given("the following ClimbSafe system exists:")
   public void the_following_climb_safe_system_exists(io.cucumber.datatable.DataTable dataTable) {
     var rows = dataTable.asMaps();
@@ -45,10 +41,7 @@ public class AssignmentFeatureStepDefinitions {
     }
     error = "";
   }
-  /**
-   * 
-   * @author Asma Gandour
-   */
+
   @Given("the following pieces of equipment exist in the system:")
   public void the_following_pieces_of_equipment_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -59,10 +52,7 @@ public class AssignmentFeatureStepDefinitions {
           Integer.parseInt(row.get("pricePerWeek")));
     }
   }
-  /**
-   * 
-   * @author Asma Gandour
-   */
+
   @Given("the following equipment bundles exist in the system:")
   public void the_following_equipment_bundles_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
@@ -102,10 +92,7 @@ public class AssignmentFeatureStepDefinitions {
       }
     }
   }
-  /**
-   * 
-   * @author Asma Gandour
-   */
+
   @Given("the following guides exist in the system:")
   public void the_following_guides_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> guideList = dataTable.asMaps();
@@ -118,10 +105,7 @@ public class AssignmentFeatureStepDefinitions {
       climbSafe.addGuide(guideEmail, guidePassword, guideName, guideEmergencyContact);
     }
   }
-  /**
-   * 
-   * @author Asma Gandour
-   */
+
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> memberList = dataTable.asMaps();
