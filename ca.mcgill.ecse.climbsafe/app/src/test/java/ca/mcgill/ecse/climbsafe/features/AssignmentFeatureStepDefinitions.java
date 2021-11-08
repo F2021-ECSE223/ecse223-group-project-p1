@@ -270,8 +270,8 @@ public class AssignmentFeatureStepDefinitions {
 
   @Then("the member with email {string} shall be {string}")
   public void the_member_with_email_shall_be(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	 assertEquals(string2, "banned");
+	 throw new io.cucumber.java.PendingException();
   }
 
   @When("the administrator attempts to start the trips for week {string}")
