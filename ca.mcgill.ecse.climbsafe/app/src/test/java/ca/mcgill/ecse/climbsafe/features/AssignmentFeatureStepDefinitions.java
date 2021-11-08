@@ -187,11 +187,15 @@ public class AssignmentFeatureStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 
+ /*
+ * @author : Haroun Guessous
+ */
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	  var member=(Member)Member.getWithEmail(string);
+	  callController(() -> AssignmentController.payment(member));
+	  throw new io.cucumber.java.PendingException();
   }
 
   @Then("the assignment for {string} shall record the authorization code {string}")
