@@ -1,3 +1,8 @@
+
+// State Machine for the Member class
+// Member object becomes Assigned when toggleStatus() is called 
+// on it at the Unassigned state
+// @author Asma Gandour
 class Member{
 
 assignementStatus{
@@ -5,9 +10,97 @@ assignementStatus{
   		toggleStatus() -> Assigned;
   		
   	}Assigned{
-  		toggleStatus() -> Assigned;
   	}
   }
 
+
+}
+
+
+class Guide {
+  
+  // Returns true if a guide has no assignment for 
+  // a given number of weeks
+  // @author Asma Gandour
+  public boolean isAvailableFor(Integer nbrWeeks){
+    if(hasAssignments()){
+      Integer lastWeek = getAssignment(numberOfAssignments()-1).getEndWeek();
+      if(getClimbSafe().getNrWeeks()-lastWeek < nbrWeeks)
+        return false;
+    }
+    
+    return true;
+  }
+  
+	// Assigns this guide to members that require a guide
+	// until the guide is not available anymore
+	// @author Asma Gandour
+	public boolean performAssignmentToMembers(){
+		Integer startWeek = 1;
+		Integer endWeek;
+		for(Member member: climbSafe.getMembers()){
+
+			if(member.getAssignementStatusFullName().equals("Unassigned")){
+				if(!member.isGuideRequired()){
+
+					endWeek = startWeek + member.getNrWeeks() - 1;
+					Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
+					climbSafe.addAssignment(assignment);
+					member.toggleStatus();
+
+				}else{
+					if(isAvailableFor(member.getNrWeeks())){
+						if(hasAssignments()){
+							startWeek = getAssignment(numberOfAssignments()-1).getEndWeek()+1;
+
+						}
+						endWeek = startWeek + member.getNrWeeks() - 1;
+						Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
+						addAssignment(assignment);
+						climbSafe.addAssignment(assignment);
+						member.toggleStatus();
+
+
+					}
+
+				}
+			}
+		}
+
+		return true;
+	}
+  
+}
+
+  
+class Assignment{
+
+    tripStatus{
+    
+      notStarted{
+       startTrip() -> Started; 
+       cancelTrip() -> Cancelled;  
+
+      } Started {
+        startTrip() -> Started;
+        finishTrip() -> Finished;
+        cancelTrip() -> Cancelled;
+
+      } Finished{
+        finishTrip() -> Finished;
+      }  
+
+      Cancelled{
+       cancelTrip() -> Cancelled;    	
+      }
+
+    }
+    
+    paymentStatus{
+	notPaid{
+		pay()-> paid;
+	}
+	paid {}
+    }
 
 }

@@ -1,18 +1,21 @@
 package ca.mcgill.ecse.climbsafe.features;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet1Controller;
+import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
+import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
 import ca.mcgill.ecse.climbsafe.model.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.After;
 import org.junit.Assert;
-
+import org.junit.jupiter.api.function.Executable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -125,7 +128,8 @@ public class P14StepDefinitions {
    */
   @When("the member attempts to delete the account with email {string} \\(p14)")
   public void the_member_attempts_to_delete_the_account_with_email_p14(String string) {
-    ClimbSafeFeatureSet1Controller.deleteMember(string);
+    callController(() -> ClimbSafeFeatureSet1Controller.deleteMember(string));
+    
 
   }
 
@@ -159,7 +163,8 @@ public class P14StepDefinitions {
 
   public void the_member_attempts_to_delete_the_member_account_with_email_p14(String string) {
 
-    ClimbSafeFeatureSet1Controller.deleteMember(string);
+    callController(() -> ClimbSafeFeatureSet1Controller.deleteMember(string));
+    
 
   }
 
@@ -193,5 +198,15 @@ public class P14StepDefinitions {
   @Then("there are {int} members in the system. \\(p14)")
   public void there_are_members_in_the_system_p14(Integer numMembers) {
     Assert.assertEquals(numMembers, Integer.valueOf(climbSafe.numberOfMembers()));
+  }
+  
+  private void callController(Executable executable) {
+    try {
+      executable.execute();
+    } catch (InvalidInputException e) {
+      error += e.getMessage();
+    } catch (Throwable t) {
+      fail();
+    }
   }
 }
