@@ -25,6 +25,12 @@ public class AssignmentController {
          guide.performAssignmentToMembers(); 
       }
       
+      try {
+        ClimbSafePersistence.save();
+      } catch (RuntimeException e) {
+        throw new InvalidInputException(e.getMessage());
+      }
+      
       // checking if all members are assigned
       for(Member member: climbSafe.getMembers()) {
         if(member.getAssignementStatusFullName().equals("Unassigned")) {
