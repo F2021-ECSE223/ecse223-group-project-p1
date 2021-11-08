@@ -47,7 +47,7 @@ public class AssignmentController {
      */
     public static void payment(Member member) {
     	var assignment= member.getAssignment();
-    	if (assignment.getPaymentStatusFullName().equals("Paid")) {throw new InvalidInputException("Member has already paid for their trip.")}
+    	if (assignment.getPaymentStatusFullName().equals("Paid")) {throw new InvalidInputException("Member has already paid for their trip.");}
     	else {assignment.pay();}
     }
     
