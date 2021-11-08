@@ -44,6 +44,7 @@ public class AssignmentController {
      * This method toggles the payment status of a Member "member". If the member has already paid, it throws an exception.
      * @author Haroun Guessous
      * @param member
+     * @throws InvalidInputException 
      */
     public static void payment(Member member) {
     	var assignment= member.getAssignment();
