@@ -40,8 +40,15 @@ public class AssignmentController {
       }
     }
     
+      /**
+     * This method toggles the payment status of a Member "member". If the member has already paid, it throws an exception.
+     * @author Haroun Guessous
+     * @param member
+     */
     public static void payment(Member member) {
-      
+    	var assignment= member.getAssignment();
+    	if (assignment.getPaymentStatusFullName().equals("Paid")) {throw new InvalidInputException("Member has already paid for their trip.")}
+    	else {assignment.pay();}
     }
     
       public static void startTrips(Integer startingWeekNb) throws InvalidInputException {  // start all trips for a specific week
