@@ -101,5 +101,12 @@ class Assignment{
 	}
 	paid {}
     }
+    
+    memberStatus{
+        unbanned{
+	ban()-> banned;
+	}
+	banned{}
+    }
 
 }
