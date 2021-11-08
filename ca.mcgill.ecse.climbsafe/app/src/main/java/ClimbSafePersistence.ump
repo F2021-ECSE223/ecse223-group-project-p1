@@ -36,7 +36,7 @@ class ClimbSafe {
 }
 
 class User {
-  depend java.io.Serializable;
+   depend java.io.Serializable;
   isA Serializable;
   private static final long serialVersionUID = 2315072607928790501L;
   
@@ -44,10 +44,12 @@ class User {
 	public static void reinitializeUniqueEmail(List<User> users) {
 	  usersByEmail = new HashMap<String, User>();
 	  for (User user : users) {
-	    usersByEmail.put(user.getEmail(), user);
+	  	if(user != null)
+	    	usersByEmail.put(user.getEmail(), user);
 	  }
   
   }
+  
   
 }
 
