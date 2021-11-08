@@ -1,8 +1,5 @@
 namespace ca.mcgill.ecse.climbsafe.model;
 
-use ClimbSafeStates.ump;
-use ClimbSafePersistence.ump;
-
 class ClimbSafe {
   Date startDate;
   Integer nrWeeks;
@@ -37,51 +34,6 @@ class NamedUser {
 
 class Guide {
   isA NamedUser;
-  public boolean isAvailableFor(Integer nbrWeeks){
-    if(hasAssignments()){
-      Integer lastWeek = getAssignment(numberOfAssignments()-1).getEndWeek();
-      if(getClimbSafe().getNrWeeks()-lastWeek < nbrWeeks)
-        return false;
-    }
-    
-    return true;
-  }
-
-	public boolean performAssignmentToMembers(){
-		Integer startWeek = 1;
-		Integer endWeek;
-		for(Member member: climbSafe.getMembers()){
-		
-			if(member.getAssignementStatusFullName().equals("Unassigned")){
-				if(!member.isGuideRequired()){
-					
-	  	 			endWeek = startWeek + member.getNrWeeks() - 1;
-	  				Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
-	  				climbSafe.addAssignment(assignment);
-	  				member.toggleStatus();
-				
-				}else{
-					if(isAvailableFor(member.getNrWeeks())){
-			  			if(hasAssignments()){
-				  			startWeek = getAssignment(numberOfAssignments()-1).getEndWeek()+1;
-				  			
-			  			}
-			  			endWeek = startWeek + member.getNrWeeks() - 1;
-			  			Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
-			  			addAssignment(assignment);
-			  			climbSafe.addAssignment(assignment);
-			  			member.toggleStatus();
-			  			
-			  			
-		  			}
-				
-				}
-			}
-		}
-		
-		return true;
-	}
-  
 }
 
 class Member {
@@ -89,10 +41,6 @@ class Member {
   Integer nrWeeks;
   Boolean guideRequired;
   Boolean hotelRequired;
-  
-  
-  
-  
 }
 
 associationClass BookedItem {
@@ -136,71 +84,4 @@ class Assignment {
   0..1 -- 1 Member member;
   * -- 0..1 Guide guide;
   * -- 0..1 Hotel hotel;
-  
-    public int getTotalCostForGuide(){
-	 int totalCostForGuide = 0;
-	 
-	 // If no guide, then total cost = 0
-	 if(this.hasGuide()){
-	 
-		 int nbrWeek = this.getMember().getNrWeeks();
-		 	
-		 	// Compute total cost
-		  	totalCostForGuide += this.getClimbSafe().getPriceOfGuidePerWeek()*nbrWeek;
-		 
-	 }
-	  return totalCostForGuide;
-  }
-  
-  public int getTotalCostForEquipment(){
-  	 double totalCostForEquipment = 0;
-	 int nbrWeek = this.getMember().getNrWeeks();
-	 if(this.getMember().hasBookedItems()){
-	 	
-	 	
-	 	// Iterating over the booked items of the member
-	 	for(BookedItem bookedItem: this.getMember().getBookedItems()){
-	 	int quantity = bookedItem.getQuantity();
-	 	
-	  	if(bookedItem.getItem() instanceof EquipmentBundle){
-	  	
-	  		
-	  				// Then we get the bundle
-	  				EquipmentBundle bundle = ((EquipmentBundle) bookedItem.getItem());
-	  				
-	  				
-					// And we iterate over the items of equipment bundle
-					for(BundleItem item: bundle.getBundleItems()){
-					
-						// We check if a guide is hired
-						if(this.getMember().isGuideRequired()){
-							
-						
-							// If so, the discount is applied on the equipments
-							totalCostForEquipment += item.getQuantity() * quantity*
-								item.getEquipment().getPricePerWeek() * ( (100-bundle.getDiscount()) /100.0 ) * nbrWeek;
-						}else{
-						
-							// If not, the equipments are rented at regular price
-							
-							totalCostForEquipment += item.getQuantity() * 
-								item.getEquipment().getPricePerWeek() * quantity* nbrWeek;
-						}
-					
-					}
-	  		// If the current item is an equipment not in a bundle
-	   	}else if(bookedItem.getItem() instanceof Equipment){
-	 		
-	 			// Then the cost is the equipment's price per week times the number of weeks
-	  			totalCostForEquipment += ((Equipment) bookedItem.getItem()).getPricePerWeek()* quantity* nbrWeek;
-	  			
-	  		
-	  	}
-	  		
-	  		
-	  	}
-	 }
-	 return ((int) totalCostForEquipment);
-  
-  }
 }
