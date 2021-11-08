@@ -1,12 +1,12 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
 import java.sql.Date;
+import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
 import ca.mcgill.ecse.climbsafe.model.User;
-import ca.mcgill.ecse223.climbsafe.persistence.ClimbSafePersistence;
 
 public class ClimbSafeFeatureSet1Controller {
 
