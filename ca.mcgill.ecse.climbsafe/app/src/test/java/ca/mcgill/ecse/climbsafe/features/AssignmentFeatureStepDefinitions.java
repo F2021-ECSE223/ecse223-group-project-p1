@@ -240,7 +240,7 @@ public class AssignmentFeatureStepDefinitions {
   public void the_member_with_has_paid_for_their_trip(String string) {
     var member=(Member)Member.getWithEmail(string);
     var assignment=member.getAssignment();
-    assertTrue(assignment.getAssignementStatusFullName().equals("Paid"));
+    assertTrue(assignment.getPaymentStatusFullName().equals("paid"));
     throw new io.cucumber.java.PendingException();
   }
 
@@ -270,7 +270,7 @@ public class AssignmentFeatureStepDefinitions {
   public void the_member_with_is_banned(String string) {
     var member=(Member)Member.getWithEmail(string);
     var assignment=member.getAssignment();
-    assertTrue(assignment.getAssignementStatusFullName().equals("Banned"));
+    assertTrue(assignment.getMemberStatusFullName().equals("banned"));
     throw new io.cucumber.java.PendingException();
   }
 
