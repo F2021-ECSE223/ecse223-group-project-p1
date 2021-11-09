@@ -238,7 +238,7 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has paid for their trip")
   public void the_member_with_has_paid_for_their_trip(String string) {
-    var member=(Member)Member.getWithEmail(string);
+    var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
     assertTrue(assignment.getPaymentStatusFullName().equals("paid"));
     throw new io.cucumber.java.PendingException();
@@ -253,7 +253,7 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has started their trip")
   public void the_member_with_has_started_their_trip(String string) {
-    var member=(Member)Member.getWithEmail(string);
+    var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
     assertTrue(assignment.getAssignementStatusFullName().equals("Started"));
     throw new io.cucumber.java.PendingException();
@@ -268,9 +268,8 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} is banned")
   public void the_member_with_is_banned(String string) {
-    var member=(Member)Member.getWithEmail(string);
-    var assignment=member.getAssignment();
-    assertTrue(member.getMemberStatusFullName().equals("banned"));
+    var member=(Member)User.getWithEmail(string);
+    assertTrue(member.getMember().getMemberStatusFullName().equals("banned"));
     throw new io.cucumber.java.PendingException();
   }
 
@@ -287,7 +286,7 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has cancelled their trip")
   public void the_member_with_has_cancelled_their_trip(String string) {
-    var member=(Member)Member.getWithEmail(string);
+    var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
     assertTrue(assignment.getAssignementStatusFullName().equals("Cancelled"));
     throw new io.cucumber.java.PendingException();
