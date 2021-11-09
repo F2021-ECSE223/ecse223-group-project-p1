@@ -12,9 +12,17 @@ assignementStatus{
   	}Assigned{
   	}
   }
-
+  
+memberStatus{
+        unbanned{
+	ban()-> banned;
+	}
+	banned{}
+    }
 
 }
+
+
 
 
 class Guide {
@@ -31,6 +39,8 @@ class Guide {
     
     return true;
   }
+  
+ 
   
 	// Assigns this guide to members that require a guide
 	// until the guide is not available anymore
@@ -102,11 +112,5 @@ class Assignment{
 	paid {}
     }
     
-    memberStatus{
-        unbanned{
-	ban()-> banned;
-	}
-	banned{}
-    }
 
 }
