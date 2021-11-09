@@ -157,7 +157,7 @@ public class AssignmentFeatureStepDefinitions {
    */
   @Then("the assignment for {string} shall be marked as {string}")
   public void the_assignment_for_shall_be_marked_as(String string, String string2) {
-    assertEquals(string2, ((Member) User.getWithEmail(string)).getAssignementStatusFullName());
+    assertEquals(string2, ((Member) User.getWithEmail(string)).getAssignment().getAssignmentStatusFullName());
   }
   /**
    * 
