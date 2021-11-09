@@ -235,13 +235,17 @@ public class AssignmentFeatureStepDefinitions {
 	var member = (Member)Member.getWithEmail(memberEmail);
     callController(() -> AssignmentController.cancelTrip(member));
   }
+	
+/**
+   * 
+   * @author Atreyi Srivastava
+   */
 
   @Given("the member with {string} has paid for their trip")
   public void the_member_with_has_paid_for_their_trip(String string) {
     var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
-    assertTrue(assignment.getPaymentStatusFullName().equals("paid"));
-    throw new io.cucumber.java.PendingException();
+    assignment.pay();
   }
 
   @Then("the member with email address {string} shall receive a refund of {string} percent")
@@ -250,13 +254,17 @@ public class AssignmentFeatureStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+	
+/**
+   * 
+   * @author Atreyi Srivastava
+   */
 
   @Given("the member with {string} has started their trip")
   public void the_member_with_has_started_their_trip(String string) {
     var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
-    assertTrue(assignment.getAssignementStatusFullName().equals("Started"));
-    throw new io.cucumber.java.PendingException();
+    assignment.startTrip();
   }
 
   @When("the administrator attempts to finish the trip for the member with email {string}")
@@ -265,12 +273,16 @@ public class AssignmentFeatureStepDefinitions {
 	  var member = (Member)Member.getWithEmail(memberEmail);
 	  callController(() -> AssignmentController.finishTrip(member));  
   }
+	
+/**
+   * 
+   * @author Atreyi Srivastava
+   */
 
   @Given("the member with {string} is banned")
   public void the_member_with_is_banned(String string) {
     var member=(Member)User.getWithEmail(string);
-    assertTrue(member.getMember().getMemberStatusFullName().equals("banned"));
-    throw new io.cucumber.java.PendingException();
+    member.ban();
   }
  /*
  * @author : Haroun Guessous
@@ -287,12 +299,17 @@ public class AssignmentFeatureStepDefinitions {
     callController(() -> AssignmentController.startTrips(Integer.parseInt(weekNb)));
   }
 
+/**
+   * 
+   * @author Atreyi Srivastava
+   */
+	
   @Given("the member with {string} has cancelled their trip")
   public void the_member_with_has_cancelled_their_trip(String string) {
     var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
-    assertTrue(assignment.getAssignementStatusFullName().equals("Cancelled"));
-    throw new io.cucumber.java.PendingException();
+    assignment.cancelTrip();
+   
   }
 
   @Given("the member with {string} has finished their trip")
