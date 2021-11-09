@@ -272,10 +272,13 @@ public class AssignmentFeatureStepDefinitions {
     assertTrue(member.getMember().getMemberStatusFullName().equals("banned"));
     throw new io.cucumber.java.PendingException();
   }
-
+ /*
+ * @author : Haroun Guessous
+ */
   @Then("the member with email {string} shall be {string}")
   public void the_member_with_email_shall_be(String string, String string2) {
-	 assertEquals(string2, "banned");
+	  var member=Member.getWithEmail(string);
+	  assertEquals(((Member) member).getMemberStatusFullName(),string2);
 	 throw new io.cucumber.java.PendingException();
   }
 
