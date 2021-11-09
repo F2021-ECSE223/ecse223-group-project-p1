@@ -87,6 +87,17 @@ public class AssignmentController {
       if(assignment.getTripStatusFullName().equals("Finished")) {
     	  assignment.finishTrip();
       }
+      
+      if(assignment.getPaymentStatusFullName().equals("Paid")){
+        throw new InvalidInputException("Cannot finish a trip which has not started");
+      }
+      if(assignment.getAssignmentStatusFullName().equals("Assigned")){
+        throw new InvalidInputException("Cannot finish a trip which has not started");
+      }
+      if(member.getMember().getMemberStatusFullName().equals("Banned")){
+        throw new InvalidInputException("Cannot finish the trip due to a ban");
+      }
+      
     }
 
     public static void cancelTrip(Member member) {
