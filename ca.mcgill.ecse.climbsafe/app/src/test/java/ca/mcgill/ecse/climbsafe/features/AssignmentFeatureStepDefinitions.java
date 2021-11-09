@@ -270,7 +270,7 @@ public class AssignmentFeatureStepDefinitions {
   public void the_member_with_is_banned(String string) {
     var member=(Member)Member.getWithEmail(string);
     var assignment=member.getAssignment();
-    assertTrue(assignment.getMemberStatusFullName().equals("banned"));
+    assertTrue(member.getMemberStatusFullName().equals("banned"));
     throw new io.cucumber.java.PendingException();
   }
 
