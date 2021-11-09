@@ -34,7 +34,7 @@ public class AssignmentController {
       
       // checking if all members are assigned
       for(Member member: climbSafe.getMembers()) {
-        if(member.getAssignementStatusFullName().equals("Unassigned")) {
+        if(member.getAssignment() == null)) {
           throw new InvalidInputException("Assignments could not be completed for all members");
         }
       }
