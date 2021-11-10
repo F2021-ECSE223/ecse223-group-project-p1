@@ -75,20 +75,20 @@ public class AssignmentController {
     
     public static void finishTrip(Member member) throws InvalidInputException {
       var assignment=member.getAssignment();
-      if(assignment.getTripStatusFullName().equals("Started")) {
+      if(assignment.getAssignmentStatusFullName().equals("Started")) {
     	  assignment.finishTrip();
       }
-      if(assignment.getTripStatusFullName().equals("notStarted")) {
+      if(assignment.getAssignmentStatusFullName().equals("notStarted")) {
     	  throw new InvalidInputException("Cannot finish a trip which has not started");
       }
-      if(assignment.getTripStatusFullName().equals("Cancelled")) {
+      if(assignment.getAssignmentStatusFullName().equals("Cancelled")) {
     	  throw new InvalidInputException("Cannot finish a trip which has been cancelled");
       }
-      if(assignment.getTripStatusFullName().equals("Finished")) {
+      if(assignment.getAssignmentStatusFullName().equals("Finished")) {
     	  assignment.finishTrip();
       }
       
-      if(assignment.getPaymentStatusFullName().equals("Paid")){
+      if(assignment.getAssignmentStatusFullName().equals("Paid")){
         throw new InvalidInputException("Cannot finish a trip which has not started");
       }
       if(assignment.getAssignmentStatusFullName().equals("Assigned")){
