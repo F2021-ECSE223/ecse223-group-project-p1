@@ -211,7 +211,7 @@ public class AssignmentFeatureStepDefinitions {
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String string, String string2) {
 	  var member = (Member)Member.getWithEmail(string);
-	  callController(() -> AssignmentController.payment(member));
+	  callController(() -> AssignmentController.payment(member, string2));
   }
 
   @Then("the assignment for {string} shall record the authorization code {string}")
