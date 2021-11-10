@@ -58,13 +58,13 @@ public class AssignmentController {
     		var memberAssignment = member.getAssignment();
     		if(memberAssignment.getStartWeek() <= startingWeekNb && startingWeekNb <= memberAssignment.getEndWeek()) {
     			//if at initial state then start the trip otherwise check for other conditions
-    			if(memberAssignment.getAssignmentStatusFullName().equals("notStarted")) {
+    			if(memberAssignment.getTripStatusFullName().equals("notStarted")) {
     				memberAssignment.startTrip();	
     			} 
-    			if(memberAssignment.getAssignmentStatusFullName().equals("Cancelled")) {
+    			if(memberAssignment.getTripStatusFullName().equals("Cancelled")) {
     	    		throw new InvalidInputException("Cannot start a trip which has been cancelled");
     	    	}    			
-    			if(memberAssignment.getAssignmentStatusFullName().equals("Finished")) {
+    			if(memberAssignment.getTripStatusFullName().equals("Finished")) {
     				throw new InvalidInputException("Cannot start a trip which has finished");
     			}    			 
     		} else throw new InvalidInputException("The starting week must be comprised in the climbing weeks");
@@ -72,31 +72,37 @@ public class AssignmentController {
     	
       
     }
+  
+  /**
+     * This method finished the trip for a Member "member". 
+     * @author Atreyi Srivastava, Asma Gandour
+     * 
+     * @throws InvalidInputException 
+     */
     
-    public static void finishTrip(Member member) throws InvalidInputException {
+    public static void finishTrip(String email) throws InvalidInputException {
+      Member member= (Member)User.getWithEmail(email);
+      if(member==null){
+       throw new InvalidInputException("Member with email address"+email+"does not exist"); 
+      }
       var assignment=member.getAssignment();
       if(assignment.getAssignmentStatusFullName().equals("Started")) {
     	  assignment.finishTrip();
       }
-      if(assignment.getAssignmentStatusFullName().equals("notStarted")) {
-    	  throw new InvalidInputException("Cannot finish a trip which has not started");
-      }
+      
       if(assignment.getAssignmentStatusFullName().equals("Cancelled")) {
     	  throw new InvalidInputException("Cannot finish a trip which has been cancelled");
       }
-      if(assignment.getAssignmentStatusFullName().equals("Finished")) {
-    	  assignment.finishTrip();
+      
+      if(assignment.getAssignmentStatusFullName().equals("Paid")||assignment.getAssignmentStatusFullName().equals("Assigned")){
+        throw new InvalidInputException("Cannot finish a trip which has not started");
       }
       
-      if(assignment.getAssignmentStatusFullName().equals("Paid")){
-        throw new InvalidInputException("Cannot finish a trip which has not started");
-      }
-      if(assignment.getAssignmentStatusFullName().equals("Assigned")){
-        throw new InvalidInputException("Cannot finish a trip which has not started");
-      }
       if(member.getMember().getMemberStatusFullName().equals("Banned")){
         throw new InvalidInputException("Cannot finish the trip due to a ban");
       }
+      
+      assignment.finishTrip();
       
     }
 
