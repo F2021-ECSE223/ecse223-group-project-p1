@@ -52,14 +52,28 @@ public class AssignmentController {
     	else {assignment.pay();}
     }
     
-     public static void startTrips(Integer startingWeekNb) throws InvalidInputException {  // start all trips for a specific week
+ /**
+     * This method starts all the trips for a given week. If the member is banned (due to no payment), the trip cannot be started. 
+     * @author Alexandre Chiasera
+     * @param startingWeekNb 
+     * @throws InvalidInputException 
+     */
+    public static void startTrips(Integer startingWeekNb) throws InvalidInputException {  // start all trips for a specific week
     	// retrieves all the members
     	for(var member : climbSafe.getMembers()) {
     		var memberAssignment = member.getAssignment();
-    		if(memberAssignment.getStartWeek() <= startingWeekNb && startingWeekNb <= memberAssignment.getEndWeek()) {
+    		if(memberAssignment.getStartWeek() <= startingWeekNb && startingWeekNb <= memberAssignment.getEndWeek()) {  			
+    			if(member.getMemberStatusFullName().equals("Banned")){
+    		        throw new InvalidInputException("Cannot start the trip due to a ban");
+    		      }
     			//if at initial state then start the trip otherwise check for other conditions
     			if(memberAssignment.getAssignmentStatusFullName().equals("Paid") || memberAssignment.getAssignmentStatusFullName().equals("Assigned")) {
-    				memberAssignment.startTrip();	
+    				memberAssignment.startTrip();
+    				try {
+    			        ClimbSafePersistence.save();
+    			      } catch (RuntimeException e) {
+    			        throw new InvalidInputException(e.getMessage());
+    			      }    			      
     			} 
     			if(memberAssignment.getAssignmentStatusFullName().equals("Cancelled")) {
     	    		throw new InvalidInputException("Cannot start a trip which has been cancelled");
@@ -68,9 +82,7 @@ public class AssignmentController {
     				throw new InvalidInputException("Cannot start a trip which has finished");
     			}    			 
     		}
-    	}
-    	
-      
+    	}   
     }
   
   /**
