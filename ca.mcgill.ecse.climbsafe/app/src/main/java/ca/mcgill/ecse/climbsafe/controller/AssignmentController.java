@@ -46,7 +46,7 @@ public class AssignmentController {
      * @param member
      * @throws InvalidInputException 
      */
-    public static void payment(Member member) throws InvalidInputException{
+    public static void payment(Member member, String paymentAuthorizationCode) throws InvalidInputException{
     	var assignment= member.getAssignment();
     	if (assignment.getAssignmentStatusFullName().equals("Paid")) {throw new InvalidInputException("Member has already paid for their trip.");}
     	else {assignment.pay();}
