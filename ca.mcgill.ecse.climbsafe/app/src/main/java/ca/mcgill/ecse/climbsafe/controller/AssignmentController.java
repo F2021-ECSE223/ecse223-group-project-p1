@@ -104,6 +104,12 @@ public class AssignmentController {
       
       assignment.finishTrip();
       
+      try {
+        ClimbSafePersistence.save();
+      } catch (RuntimeException e) {
+        throw new InvalidInputException(e.getMessage());
+      }
+      
     }
 
     public static void cancelTrip(Member member) {
