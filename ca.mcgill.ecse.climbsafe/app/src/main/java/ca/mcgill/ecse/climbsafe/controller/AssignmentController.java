@@ -58,7 +58,7 @@ public class AssignmentController {
     		var memberAssignment = member.getAssignment();
     		if(memberAssignment.getStartWeek() <= startingWeekNb && startingWeekNb <= memberAssignment.getEndWeek()) {
     			//if at initial state then start the trip otherwise check for other conditions
-    			if(memberAssignment.getAssignmentStatusFullName().equals("Paid")) {
+    			if(memberAssignment.getAssignmentStatusFullName().equals("Paid") || memberAssignment.getAssignmentStatusFullName().equals("Assigned")) {
     				memberAssignment.startTrip();	
     			} 
     			if(memberAssignment.getAssignmentStatusFullName().equals("Cancelled")) {
