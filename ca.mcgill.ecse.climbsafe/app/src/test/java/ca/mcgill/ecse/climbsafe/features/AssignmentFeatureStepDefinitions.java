@@ -183,20 +183,26 @@ public class AssignmentFeatureStepDefinitions {
   public void the_system_shall_raise_the_error(String errorMessage) {
     assertEquals(errorMessage, error);	 
   }
-
+	
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-	  
-	  var rows = dataTable.asMaps();
-	  for(var row: rows) {		  
-		  Member member = (Member) User.getWithEmail(row.get("memberEmail")); //should not return null
-		  member.getName();
-		  climbSafe.addAssignment(Integer.parseInt(row.get("startWeek")), 
-				  Integer.parseInt(row.get("endWeek")), 
-				  (Member) User.getWithEmail(row.get("memberEmail")));		  
-	  }
+      var rows = dataTable.asMaps();
+      for(var row: rows) {        
+          Member member = (Member) User.getWithEmail(row.get("memberEmail")); //should not return null
+          
+          Assignment assignment = new Assignment(Integer.parseInt(row.get("startWeek")), 
+              Integer.parseInt(row.get("endWeek")), member, climbSafe);
+          
+          if(row.get("guideEmail") != null){
+            Guide guide = (Guide) User.getWithEmail(row.get("guideEmail"));
+            guide.addAssignment(assignment);
+          }
+          climbSafe.addAssignment(assignment);  
+          member.getAssignment().toggleStatus();        
+      }
   }
+
 
  /*
  * @author : Haroun Guessous
