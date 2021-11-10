@@ -75,7 +75,6 @@ class Hotel {
 } 
 
 class Assignment {
-  lazy String paymentAuthorizationCode;
   Integer startWeek;
   Integer endWeek;
   0..1 -- 1 Member member;
