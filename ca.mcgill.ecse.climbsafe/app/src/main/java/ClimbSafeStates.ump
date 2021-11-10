@@ -1,5 +1,6 @@
 
 class Member{
+	lazy Integer refundPercentage;
 
 	memberStatus{
     	Unbanned{
@@ -68,6 +69,7 @@ class Guide {
 
   
 class Assignment{
+    lazy String paymentAuthorizationCode;
 
     assignmentStatus{
     
