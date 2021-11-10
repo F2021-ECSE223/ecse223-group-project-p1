@@ -1,16 +1,17 @@
 package ca.mcgill.ecse.climbsafe.features;
 
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Integer.parseInt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
+
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.jupiter.api.function.Executable;
+
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.controller.AssignmentController;
 import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
@@ -19,8 +20,10 @@ import ca.mcgill.ecse.climbsafe.model.BookableItem;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Equipment;
 import ca.mcgill.ecse.climbsafe.model.EquipmentBundle;
+import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
 import ca.mcgill.ecse.climbsafe.model.User;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -108,14 +111,22 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the following members exist in the system:")
   public void the_following_members_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> memberList = dataTable.asMaps();
-    for (int i = 0; i < memberList.size(); i++) {
-      climbSafe.addMember(memberList.get(i).get("email"), memberList.get(i).get("password"),
-          memberList.get(i).get("name"), memberList.get(i).get("emergencyContact"),
-          parseInt(memberList.get(i).get("nrWeeks")),
-          parseBoolean(memberList.get(i).get("guideRequired")),
-          parseBoolean(memberList.get(i).get("hotelRequired")));
-    }
+    var rows = dataTable.asMaps();
+    for(var row: rows) {
+    	var bookedItems = Arrays.asList(row.get("bookedItems").split(","));
+    	var bookedItemQuantities = new ArrayList<Integer>();
+    	
+    	for(var itemQuantity: row.get("bookedItemQuantities").split(",")) {
+    		bookedItemQuantities.add(Integer.parseInt(itemQuantity));   		
+    	} 
+    	climbSafe.addMember(row.get("email"), row.get("password"), row.get("name"), row.get("emergencyContact"), Integer.parseInt(row.get("nrWeeks")), 
+    			Boolean.parseBoolean(row.get("guideRequired")), Boolean.parseBoolean(row.get("hotelRequired")));
+    	var newMember = (Member)User.getWithEmail(row.get("email"));
+    	for(int i = 0; i< bookedItems.size(); i++ ){
+    		var bookableItem = BookableItem.getWithName(bookedItems.get(i));
+    		newMember.addBookedItem(bookedItemQuantities.get(i), climbSafe, BookableItem.getWithName(bookedItems.get(i)));
+    	}  	
+    } 
   }
   /**
    * 
@@ -169,22 +180,22 @@ public class AssignmentFeatureStepDefinitions {
   }
 
   @Then("the system shall raise the error {string}")
-  public void the_system_shall_raise_the_error(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();	 
+  public void the_system_shall_raise_the_error(String errorMessage) {
+    assertEquals(errorMessage, error);	 
   }
 
   @Given("the following assignments exist in the system:")
   public void the_following_assignments_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+	  
+	  var rows = dataTable.asMaps();
+	  for(var row: rows) {		  
+		  Member member = (Member) User.getWithEmail(row.get("memberEmail")); //should not return null
+		  member.getName();
+		  climbSafe.addAssignment(Integer.parseInt(row.get("startWeek")), 
+				  Integer.parseInt(row.get("endWeek")), 
+				  (Member) User.getWithEmail(row.get("memberEmail")));		  
+	  }
   }
 
  /*
@@ -193,36 +204,34 @@ public class AssignmentFeatureStepDefinitions {
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String string, String string2) {
-	  var member=(Member)Member.getWithEmail(string);
+	  var member = (Member)Member.getWithEmail(string);
 	  callController(() -> AssignmentController.payment(member));
-	  throw new io.cucumber.java.PendingException();
   }
 
   @Then("the assignment for {string} shall record the authorization code {string}")
   public void the_assignment_for_shall_record_the_authorization_code(String string,
       String string2) {
+	// the assignment for {string} shall record the authorization code {string}
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
 
   @Then("the member account with the email {string} does not exist")
-  public void the_member_account_with_the_email_does_not_exist(String string) {
+  public void the_member_account_with_the_email_does_not_exist(String email) {
      int temp=0;
       for (int i=0;i<climbSafe.getMembers().size();i++)
       {
-        if (climbSafe.getMembers().get(i).getEmail()==string)
+        if (climbSafe.getMembers().get(i).getEmail()==email)
         {
           temp=i;
         }
       }
-    assertFalse(string==climbSafe.getMembers().get(temp).getEmail());
-    throw new io.cucumber.java.PendingException();
+    assertFalse(email==climbSafe.getMembers().get(temp).getEmail());
   }
 
   @Then("there are {string} members in the system")
-  public void there_are_members_in_the_system(String string) {
-     assertEquals(Integer.parseInt(string),climbSafe.getMembers().size());
-    throw new io.cucumber.java.PendingException();
+  public void there_are_members_in_the_system(String numOfMembers) {
+     assertEquals(Integer.parseInt(numOfMembers),climbSafe.getMembers().size());
   }
 
   @Then("the error {string} shall be raised")
@@ -242,15 +251,15 @@ public class AssignmentFeatureStepDefinitions {
    */
 
   @Given("the member with {string} has paid for their trip")
-  public void the_member_with_has_paid_for_their_trip(String string) {
-    var member=(Member)User.getWithEmail(string);
+  public void the_member_with_has_paid_for_their_trip(String memberEmail) {
+    var member=(Member)User.getWithEmail(memberEmail);
     var assignment=member.getAssignment();
     assignment.pay();
   }
 
   @Then("the member with email address {string} shall receive a refund of {string} percent")
-  public void the_member_with_email_address_shall_receive_a_refund_of_percent(String string,
-      String string2) {
+  public void the_member_with_email_address_shall_receive_a_refund_of_percent(String memberEmail,
+      String refundPercentage) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
@@ -261,8 +270,8 @@ public class AssignmentFeatureStepDefinitions {
    */
 
   @Given("the member with {string} has started their trip")
-  public void the_member_with_has_started_their_trip(String string) {
-    var member=(Member)User.getWithEmail(string);
+  public void the_member_with_has_started_their_trip(String memberEmail) {
+    var member=(Member)User.getWithEmail(memberEmail);
     var assignment=member.getAssignment();
     assignment.startTrip();
   }
@@ -280,18 +289,17 @@ public class AssignmentFeatureStepDefinitions {
    */
 
   @Given("the member with {string} is banned")
-  public void the_member_with_is_banned(String string) {
-    var member=(Member)User.getWithEmail(string);
+  public void the_member_with_is_banned(String memberEmail) {
+    var member=(Member)User.getWithEmail(memberEmail);
     member.ban();
   }
  /*
  * @author : Haroun Guessous
  */
   @Then("the member with email {string} shall be {string}")
-  public void the_member_with_email_shall_be(String string, String string2) {
-	  var member=Member.getWithEmail(string);
-	  assertEquals(((Member) member).getMemberStatusFullName(),string2);
-	 throw new io.cucumber.java.PendingException();
+  public void the_member_with_email_shall_be(String email, String banState) {
+	  var member=Member.getWithEmail(email);
+	  assertEquals(((Member) member).getMemberStatusFullName(),banState);
   }
 
   @When("the administrator attempts to start the trips for week {string}")
@@ -314,10 +322,10 @@ public class AssignmentFeatureStepDefinitions {
 
   @Given("the member with {string} has finished their trip")
   public void the_member_with_has_finished_their_trip(String string) {
-    
+    //Implement this code
     throw new io.cucumber.java.PendingException();
   }
-
+  
   private void callController(Executable executable) { // from the btms step definitions in tutorial
     // 6
     try { // try executing the function
