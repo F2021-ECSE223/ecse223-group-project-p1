@@ -348,6 +348,8 @@ public class AssignmentFeatureStepDefinitions {
   public void the_member_with_has_finished_their_trip(String string) {
 	  var member =(Member)User.getWithEmail(string);
 	  var assignment = member.getAssignment();
+	  assignment.pay();
+	  assignment.startTrip();
 	  assignment.finishTrip(); 
   }
   
