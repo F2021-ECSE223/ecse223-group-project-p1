@@ -47,11 +47,10 @@ public class AssignmentController {
      * @throws InvalidInputException 
      */
   public static void payment(String email, String paymentAuthorizationCode) throws InvalidInputException{
-	  	if (email.isEmpty())
-	  	{
-	  		throw new InvalidInputException("Cannot pay for a nonexisting member");
-	  	}
-	  Member member=(Member) Member.getWithEmail(email);
+	  Member member= (Member)User.getWithEmail(email);
+      if(member==null){
+       throw new InvalidInputException("Member with email address"+email+"does not exist"); 
+      }
     	if (member.getMemberStatusFullName().equals("Banned"))
     			{
     		throw new InvalidInputException("Cannot pay for a banned member.");
