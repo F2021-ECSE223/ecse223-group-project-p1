@@ -61,7 +61,7 @@ public static void payment(String email, String paymentAuthorizationCode) throws
       }
     	var assignment= member.getAssignment();
     	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {
-		throw new InvalidInputException("Member has already paid for their trip.");}
+		throw new InvalidInputException("Trip has already been paid for");}
     	else {
     		assignment.setPaymentAuthorizationCode(paymentAuthorizationCode);
     		assignment.pay();
