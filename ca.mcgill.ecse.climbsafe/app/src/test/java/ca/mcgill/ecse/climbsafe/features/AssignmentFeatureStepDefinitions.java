@@ -254,8 +254,7 @@ public class AssignmentFeatureStepDefinitions {
 
   @When("the administrator attempts to cancel the trip for {string}")
   public void the_administrator_attempts_to_cancel_the_trip_for(String memberEmail) {
-	var member = (Member)Member.getWithEmail(memberEmail);
-    callController(() -> AssignmentController.cancelTrip(member));
+    callController(() -> AssignmentController.cancelTrip(memberEmail));
   }
 	
 /**
