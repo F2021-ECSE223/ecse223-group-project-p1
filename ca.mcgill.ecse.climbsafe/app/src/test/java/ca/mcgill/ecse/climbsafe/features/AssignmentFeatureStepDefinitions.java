@@ -178,7 +178,11 @@ public class AssignmentFeatureStepDefinitions {
   public void the_number_of_assignments_in_the_system_shall_be(String string) {
     assertEquals(string, Integer.toString(climbSafe.numberOfAssignments()));
   }
-
+  
+   /**
+   * 
+   * @author Mohammad Shaheer Bilal 
+   */
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String errorMessage) {
     assertEquals(errorMessage, error);	 
@@ -213,13 +217,18 @@ public class AssignmentFeatureStepDefinitions {
 	  var member = (Member)Member.getWithEmail(string);
 	  callController(() -> AssignmentController.payment(member, string2));
   }
-
+  
+  /*
+ * @author : Mohammad Shaheer Bilal 
+ */
   @Then("the assignment for {string} shall record the authorization code {string}")
   public void the_assignment_for_shall_record_the_authorization_code(String string,
       String string2) {
-	// the assignment for {string} shall record the authorization code {string}
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	  int authorizationCode = Integer.parseInt(string2);
+	  var member =(Member)User.getWithEmail(string);
+	  var assignment = member.getAssignment();
+	  assertEquals(authorizationCode,assignment.getPaymentAuthorizationCode());
+	
   }
 
   @Then("the member account with the email {string} does not exist")
@@ -263,11 +272,17 @@ public class AssignmentFeatureStepDefinitions {
     assignment.pay();
   }
 
+  /**
+   * 
+   * @author Mohammad Shaheer Bilal 
+   */
   @Then("the member with email address {string} shall receive a refund of {string} percent")
   public void the_member_with_email_address_shall_receive_a_refund_of_percent(String memberEmail,
       String refundPercentage) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+	  int refund = Integer.parseInt(refundPercentage);
+	  var member =(Member)User.getWithEmail(memberEmail);
+	  assertEquals(refundPercentage, member.getRefundPercentage());
+	  
   }
 	
 /**
@@ -326,11 +341,16 @@ public class AssignmentFeatureStepDefinitions {
     assignment.cancelTrip();
    
   }
-
+  
+/**
+   * 
+   * @author Mohammad Shaheer Bilal 
+   */
   @Given("the member with {string} has finished their trip")
   public void the_member_with_has_finished_their_trip(String string) {
-    //Implement this code
-    throw new io.cucumber.java.PendingException();
+	  var member =(Member)User.getWithEmail(string);
+	  var assignment = member.getAssignment();
+	  assignment.finishTrip(); 
   }
   
   private void callController(Executable executable) { // from the btms step definitions in tutorial
