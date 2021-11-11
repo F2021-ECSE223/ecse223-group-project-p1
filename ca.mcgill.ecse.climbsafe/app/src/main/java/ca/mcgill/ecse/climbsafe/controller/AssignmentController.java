@@ -110,7 +110,7 @@ public class AssignmentController {
         throw new InvalidInputException("Cannot finish a trip which has not started");
       }
       
-      if(member.getMember().getMemberStatusFullName().equals("Banned")){
+      if(member.getMemberStatusFullName().equals("Banned")){
         throw new InvalidInputException("Cannot finish the trip due to a ban");
       }
       
