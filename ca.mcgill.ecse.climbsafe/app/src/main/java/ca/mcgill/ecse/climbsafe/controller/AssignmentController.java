@@ -143,8 +143,52 @@ public class AssignmentController {
       }
       
     }
+  
+  /**
+     * This method cancels the trip for a Member "member". 
+     * @author Mohammad Shaheer Bilal 
+     * 
+     * @throws InvalidInputException 
+     */
 
-    public static void cancelTrip(Member member) {
+     public static void cancelTrip(String email) throws InvalidInputException {
+    	Member member = (Member)User.getWithEmail(email);
+    	if(member==null){
+    		throw new InvalidInputException("Member with email address"+email+"does not exist"); 
+    	    }
+    	var assignment=member.getAssignment();
+    	
+    	if(assignment.getAssignmentStatusFullName().equals("Unpaid")) {
+    		assignment.cancelTrip();
+    	}
+    	if(assignment.getAssignmentStatusFullName().equals("Paid")) {
+    		assignment.cancelTrip();
+    		member.setRefundPercentage(50);
+    	}
+    	if(assignment.getAssignmentStatusFullName().equals("Started")) {
+    		assignment.cancelTrip();
+    		member.setRefundPercentage(10);
+       	}
+    	if(member.getMemberStatusFullName().equals("Banned")){
+    		member.ban();
+	        throw new InvalidInputException("Cannot cancel the trip due to a ban");
+	        
+	      }
+    	if(assignment.getAssignmentStatusFullName().equals("Finished")) {
+    		assignment.finishTrip();
+    		throw new InvalidInputException("Cannot cancel a trip which has finished");
+    		
+    	}
+    	
+    	assignment.cancelTrip();
+    	try {
+            ClimbSafePersistence.save();
+          } catch (RuntimeException e) {
+            throw new InvalidInputException(e.getMessage());
+          }
+    	
+    	
+    	
       
     }
 
