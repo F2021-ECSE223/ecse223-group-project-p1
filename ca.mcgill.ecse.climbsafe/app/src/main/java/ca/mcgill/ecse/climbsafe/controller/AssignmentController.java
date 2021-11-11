@@ -21,7 +21,6 @@ public class AssignmentController {
      * @throws InvalidInputException
      */
     public static void initiateAssignmentForAllMembers() throws InvalidInputException {
-      
       for(Guide guide: climbSafe.getGuides()) {
          guide.performAssignmentToMembers(); 
       }
@@ -47,7 +46,7 @@ public class AssignmentController {
      * @throws InvalidInputException 
      */
   public static void payment(String email, String paymentAuthorizationCode) throws InvalidInputException{
-	  Member member= (Member)User.getWithEmail(email);
+	Member member= (Member)User.getWithEmail(email);
       if(member==null){
        throw new InvalidInputException("Member with email address"+email+"does not exist"); 
       }
@@ -71,10 +70,8 @@ public class AssignmentController {
           } catch (RuntimeException e) {
             throw new InvalidInputException(e.getMessage());
           }
-          
         }
     	}
-   
     	}
     }
  /**
@@ -123,6 +120,11 @@ public class AssignmentController {
        throw new InvalidInputException("Member with email address"+email+"does not exist"); 
       }
       var assignment=member.getAssignment();
+	    
+      if(member.getMemberStatusFullName().equals("Banned")){
+        throw new InvalidInputException("Cannot finish the trip due to a ban");
+      }
+	    
       if(assignment.getAssignmentStatusFullName().equals("Started")) {
     	  assignment.finishTrip();
       }
@@ -135,10 +137,6 @@ public class AssignmentController {
         throw new InvalidInputException("Cannot finish a trip which has not started");
       }
       
-      if(member.getMemberStatusFullName().equals("Banned")){
-        throw new InvalidInputException("Cannot finish the trip due to a ban");
-      }
-      
       assignment.finishTrip();
       
       try {
@@ -146,7 +144,6 @@ public class AssignmentController {
       } catch (RuntimeException e) {
         throw new InvalidInputException(e.getMessage());
       }
-      
     }
   
   /**
@@ -186,20 +183,12 @@ public class AssignmentController {
     		assignment.cancelTrip();
     		member.setRefundPercentage(10);
        	}
-    	
-    	
-    	
+
     	assignment.cancelTrip();
     	try {
             ClimbSafePersistence.save();
           } catch (RuntimeException e) {
             throw new InvalidInputException(e.getMessage());
           }
-    	
-    	
-    	
-      
     }
-
-
 }
