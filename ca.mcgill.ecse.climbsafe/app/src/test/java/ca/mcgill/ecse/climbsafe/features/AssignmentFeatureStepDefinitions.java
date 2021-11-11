@@ -214,8 +214,7 @@ public class AssignmentFeatureStepDefinitions {
   @When("the administrator attempts to confirm payment for {string} using authorization code {string}")
   public void the_administrator_attempts_to_confirm_payment_for_using_authorization_code(
       String string, String string2) {
-	  var member = (Member)Member.getWithEmail(string);
-	  callController(() -> AssignmentController.payment(member, string2));
+	  callController(() -> AssignmentController.payment(string, string2));
   }
   
   /*
