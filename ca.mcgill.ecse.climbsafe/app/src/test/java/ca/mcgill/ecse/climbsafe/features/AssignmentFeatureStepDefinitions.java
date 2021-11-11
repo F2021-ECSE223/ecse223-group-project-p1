@@ -227,7 +227,6 @@ public class AssignmentFeatureStepDefinitions {
 	  var member =(Member)User.getWithEmail(memberEmail);
 	  var assignment = member.getAssignment();
 	  assertEquals(authorizationCode,assignment.getPaymentAuthorizationCode());
-	
   }
 
   @Then("the member account with the email {string} does not exist")
@@ -280,8 +279,7 @@ public class AssignmentFeatureStepDefinitions {
       String refundPercentage) {
 	  int refund = Integer.parseInt(refundPercentage);
 	  var member =(Member)User.getWithEmail(memberEmail);
-	  assertEquals(refundPercentage, member.getRefundPercentage());
-	  
+	  assertEquals(refundPercentage, member.getRefundPercentage()); 
   }
 	
 /**
@@ -337,7 +335,6 @@ public class AssignmentFeatureStepDefinitions {
     var member=(Member)User.getWithEmail(string);
     var assignment=member.getAssignment();
     assignment.cancelTrip();
-   
   }
   
 /**
