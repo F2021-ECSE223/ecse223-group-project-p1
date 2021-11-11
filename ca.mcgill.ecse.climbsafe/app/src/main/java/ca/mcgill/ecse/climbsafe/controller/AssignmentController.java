@@ -60,7 +60,7 @@ public static void payment(String email, String paymentAuthorizationCode) throws
     	  throw new InvalidInputException("Cannot cancel the trip due to a ban");
       }
     	var assignment= member.getAssignment();
-    	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {throw new InvalidInputException("Member has already paid for their trip.");}
+    	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {throw new InvalidInputException("Trip has already been paid for");}
     	else {
     		assignment.setPaymentAuthorizationCode(paymentAuthorizationCode);
     		assignment.pay();
