@@ -156,6 +156,18 @@ public class AssignmentController {
     	if(member==null){
     		throw new InvalidInputException("Member with email address"+email+"does not exist"); 
     	    }
+	     
+	if(member.getMemberStatusFullName().equals("Banned")){
+    		member.ban();
+	        throw new InvalidInputException("Cannot cancel the trip due to a ban");
+	        
+	      }
+	     
+	if(assignment.getAssignmentStatusFullName().equals("Finished")) {
+    		assignment.finishTrip();
+    		throw new InvalidInputException("Cannot cancel a trip which has finished");
+    		
+    	}
     	var assignment=member.getAssignment();
     	
     	if(assignment.getAssignmentStatusFullName().equals("Unpaid")) {
@@ -169,16 +181,8 @@ public class AssignmentController {
     		assignment.cancelTrip();
     		member.setRefundPercentage(10);
        	}
-    	if(member.getMemberStatusFullName().equals("Banned")){
-    		member.ban();
-	        throw new InvalidInputException("Cannot cancel the trip due to a ban");
-	        
-	      }
-    	if(assignment.getAssignmentStatusFullName().equals("Finished")) {
-    		assignment.finishTrip();
-    		throw new InvalidInputException("Cannot cancel a trip which has finished");
-    		
-    	}
+    	
+    	
     	
     	assignment.cancelTrip();
     	try {
