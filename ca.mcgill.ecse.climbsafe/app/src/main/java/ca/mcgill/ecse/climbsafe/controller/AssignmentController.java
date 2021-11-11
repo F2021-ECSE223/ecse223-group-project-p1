@@ -47,6 +47,10 @@ public class AssignmentController {
      * @throws InvalidInputException 
      */
   public static void payment(Member member, String paymentAuthorizationCode) throws InvalidInputException{
+	  	if (member.getEmail().isEmpty())
+	  	{
+	  		throw new InvalidInputException("Cannot pay for a nonexisting member");
+	  	}
     	if (member.getMemberStatusFullName().equals("Banned"))
     			{
     		throw new InvalidInputException("Cannot pay for a banned member.");
@@ -58,8 +62,10 @@ public class AssignmentController {
     	}	
     	else {
     	var assignment= member.getAssignment();
-    	if (assignment.getAssignmentStatusFullName().equals("Paid")) {throw new InvalidInputException("Member has already paid for their trip.");}
-    	else {assignment.pay();
+    	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {throw new InvalidInputException("Member has already paid for their trip.");}
+    	else {
+    		assignment.setPaymentAuthorizationCode(paymentAuthorizationCode);
+    		assignment.pay();
     	try {
             ClimbSafePersistence.save();
           } catch (RuntimeException e) {
@@ -71,7 +77,6 @@ public class AssignmentController {
    
     	}
     }
-    
  /**
      * This method starts all the trips for a given week. If the member is banned (due to no payment), the trip cannot be started. 
      * @author Alexandre Chiasera
