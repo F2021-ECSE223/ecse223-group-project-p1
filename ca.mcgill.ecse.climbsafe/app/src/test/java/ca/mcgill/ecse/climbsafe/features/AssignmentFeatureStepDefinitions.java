@@ -221,10 +221,10 @@ public class AssignmentFeatureStepDefinitions {
  * @author : Mohammad Shaheer Bilal 
  */
   @Then("the assignment for {string} shall record the authorization code {string}")
-  public void the_assignment_for_shall_record_the_authorization_code(String string,
-      String string2) {
-	  int authorizationCode = Integer.parseInt(string2);
-	  var member =(Member)User.getWithEmail(string);
+  public void the_assignment_for_shall_record_the_authorization_code(String memberEmail,
+      String code) {
+	  int authorizationCode = Integer.parseInt(code);
+	  var member =(Member)User.getWithEmail(memberEmail);
 	  var assignment = member.getAssignment();
 	  assertEquals(authorizationCode,assignment.getPaymentAuthorizationCode());
 	
