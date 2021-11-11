@@ -51,7 +51,7 @@ public class AssignmentController {
 	  	{
 	  		throw new InvalidInputException("Cannot pay for a nonexisting member");
 	  	}
-	  Member member=(Member) Member.getWithEmail(string);
+	  Member member=(Member) Member.getWithEmail(email);
     	if (member.getMemberStatusFullName().equals("Banned"))
     			{
     		throw new InvalidInputException("Cannot pay for a banned member.");
