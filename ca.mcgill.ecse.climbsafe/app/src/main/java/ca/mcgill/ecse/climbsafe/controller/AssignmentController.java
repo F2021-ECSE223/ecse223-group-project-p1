@@ -33,7 +33,7 @@ public class AssignmentController {
       
       // checking if all members are assigned
       for(Member member: climbSafe.getMembers()) {
-        if(member.getAssignment() == null)) {
+        if(member.getAssignment() == null) {
           throw new InvalidInputException("Assignments could not be completed for all members");
         }
       }
@@ -164,14 +164,12 @@ public class AssignmentController {
 	        throw new InvalidInputException("Cannot cancel the trip due to a ban");
 	        
 	      }
-	     
+	var assignment=member.getAssignment();   
 	if(assignment.getAssignmentStatusFullName().equals("Finished")) {
     		throw new InvalidInputException("Cannot cancel a trip which has finished");
     		
     	}
-    	var assignment=member.getAssignment();
     	
-  
     	if(assignment.getAssignmentStatusFullName().equals("Paid")) {
     		member.setRefundPercentage(50);
     	}
