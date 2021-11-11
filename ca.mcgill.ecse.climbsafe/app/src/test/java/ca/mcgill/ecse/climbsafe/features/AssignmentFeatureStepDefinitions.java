@@ -319,7 +319,7 @@ public class AssignmentFeatureStepDefinitions {
   @Then("the member with email {string} shall be {string}")
   public void the_member_with_email_shall_be(String email, String banState) {
 	  var member=Member.getWithEmail(email);
-	  assertEquals(((Member) member).getMemberStatusFullName(),banState);
+	  assertEquals(banState, ((Member) member).getMemberStatusFullName());
   }
 
   @When("the administrator attempts to start the trips for week {string}")
