@@ -45,22 +45,23 @@ public class AssignmentController {
      * @param member
      * @throws InvalidInputException 
      */
-public static void payment(String email, String paymentAuthorizationCode) throws InvalidInputException{
-	  Member member= (Member)Member.getWithEmail(email);
+  public static void payment(String email, String paymentAuthorizationCode) throws InvalidInputException{
+	Member member= (Member)User.getWithEmail(email);
       if(member==null){
        throw new InvalidInputException("Member with email address"+email+"does not exist"); 
       }
-      switch(member.getMemberStatusFullName())
-      {
-      case "Cancelled":
-    	  throw new InvalidInputException("Cannot pay for a trip which has been cancelled");
-      case "Finished":
-    	  throw new InvalidInputException("Cannot pay for a trip which has finished");
-      case "Banned":
-    	  throw new InvalidInputException("Cannot cancel the trip due to a ban");
-      }
+    	if (member.getMemberStatusFullName().equals("Banned"))
+    			{
+    		throw new InvalidInputException("Cannot pay for a banned member.");
+    			}
+    	else {
+    	if (member.getMemberStatusFullName().equals("Finished"))
+    	{
+    		throw new InvalidInputException("Cannot pay for a finished trip");
+    	}	
+    	else {
     	var assignment= member.getAssignment();
-    	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {throw new InvalidInputException("Trip has already been paid for");}
+    	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {throw new InvalidInputException("Member has already paid for their trip.");}
     	else {
     		assignment.setPaymentAuthorizationCode(paymentAuthorizationCode);
     		assignment.pay();
@@ -68,9 +69,11 @@ public static void payment(String email, String paymentAuthorizationCode) throws
             ClimbSafePersistence.save();
           } catch (RuntimeException e) {
             throw new InvalidInputException(e.getMessage());
-          } 
+          }
         }
     	}
+    	}
+    }
  /**
      * This method starts all the trips for a given week. If the member is banned (due to no payment), the trip cannot be started. 
      * @author Alexandre Chiasera
@@ -163,21 +166,16 @@ public static void payment(String email, String paymentAuthorizationCode) throws
 	      }
 	     
 	if(assignment.getAssignmentStatusFullName().equals("Finished")) {
-    		assignment.finishTrip();
     		throw new InvalidInputException("Cannot cancel a trip which has finished");
     		
     	}
     	var assignment=member.getAssignment();
     	
-    	if(assignment.getAssignmentStatusFullName().equals("Unpaid")) {
-    		assignment.cancelTrip();
-    	}
+  
     	if(assignment.getAssignmentStatusFullName().equals("Paid")) {
-    		assignment.cancelTrip();
     		member.setRefundPercentage(50);
     	}
     	if(assignment.getAssignmentStatusFullName().equals("Started")) {
-    		assignment.cancelTrip();
     		member.setRefundPercentage(10);
        	}
 
