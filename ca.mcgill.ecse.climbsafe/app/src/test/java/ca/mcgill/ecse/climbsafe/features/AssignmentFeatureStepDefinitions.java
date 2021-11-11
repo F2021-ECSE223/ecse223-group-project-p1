@@ -300,8 +300,7 @@ public class AssignmentFeatureStepDefinitions {
   @When("the administrator attempts to finish the trip for the member with email {string}")
   public void the_administrator_attempts_to_finish_the_trip_for_the_member_with_email(
       String memberEmail) {	  
-	  var member = (Member)Member.getWithEmail(memberEmail);
-	  callController(() -> AssignmentController.finishTrip(member));  
+	  callController(() -> AssignmentController.finishTrip(memberEmail));  
   }
 	
 /**
