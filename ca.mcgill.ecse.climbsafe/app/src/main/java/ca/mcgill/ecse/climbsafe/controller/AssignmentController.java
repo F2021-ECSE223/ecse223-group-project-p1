@@ -46,10 +46,30 @@ public class AssignmentController {
      * @param member
      * @throws InvalidInputException 
      */
-    public static void payment(Member member, String paymentAuthorizationCode) throws InvalidInputException{
+  public static void payment(Member member, String paymentAuthorizationCode) throws InvalidInputException{
+    	if (member.getMemberStatusFullName().equals("Banned"))
+    			{
+    		throw new InvalidInputException("Cannot pay for a banned member.");
+    			}
+    	else {
+    	if (member.getMemberStatusFullName().equals("Finished"))
+    	{
+    		throw new InvalidInputException("Cannot pay for a finished trip");
+    	}	
+    	else {
     	var assignment= member.getAssignment();
     	if (assignment.getAssignmentStatusFullName().equals("Paid")) {throw new InvalidInputException("Member has already paid for their trip.");}
-    	else {assignment.pay();}
+    	else {assignment.pay();
+    	try {
+            ClimbSafePersistence.save();
+          } catch (RuntimeException e) {
+            throw new InvalidInputException(e.getMessage());
+          }
+          
+        }
+    	}
+   
+    	}
     }
     
  /**
