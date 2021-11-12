@@ -52,6 +52,10 @@ public static void payment(String email, String paymentAuthorizationCode) throws
       if(member==null){
        throw new InvalidInputException("Member with email address "+email+" does not exist"); 
       }
+      
+      if(paymentAuthorizationCode.isEmpty()) {
+        throw new InvalidInputException("Invalid authorization code");
+      }
       switch(member.getMemberStatusFullName())
       {
       case "Cancelled":
