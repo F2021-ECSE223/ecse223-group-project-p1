@@ -63,7 +63,7 @@ public static void payment(String email, String paymentAuthorizationCode) throws
       case "Finished":
     	  throw new InvalidInputException("Cannot pay for a trip which has finished");
       case "Banned":
-    	  throw new InvalidInputException("Cannot cancel the trip due to a ban");
+    	  throw new InvalidInputException("Cannot pay for a trip due to a ban");
       }
     	var assignment= member.getAssignment();
     	if (assignment.getAssignmentStatusFullName().equals("Paid") || assignment.getAssignmentStatusFullName().equals("Started")) {
