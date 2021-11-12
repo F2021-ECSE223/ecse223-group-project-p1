@@ -5,14 +5,8 @@ package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * State Machine for the Member class
- * Member object becomes Assigned when toggleStatus() is called
- * on it at the Unassigned state
- * @author Asma Gandour
- */
-// line 6 "../../../../../ClimbSafeStates.ump"
-// line 79 "../../../../../ClimbSafePersistence.ump"
+// line 2 "../../../../../ClimbSafeStates.ump"
+// line 80 "../../../../../ClimbSafePersistence.ump"
 // line 43 "../../../../../ClimbSafe.ump"
 public class Member extends NamedUser implements Serializable
 {
@@ -22,13 +16,14 @@ public class Member extends NamedUser implements Serializable
   //------------------------
 
   //Member Attributes
+  private int refundPercentage;
   private int nrWeeks;
   private boolean guideRequired;
   private boolean hotelRequired;
 
   //Member State Machines
-  public enum AssignementStatus { Unassigned, Assigned }
-  private AssignementStatus assignementStatus;
+  public enum MemberStatus { Unbanned, Banned }
+  private MemberStatus memberStatus;
 
   //Member Associations
   private ClimbSafe climbSafe;
@@ -42,6 +37,7 @@ public class Member extends NamedUser implements Serializable
   public Member(String aEmail, String aPassword, String aName, String aEmergencyContact, int aNrWeeks, boolean aGuideRequired, boolean aHotelRequired, ClimbSafe aClimbSafe)
   {
     super(aEmail, aPassword, aName, aEmergencyContact);
+    refundPercentage = 0;
     nrWeeks = aNrWeeks;
     guideRequired = aGuideRequired;
     hotelRequired = aHotelRequired;
@@ -51,12 +47,20 @@ public class Member extends NamedUser implements Serializable
       throw new RuntimeException("Unable to create member due to climbSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
     bookedItems = new ArrayList<BookedItem>();
-    setAssignementStatus(AssignementStatus.Unassigned);
+    setMemberStatus(MemberStatus.Unbanned);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setRefundPercentage(int aRefundPercentage)
+  {
+    boolean wasSet = false;
+    refundPercentage = aRefundPercentage;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setNrWeeks(int aNrWeeks)
   {
@@ -80,6 +84,11 @@ public class Member extends NamedUser implements Serializable
     hotelRequired = aHotelRequired;
     wasSet = true;
     return wasSet;
+  }
+
+  public int getRefundPercentage()
+  {
+    return refundPercentage;
   }
 
   public int getNrWeeks()
@@ -107,26 +116,26 @@ public class Member extends NamedUser implements Serializable
     return hotelRequired;
   }
 
-  public String getAssignementStatusFullName()
+  public String getMemberStatusFullName()
   {
-    String answer = assignementStatus.toString();
+    String answer = memberStatus.toString();
     return answer;
   }
 
-  public AssignementStatus getAssignementStatus()
+  public MemberStatus getMemberStatus()
   {
-    return assignementStatus;
+    return memberStatus;
   }
 
-  public boolean toggleStatus()
+  public boolean ban()
   {
     boolean wasEventProcessed = false;
     
-    AssignementStatus aAssignementStatus = assignementStatus;
-    switch (aAssignementStatus)
+    MemberStatus aMemberStatus = memberStatus;
+    switch (aMemberStatus)
     {
-      case Unassigned:
-        setAssignementStatus(AssignementStatus.Assigned);
+      case Unbanned:
+        setMemberStatus(MemberStatus.Banned);
         wasEventProcessed = true;
         break;
       default:
@@ -136,9 +145,9 @@ public class Member extends NamedUser implements Serializable
     return wasEventProcessed;
   }
 
-  private void setAssignementStatus(AssignementStatus aAssignementStatus)
+  private void setMemberStatus(MemberStatus aMemberStatus)
   {
-    assignementStatus = aAssignementStatus;
+    memberStatus = aMemberStatus;
   }
   /* Code from template association_GetOne */
   public ClimbSafe getClimbSafe()
@@ -331,6 +340,7 @@ public class Member extends NamedUser implements Serializable
   public String toString()
   {
     return super.toString() + "["+
+            "refundPercentage" + ":" + getRefundPercentage()+ "," +
             "nrWeeks" + ":" + getNrWeeks()+ "," +
             "guideRequired" + ":" + getGuideRequired()+ "," +
             "hotelRequired" + ":" + getHotelRequired()+ "]" + System.getProperties().getProperty("line.separator") +
@@ -341,7 +351,7 @@ public class Member extends NamedUser implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 82 "../../../../../ClimbSafePersistence.ump"
+  // line 83 "../../../../../ClimbSafePersistence.ump"
   private static final long serialVersionUID = 2045406856025012133L ;
 
   

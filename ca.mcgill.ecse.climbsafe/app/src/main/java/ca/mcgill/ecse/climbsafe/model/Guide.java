@@ -5,8 +5,8 @@ package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 import java.util.*;
 
-// line 20 "../../../../../ClimbSafeStates.ump"
-// line 71 "../../../../../ClimbSafePersistence.ump"
+// line 15 "../../../../../ClimbSafeStates.ump"
+// line 72 "../../../../../ClimbSafePersistence.ump"
 // line 38 "../../../../../ClimbSafe.ump"
 public class Guide extends NamedUser implements Serializable
 {
@@ -184,7 +184,7 @@ public class Guide extends NamedUser implements Serializable
    * a given number of weeks
    * @author Asma Gandour
    */
-  // line 26 "../../../../../ClimbSafeStates.ump"
+  // line 21 "../../../../../ClimbSafeStates.ump"
    public boolean isAvailableFor(Integer nbrWeeks){
     if(hasAssignments()){
       Integer lastWeek = getAssignment(numberOfAssignments()-1).getEndWeek();
@@ -201,19 +201,19 @@ public class Guide extends NamedUser implements Serializable
    * until the guide is not available anymore
    * @author Asma Gandour
    */
-  // line 39 "../../../../../ClimbSafeStates.ump"
+  // line 34 "../../../../../ClimbSafeStates.ump"
    public boolean performAssignmentToMembers(){
     Integer startWeek = 1;
 		Integer endWeek;
 		for(Member member: climbSafe.getMembers()){
 
-			if(member.getAssignementStatusFullName().equals("Unassigned")){
+			if(member.getAssignment() == null){
 				if(!member.isGuideRequired()){
 
 					endWeek = startWeek + member.getNrWeeks() - 1;
 					Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
 					climbSafe.addAssignment(assignment);
-					member.toggleStatus();
+					member.getAssignment().toggleStatus();
 
 				}else{
 					if(isAvailableFor(member.getNrWeeks())){
@@ -225,7 +225,7 @@ public class Guide extends NamedUser implements Serializable
 						Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
 						addAssignment(assignment);
 						climbSafe.addAssignment(assignment);
-						member.toggleStatus();
+						member.getAssignment().toggleStatus();
 
 
 					}
@@ -241,7 +241,7 @@ public class Guide extends NamedUser implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 74 "../../../../../ClimbSafePersistence.ump"
+  // line 75 "../../../../../ClimbSafePersistence.ump"
   private static final long serialVersionUID = -3900912597282882073L ;
 
   

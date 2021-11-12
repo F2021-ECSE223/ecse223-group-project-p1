@@ -4,8 +4,8 @@
 package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 
-// line 76 "../../../../../ClimbSafeStates.ump"
-// line 154 "../../../../../ClimbSafePersistence.ump"
+// line 71 "../../../../../ClimbSafeStates.ump"
+// line 155 "../../../../../ClimbSafePersistence.ump"
 // line 77 "../../../../../ClimbSafe.ump"
 public class Assignment implements Serializable
 {
@@ -15,14 +15,13 @@ public class Assignment implements Serializable
   //------------------------
 
   //Assignment Attributes
+  private String paymentAuthorizationCode;
   private int startWeek;
   private int endWeek;
 
   //Assignment State Machines
-  public enum TripStatus { notStarted, Started, Finished, Cancelled }
-  private TripStatus tripStatus;
-  public enum PaymentStatus { notPaid, paid }
-  private PaymentStatus paymentStatus;
+  public enum AssignmentStatus { Unassigned, Assigned, Paid, Started, Cancelled, Finished }
+  private AssignmentStatus assignmentStatus;
 
   //Assignment Associations
   private Member member;
@@ -36,6 +35,7 @@ public class Assignment implements Serializable
 
   public Assignment(int aStartWeek, int aEndWeek, Member aMember, ClimbSafe aClimbSafe)
   {
+    paymentAuthorizationCode = null;
     startWeek = aStartWeek;
     endWeek = aEndWeek;
     boolean didAddMember = setMember(aMember);
@@ -48,13 +48,20 @@ public class Assignment implements Serializable
     {
       throw new RuntimeException("Unable to create assignment due to climbSafe. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
-    setTripStatus(TripStatus.notStarted);
-    setPaymentStatus(PaymentStatus.notPaid);
+    setAssignmentStatus(AssignmentStatus.Unassigned);
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setPaymentAuthorizationCode(String aPaymentAuthorizationCode)
+  {
+    boolean wasSet = false;
+    paymentAuthorizationCode = aPaymentAuthorizationCode;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setStartWeek(int aStartWeek)
   {
@@ -72,6 +79,11 @@ public class Assignment implements Serializable
     return wasSet;
   }
 
+  public String getPaymentAuthorizationCode()
+  {
+    return paymentAuthorizationCode;
+  }
+
   public int getStartWeek()
   {
     return startWeek;
@@ -82,89 +94,26 @@ public class Assignment implements Serializable
     return endWeek;
   }
 
-  public String getTripStatusFullName()
+  public String getAssignmentStatusFullName()
   {
-    String answer = tripStatus.toString();
+    String answer = assignmentStatus.toString();
     return answer;
   }
 
-  public String getPaymentStatusFullName()
+  public AssignmentStatus getAssignmentStatus()
   {
-    String answer = paymentStatus.toString();
-    return answer;
+    return assignmentStatus;
   }
 
-  public TripStatus getTripStatus()
-  {
-    return tripStatus;
-  }
-
-  public PaymentStatus getPaymentStatus()
-  {
-    return paymentStatus;
-  }
-
-  public boolean startTrip()
+  public boolean toggleStatus()
   {
     boolean wasEventProcessed = false;
     
-    TripStatus aTripStatus = tripStatus;
-    switch (aTripStatus)
+    AssignmentStatus aAssignmentStatus = assignmentStatus;
+    switch (aAssignmentStatus)
     {
-      case notStarted:
-        setTripStatus(TripStatus.Started);
-        wasEventProcessed = true;
-        break;
-      case Started:
-        setTripStatus(TripStatus.Started);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean cancelTrip()
-  {
-    boolean wasEventProcessed = false;
-    
-    TripStatus aTripStatus = tripStatus;
-    switch (aTripStatus)
-    {
-      case notStarted:
-        setTripStatus(TripStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      case Started:
-        setTripStatus(TripStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      case Cancelled:
-        setTripStatus(TripStatus.Cancelled);
-        wasEventProcessed = true;
-        break;
-      default:
-        // Other states do respond to this event
-    }
-
-    return wasEventProcessed;
-  }
-
-  public boolean finishTrip()
-  {
-    boolean wasEventProcessed = false;
-    
-    TripStatus aTripStatus = tripStatus;
-    switch (aTripStatus)
-    {
-      case Started:
-        setTripStatus(TripStatus.Finished);
-        wasEventProcessed = true;
-        break;
-      case Finished:
-        setTripStatus(TripStatus.Finished);
+      case Unassigned:
+        setAssignmentStatus(AssignmentStatus.Assigned);
         wasEventProcessed = true;
         break;
       default:
@@ -178,11 +127,39 @@ public class Assignment implements Serializable
   {
     boolean wasEventProcessed = false;
     
-    PaymentStatus aPaymentStatus = paymentStatus;
-    switch (aPaymentStatus)
+    AssignmentStatus aAssignmentStatus = assignmentStatus;
+    switch (aAssignmentStatus)
     {
-      case notPaid:
-        setPaymentStatus(PaymentStatus.paid);
+      case Assigned:
+        if (!(member.getMemberStatusFullName().equals("Banned")))
+        {
+          setAssignmentStatus(AssignmentStatus.Paid);
+          wasEventProcessed = true;
+          break;
+        }
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean startTrip()
+  {
+    boolean wasEventProcessed = false;
+    
+    AssignmentStatus aAssignmentStatus = assignmentStatus;
+    switch (aAssignmentStatus)
+    {
+      case Assigned:
+        // line 81 "../../../../../ClimbSafeStates.ump"
+        getMember().ban();
+        setAssignmentStatus(AssignmentStatus.Assigned);
+        wasEventProcessed = true;
+        break;
+      case Paid:
+        setAssignmentStatus(AssignmentStatus.Started);
         wasEventProcessed = true;
         break;
       default:
@@ -192,14 +169,61 @@ public class Assignment implements Serializable
     return wasEventProcessed;
   }
 
-  private void setTripStatus(TripStatus aTripStatus)
+  public boolean cancelTrip()
   {
-    tripStatus = aTripStatus;
+    boolean wasEventProcessed = false;
+    
+    AssignmentStatus aAssignmentStatus = assignmentStatus;
+    switch (aAssignmentStatus)
+    {
+      case Assigned:
+        if (!(member.getMemberStatusFullName().equals("Banned")))
+        {
+          setAssignmentStatus(AssignmentStatus.Cancelled);
+          wasEventProcessed = true;
+          break;
+        }
+        break;
+      case Paid:
+        setAssignmentStatus(AssignmentStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Started:
+        setAssignmentStatus(AssignmentStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      case Finished:
+        setAssignmentStatus(AssignmentStatus.Cancelled);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
   }
 
-  private void setPaymentStatus(PaymentStatus aPaymentStatus)
+  public boolean finishTrip()
   {
-    paymentStatus = aPaymentStatus;
+    boolean wasEventProcessed = false;
+    
+    AssignmentStatus aAssignmentStatus = assignmentStatus;
+    switch (aAssignmentStatus)
+    {
+      case Started:
+        setAssignmentStatus(AssignmentStatus.Finished);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  private void setAssignmentStatus(AssignmentStatus aAssignmentStatus)
+  {
+    assignmentStatus = aAssignmentStatus;
   }
   /* Code from template association_GetOne */
   public Member getMember()
@@ -415,6 +439,7 @@ public class Assignment implements Serializable
   public String toString()
   {
     return super.toString() + "["+
+            "paymentAuthorizationCode" + ":" + getPaymentAuthorizationCode()+ "," +
             "startWeek" + ":" + getStartWeek()+ "," +
             "endWeek" + ":" + getEndWeek()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "member = "+(getMember()!=null?Integer.toHexString(System.identityHashCode(getMember())):"null") + System.getProperties().getProperty("line.separator") +
@@ -426,7 +451,7 @@ public class Assignment implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 158 "../../../../../ClimbSafePersistence.ump"
+  // line 159 "../../../../../ClimbSafePersistence.ump"
   private static final long serialVersionUID = 8613302774459815337L ;
 
   

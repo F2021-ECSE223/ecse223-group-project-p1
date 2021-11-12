@@ -1,18 +1,13 @@
 
-// State Machine for the Member class
-// Member object becomes Assigned when toggleStatus() is called 
-// on it at the Unassigned state
-// @author Asma Gandour
 class Member{
+	lazy Integer refundPercentage;
 
-assignementStatus{
-  	Unassigned{
-  		toggleStatus() -> Assigned;
-  		
-  	}Assigned{
-  	}
-  }
-
+	memberStatus{
+    	Unbanned{
+		ban()-> Banned;
+		}
+		Banned{}
+    }
 
 }
 
@@ -40,13 +35,13 @@ class Guide {
 		Integer endWeek;
 		for(Member member: climbSafe.getMembers()){
 
-			if(member.getAssignementStatusFullName().equals("Unassigned")){
+			if(member.getAssignment() == null){
 				if(!member.isGuideRequired()){
 
 					endWeek = startWeek + member.getNrWeeks() - 1;
 					Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
 					climbSafe.addAssignment(assignment);
-					member.toggleStatus();
+					member.getAssignment().toggleStatus();
 
 				}else{
 					if(isAvailableFor(member.getNrWeeks())){
@@ -58,7 +53,7 @@ class Guide {
 						Assignment assignment = new Assignment(startWeek, endWeek, member, climbSafe);
 						addAssignment(assignment);
 						climbSafe.addAssignment(assignment);
-						member.toggleStatus();
+						member.getAssignment().toggleStatus();
 
 
 					}
@@ -74,33 +69,37 @@ class Guide {
 
   
 class Assignment{
+    lazy String paymentAuthorizationCode;
 
-    tripStatus{
+    assignmentStatus{
     
-      notStarted{
-       startTrip() -> Started; 
-       cancelTrip() -> Cancelled;  
-
-      } Started {
+	  Unassigned{
+	   toggleStatus() -> Assigned;
+	  		
+	  }Assigned{
+        pay()[!member.getMemberStatusFullName().equals("Banned")]-> Paid;
+        startTrip()/{getMember().ban();}-> Assigned;
+        cancelTrip()[!member.getMemberStatusFullName().equals("Banned")] -> Cancelled;  
+      }
+      
+      Paid{
         startTrip() -> Started;
+        cancelTrip() -> Cancelled;  
+      }
+      
+      Started {
+        
         finishTrip() -> Finished;
         cancelTrip() -> Cancelled;
 
-      } Finished{
-        finishTrip() -> Finished;
-      }  
-
-      Cancelled{
-       cancelTrip() -> Cancelled;    	
       }
-
+      
+      Cancelled{}
+      
+      Finished{
+        cancelTrip() -> Cancelled; 
+      } 
+      
     }
-    
-    paymentStatus{
-	notPaid{
-		pay()-> paid;
-	}
-	paid {}
-    }
-
+     
 }
