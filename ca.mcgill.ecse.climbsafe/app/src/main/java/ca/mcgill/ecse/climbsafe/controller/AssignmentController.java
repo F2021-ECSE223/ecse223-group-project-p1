@@ -45,7 +45,8 @@ public class AssignmentController {
    * throws an exception.
    * 
    * @author Haroun Guessous
-   * @param member
+   * @param email
+   * @param paymentAuthorizationCode
    * @throws InvalidInputException
    */
   public static void payment(String email, String paymentAuthorizationCode)
@@ -92,10 +93,7 @@ public class AssignmentController {
    * @param startingWeekNb
    * @throws InvalidInputException
    */
-  public static void startTrips(Integer startingWeekNb) throws InvalidInputException { // start all
-                                                                                       // trips for
-                                                                                       // a specific
-                                                                                       // week
+  public static void startTrips(Integer startingWeekNb) throws InvalidInputException { 
     // retrieves all the members
     for (var member : climbSafe.getMembers()) {
       var memberAssignment = member.getAssignment();
@@ -128,10 +126,9 @@ public class AssignmentController {
    * This method finished the trip for a Member "member".
    * 
    * @author Atreyi Srivastava, Asma Gandour
-   * 
+   * @param email
    * @throws InvalidInputException
    */
-
   public static void finishTrip(String email) throws InvalidInputException {
     Member member = (Member) User.getWithEmail(email);
     if (member == null) {
@@ -169,10 +166,9 @@ public class AssignmentController {
    * This method cancels the trip for a Member "member".
    * 
    * @author Mohammad Shaheer Bilal
-   * 
+   * @param email
    * @throws InvalidInputException
    */
-
   public static void cancelTrip(String email) throws InvalidInputException {
     Member member = (Member) User.getWithEmail(email);
     if (member == null) {

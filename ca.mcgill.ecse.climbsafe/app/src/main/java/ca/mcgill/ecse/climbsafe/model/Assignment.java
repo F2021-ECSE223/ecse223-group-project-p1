@@ -4,7 +4,7 @@
 package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 
-// line 71 "../../../../../ClimbSafeStates.ump"
+// line 70 "../../../../../ClimbSafeStates.ump"
 // line 155 "../../../../../ClimbSafePersistence.ump"
 // line 77 "../../../../../ClimbSafe.ump"
 public class Assignment implements Serializable
@@ -153,7 +153,7 @@ public class Assignment implements Serializable
     switch (aAssignmentStatus)
     {
       case Assigned:
-        // line 81 "../../../../../ClimbSafeStates.ump"
+        // line 80 "../../../../../ClimbSafeStates.ump"
         getMember().ban();
         setAssignmentStatus(AssignmentStatus.Assigned);
         wasEventProcessed = true;

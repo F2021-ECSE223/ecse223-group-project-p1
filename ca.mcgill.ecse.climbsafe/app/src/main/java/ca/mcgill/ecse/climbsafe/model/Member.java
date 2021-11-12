@@ -5,7 +5,7 @@ package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 import java.util.*;
 
-// line 2 "../../../../../ClimbSafeStates.ump"
+// line 1 "../../../../../ClimbSafeStates.ump"
 // line 80 "../../../../../ClimbSafePersistence.ump"
 // line 43 "../../../../../ClimbSafe.ump"
 public class Member extends NamedUser implements Serializable

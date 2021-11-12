@@ -5,7 +5,7 @@ package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 import java.util.*;
 
-// line 15 "../../../../../ClimbSafeStates.ump"
+// line 14 "../../../../../ClimbSafeStates.ump"
 // line 72 "../../../../../ClimbSafePersistence.ump"
 // line 38 "../../../../../ClimbSafe.ump"
 public class Guide extends NamedUser implements Serializable
@@ -184,7 +184,7 @@ public class Guide extends NamedUser implements Serializable
    * a given number of weeks
    * @author Asma Gandour
    */
-  // line 21 "../../../../../ClimbSafeStates.ump"
+  // line 20 "../../../../../ClimbSafeStates.ump"
    public boolean isAvailableFor(Integer nbrWeeks){
     if(hasAssignments()){
       Integer lastWeek = getAssignment(numberOfAssignments()-1).getEndWeek();
@@ -201,7 +201,7 @@ public class Guide extends NamedUser implements Serializable
    * until the guide is not available anymore
    * @author Asma Gandour
    */
-  // line 34 "../../../../../ClimbSafeStates.ump"
+  // line 33 "../../../../../ClimbSafeStates.ump"
    public boolean performAssignmentToMembers(){
     Integer startWeek = 1;
 		Integer endWeek;
