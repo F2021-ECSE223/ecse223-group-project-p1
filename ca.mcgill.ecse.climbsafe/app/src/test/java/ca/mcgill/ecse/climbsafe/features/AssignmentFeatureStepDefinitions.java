@@ -277,7 +277,7 @@ public class AssignmentFeatureStepDefinitions {
       String refundPercentage) {
 	  int refund = Integer.parseInt(refundPercentage);
 	  var member =(Member)User.getWithEmail(memberEmail);
-	  assertEquals(refundPercentage, member.getRefundPercentage()); 
+	  assertEquals(refund, member.getRefundPercentage()); 
   }
 	
 /**
