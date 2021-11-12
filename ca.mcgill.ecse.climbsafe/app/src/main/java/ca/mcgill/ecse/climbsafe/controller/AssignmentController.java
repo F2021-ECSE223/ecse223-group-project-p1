@@ -50,7 +50,7 @@ public class AssignmentController {
 public static void payment(String email, String paymentAuthorizationCode) throws InvalidInputException{
 	  Member member= (Member)Member.getWithEmail(email);
       if(member==null){
-       throw new InvalidInputException("Member with email address"+email+"does not exist"); 
+       throw new InvalidInputException("Member with email address "+email+" does not exist"); 
       }
       switch(member.getMemberStatusFullName())
       {
@@ -117,7 +117,7 @@ public static void payment(String email, String paymentAuthorizationCode) throws
     public static void finishTrip(String email) throws InvalidInputException {
       Member member= (Member)User.getWithEmail(email);
       if(member==null){
-       throw new InvalidInputException("Member with email address"+email+"does not exist"); 
+       throw new InvalidInputException("Member with email address "+email+" does not exist"); 
       }
       var assignment=member.getAssignment();
 	    
@@ -156,7 +156,7 @@ public static void payment(String email, String paymentAuthorizationCode) throws
      public static void cancelTrip(String email) throws InvalidInputException {
     	Member member = (Member)User.getWithEmail(email);
     	if(member==null){
-    		throw new InvalidInputException("Member with email address"+email+"does not exist"); 
+    		throw new InvalidInputException("Member with email address "+email+" does not exist"); 
     	    }
 	     
 	if(member.getMemberStatusFullName().equals("Banned")){
