@@ -1,6 +1,7 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
 
+
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
@@ -192,6 +193,7 @@ public class AssignmentController {
     if (assignment.getAssignmentStatusFullName().equals("Started")) {
       member.setRefundPercentage(10);
     }
+
 
     assignment.cancelTrip();
     try {
