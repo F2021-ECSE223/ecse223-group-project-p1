@@ -1,11 +1,15 @@
 package ca.mcgill.ecse.climbsafe.features;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import org.junit.Assert;
+import org.junit.jupiter.api.function.Executable;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet1Controller;
+import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
+import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
@@ -15,6 +19,7 @@ import io.cucumber.java.en.When;
 
 public class P12StepDefinitions {
 
+  private String error;
   private ClimbSafe climbSafe;
 
   /**
@@ -87,7 +92,8 @@ public class P12StepDefinitions {
    */
   @When("the admin attempts to delete the guide account linked to the {string} \\(p12)")
   public void the_admin_attempts_to_delete_the_guide_account_linked_to_the_p12(String string) {
-    ClimbSafeFeatureSet1Controller.deleteGuide(string);
+    callController(() -> ClimbSafeFeatureSet1Controller.deleteGuide(string));
+    
   }
 
   /**
@@ -182,6 +188,17 @@ public class P12StepDefinitions {
       }
     }
     return null;
+  }
+  
+  
+  private void callController(Executable executable) {
+    try {
+      executable.execute();
+    } catch (InvalidInputException e) {
+      error += e.getMessage();
+    } catch (Throwable t) {
+      fail();
+    }
   }
 
 }

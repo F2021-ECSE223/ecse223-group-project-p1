@@ -14,20 +14,21 @@ class ClimbSafe {
 }
 
 class User {
-  depend java.io.Serializable;
+   depend java.io.Serializable;
   isA Serializable;
-  private static final long serialVersionUID = 2L;
+
+  private static final long serialVersionUID = 2315072607928790501L;
   
-  public static void reinitializeUniqueEmail(Administrator admin, List<Guide> guides, List<Member> members) {
-    usersByEmail = new HashMap<String, User>();
-    usersByEmail.put(admin.getEmail(), admin);
-    for (Guide guide : guides) {
-      usersByEmail.put(guide.getEmail(), guide);
-    }
-    for (Member member : members) {
-      usersByEmail.put(member.getEmail(), member);
-    }
+  
+	public static void reinitializeUniqueEmail(List<User> users) {
+	  usersByEmail = new HashMap<String, User>();
+	  for (User user : users) {
+	  	if(user != null)
+	    	usersByEmail.put(user.getEmail(), user);
+	  }
+  
   }
+  
 
 }
 
@@ -55,8 +56,17 @@ class Member {
   private static final long serialVersionUID = 6L;
 }
 
-// persistence for BookedItem needs to be specified in ClimbSafe.ump
-// due to a bug in Umple (association classes cannot be defined in two files)
+
+associationClass BookedItem {
+  Integer quantity;
+  * Member member;
+  * BookableItem item;
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 2045406876024012133L;
+}
+
+
 
 class BookableItem {
   depend java.io.Serializable;
@@ -87,8 +97,16 @@ class EquipmentBundle {
   private static final long serialVersionUID = 9L;
 }
 
-// persistence for BundleItem needs to be specified in ClimbSafe.ump
-// due to a bug in Umple (association classes cannot be defined in two files)
+
+associationClass BundleItem {
+  Integer quantity;
+  * EquipmentBundle bundle;
+  * Equipment equipment;
+  depend java.io.Serializable;
+  isA Serializable;
+  private static final long serialVersionUID = 2335406876029412133L;
+}
+
 
 class Hotel {
   depend java.io.Serializable;

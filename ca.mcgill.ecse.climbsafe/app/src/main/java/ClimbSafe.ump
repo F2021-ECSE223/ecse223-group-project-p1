@@ -38,6 +38,9 @@ class NamedUser {
 
 class Guide {
   isA NamedUser;
+
+  
+
 }
 
 class Member {
@@ -47,15 +50,6 @@ class Member {
   Boolean hotelRequired;
 }
 
-associationClass BookedItem {
-  Integer quantity;
-  * Member member;
-  * BookableItem item;
-
-  depend java.io.Serializable;
-  isA Serializable;
-  private static final long serialVersionUID = 12L;
-}
 
 class BookableItem {
   abstract;
@@ -73,15 +67,7 @@ class EquipmentBundle {
   Integer discount;
 }
 
-associationClass BundleItem {
-  Integer quantity;
-  * EquipmentBundle bundle;
-  * Equipment equipment;
 
-  depend java.io.Serializable;
-  isA Serializable;
-  private static final long serialVersionUID = 13L;
-}
 
 class Hotel {
   unique name;
@@ -96,4 +82,73 @@ class Assignment {
   0..1 -- 1 Member member;
   * -- 0..1 Guide guide;
   * -- 0..1 Hotel hotel;
+
+  
+    public int getTotalCostForGuide(){
+	 int totalCostForGuide = 0;
+	 
+	 // If no guide, then total cost = 0
+	 if(this.hasGuide()){
+	 
+		 int nbrWeek = this.getMember().getNrWeeks();
+		 	
+		 	// Compute total cost
+		  	totalCostForGuide += this.getClimbSafe().getPriceOfGuidePerWeek()*nbrWeek;
+		 
+	 }
+	  return totalCostForGuide;
+  }
+  
+  public int getTotalCostForEquipment(){
+  	 double totalCostForEquipment = 0;
+	 int nbrWeek = this.getMember().getNrWeeks();
+	 if(this.getMember().hasBookedItems()){
+	 	
+	 	
+	 	// Iterating over the booked items of the member
+	 	for(BookedItem bookedItem: this.getMember().getBookedItems()){
+	 	int quantity = bookedItem.getQuantity();
+	 	
+	  	if(bookedItem.getItem() instanceof EquipmentBundle){
+	  	
+	  		
+	  				// Then we get the bundle
+	  				EquipmentBundle bundle = ((EquipmentBundle) bookedItem.getItem());
+	  				
+	  				
+					// And we iterate over the items of equipment bundle
+					for(BundleItem item: bundle.getBundleItems()){
+					
+						// We check if a guide is hired
+						if(this.getMember().isGuideRequired()){
+							
+						
+							// If so, the discount is applied on the equipments
+							totalCostForEquipment += item.getQuantity() * quantity*
+								item.getEquipment().getPricePerWeek() * ( (100-bundle.getDiscount()) /100.0 ) * nbrWeek;
+						}else{
+						
+							// If not, the equipments are rented at regular price
+							
+							totalCostForEquipment += item.getQuantity() * 
+								item.getEquipment().getPricePerWeek() * quantity* nbrWeek;
+						}
+					
+					}
+	  		// If the current item is an equipment not in a bundle
+	   	}else if(bookedItem.getItem() instanceof Equipment){
+	 		
+	 			// Then the cost is the equipment's price per week times the number of weeks
+	  			totalCostForEquipment += ((Equipment) bookedItem.getItem()).getPricePerWeek()* quantity* nbrWeek;
+	  			
+	  		
+	  	}
+	  		
+	  		
+	  	}
+	 }
+	 return ((int) totalCostForEquipment);
+  
+  }
 }
+
