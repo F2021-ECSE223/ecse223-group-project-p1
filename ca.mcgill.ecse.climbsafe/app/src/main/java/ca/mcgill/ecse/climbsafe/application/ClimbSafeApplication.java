@@ -3,20 +3,36 @@
  */
 package ca.mcgill.ecse.climbsafe.application;
 
-import java.sql.Date;
+import java.awt.EventQueue;
+
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
+import ca.mcgill.ecse.climbsafe.view.ClimbSafePage;
 
 public class ClimbSafeApplication {
-  private static ClimbSafe climbSafe;
+	
+	
+public static final boolean DARK_MODE = true;
+private static ClimbSafe climbSafe;
 
   public String getGreeting() {
-    return "Hello World!";
+    return "Hello World!"; 
   }
 
   public static void main(String[] args) {
-    System.out.println(new ClimbSafeApplication().getGreeting());
-  }
+	    // start UI
+	    try {
+	      UIManager.setLookAndFeel(DARK_MODE ? new FlatDarkLaf() : new FlatLightLaf());
+	    } catch (UnsupportedLookAndFeelException e) {
+	      // Use regular Swing theme if FlatLaf is unavailable
+	    }
+	    EventQueue.invokeLater(ClimbSafePage::new);
+	  }
 
   public static ClimbSafe getClimbSafe() {
     if (climbSafe == null) {

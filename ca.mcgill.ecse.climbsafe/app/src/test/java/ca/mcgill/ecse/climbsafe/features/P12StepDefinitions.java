@@ -6,6 +6,7 @@ import java.util.Map;
 import org.junit.Assert;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet1Controller;
+import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
@@ -84,9 +85,10 @@ public class P12StepDefinitions {
    * @author Cédric Barré, Theo Ghanem, Zachary Godden, Chris Hatoum, Habib Jarweh, Philippe
    *         Sarouphim Hochar
    * @param string Email of the guide to be deleted
+ * @throws InvalidInputException 
    */
   @When("the admin attempts to delete the guide account linked to the {string} \\(p12)")
-  public void the_admin_attempts_to_delete_the_guide_account_linked_to_the_p12(String string) {
+  public void the_admin_attempts_to_delete_the_guide_account_linked_to_the_p12(String string) throws InvalidInputException {
     ClimbSafeFeatureSet1Controller.deleteGuide(string);
   }
 

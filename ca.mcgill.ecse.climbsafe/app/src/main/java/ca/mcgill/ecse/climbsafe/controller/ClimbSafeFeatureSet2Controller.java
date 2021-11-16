@@ -145,12 +145,6 @@ public class ClimbSafeFeatureSet2Controller {
     if (member == null) {
       throw new InvalidInputException("Member not found");
     }
-    member.setPassword(newPassword);
-    member.setName(newName);
-    member.setEmergencyContact(newEmergencyContact);
-    member.setNrWeeks(newNrWeeks);
-    member.setGuideRequired(newGuideRequired);
-    member.setHotelRequired(newHotelRequired);
 
     for (int i = member.getBookedItems().size() - 1; i >= 0; i--) {
       // if we use for(item : member.getBookeItems()) our elements will be shifter to
