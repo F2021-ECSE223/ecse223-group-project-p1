@@ -11,3 +11,35 @@ class TOAssignment {
   Integer totalCostForGuide;
   Integer totalCostForEquipment;
 }
+
+class TOGuide{
+	email;
+	password;
+  name;
+  emergencyContact;
+  @Override public String toString() {
+    return email;
+  }
+
+}
+
+class TOMember{
+	email;
+	password;
+  name;
+  emergencyContact;
+  
+    Integer nrWeeks;
+  Boolean guideRequired;
+  Boolean hotelRequired;
+  @Override public String toString() {
+    return email;
+  }
+}
+
+class TOBookableItem{
+	name;
+	 @Override public String toString() {
+    return name;
+  }
+}
