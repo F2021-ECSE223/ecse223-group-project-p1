@@ -12,6 +12,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
+import ca.mcgill.ecse.climbsafe.view.ClimbSafeMainPage;
 import ca.mcgill.ecse.climbsafe.view.ClimbSafePage;
 
 public class ClimbSafeApplication {
@@ -25,13 +26,13 @@ private static ClimbSafe climbSafe;
   }
 
   public static void main(String[] args) {
-	    // start UI
-	    try {
+	    // start UI with dark mode, otherwise default mode
+	   /* try {
 	      UIManager.setLookAndFeel(DARK_MODE ? new FlatDarkLaf() : new FlatLightLaf());
 	    } catch (UnsupportedLookAndFeelException e) {
 	      // Use regular Swing theme if FlatLaf is unavailable
-	    }
-	    EventQueue.invokeLater(ClimbSafePage::new);
+	    }*/
+	    EventQueue.invokeLater(ClimbSafeMainPage::new);
 	  }
 
   public static ClimbSafe getClimbSafe() {
