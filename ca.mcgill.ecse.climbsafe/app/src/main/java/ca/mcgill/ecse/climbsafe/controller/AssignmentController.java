@@ -1,6 +1,8 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
@@ -193,4 +195,39 @@ public class AssignmentController {
             throw new InvalidInputException(e.getMessage());
           }
     }
+     
+     public static List<TOMember> getMembers() {
+       var members = new ArrayList<TOMember>();
+       for (var member : climbSafe.getMembers()) {
+         members.add(new TOMember(member.getEmail(), member.getPassword(), 
+             member.getName(), member.getEmergencyContact(), member.getNrWeeks(),
+             member.getGuideRequired(), member.getHotelRequired()));
+       }
+       return members;
+     }
+     
+     public static List<TOGuide> getGuides() {
+       var guides = new ArrayList<TOGuide>();
+       for (var guide : climbSafe.getGuides()) {
+         guides.add(new TOGuide(guide.getEmail(), guide.getPassword(), 
+             guide.getName(), guide.getEmergencyContact()));
+       }
+       return guides;
+     }
+     
+     public static List<TOEquipment> getEquipments() {
+       var equipments = new ArrayList<TOEquipment>();
+       for (var equipment : climbSafe.getEquipment()) {
+         equipments.add(new TOEquipment(equipment.getName(),
+             equipment.getWeight(), equipment.getPricePerWeek()));
+       }
+       return equipments;
+     }
+     
+     public static List<Integer> getWeekNbrs(){
+       var weekNbrs = new ArrayList<Integer>();
+       for(int i = 1; i < climbSafe.getNrWeeks()+1 ; i++)
+         weekNbrs.add(i);
+       return weekNbrs;
+     }
 }
