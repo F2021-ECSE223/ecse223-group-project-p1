@@ -20,7 +20,6 @@ class TOGuide{
   @Override public String toString() {
     return email;
   }
-
 }
 
 class TOMember{
