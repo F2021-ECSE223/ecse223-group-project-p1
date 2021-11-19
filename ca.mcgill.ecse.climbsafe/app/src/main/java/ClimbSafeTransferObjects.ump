@@ -36,9 +36,10 @@ class TOMember{
   }
 }
 
-class TOBookableItem{
-	name;
-	 @Override public String toString() {
-    return name;
-  }
+
+class TOEquipment{
+  name;
+  Integer weight;
+  Integer pricePerWeek;
+
 }
