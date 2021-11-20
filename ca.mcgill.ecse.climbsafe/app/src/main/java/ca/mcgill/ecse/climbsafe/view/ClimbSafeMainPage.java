@@ -59,7 +59,7 @@ public class ClimbSafeMainPage extends JFrame {
 
   // All text fields are listed here
   private String error = "";
-  private JTextField newMemberEmailTextField;
+  private JTextField newMemberWeekTextField;
   private JTextField newMemberEmergencyNumberTextField;
   private JTextField newMemberPasswordTextField;
   private JTextField newMemberNameTextField;
@@ -92,7 +92,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JPanel panel;
   private JLabel selectMemberToUpdateLabel;
   private JComboBox selectMemberToUpdateComboBox;
-  private JLabel newMemberEmailLabel;
+  private JLabel newMemberWeekLabel;
   private JLabel newMemberEmergencyNumberLabel;
   private JLabel newMemberPasswordLabel;
   private JLabel newMemberNameLabel;
@@ -102,16 +102,16 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel selectNewItemsComboBoxUpdatePage;
   private JComboBox selectNewItemsComboBox;
   private JLabel memberItemQuantityLabel;
-  private JButton memberAddItemButton; 
-  private JButton updateMemberButton; 
+  private JButton memberAddItemButton;
+  private JButton updateMemberButton;
   private JLabel updateMemberInformationLabel;
   private JLabel updateGuideInformationLabel;
   private JLabel selectGuideToUpdateLabel;
   private JLabel newGuideEmailLabel;
-  private JComboBox selectGuideToUpdateComboBox; 
+  private JComboBox selectGuideToUpdateComboBox;
   private JLabel newGuideEmergencyNumberLabel;
   private JLabel newGuideNameLabel;
-  private JButton updateGuideButton; 
+  private JButton updateGuideButton;
   private JLabel background;
 
   // SECOND TAB BELOW (except text fields) -- REGISTER PAGE
@@ -126,8 +126,8 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel guideRegisterPasswordLabel;
   private JLabel guideRegisterEmergencyContactLabel;
   private JLabel guideRegisterNameLabel;
-  private JButton registerMemberBtn; 
-  private JButton registerGuideBtn; 
+  private JButton registerMemberBtn;
+  private JButton registerGuideBtn;
   private JLabel registerAsMemberLabel;
   private JLabel registerAsGuideLabel;
   private JLabel backgroundRegisterPage;
@@ -137,7 +137,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel setUpStartdateLabel;
   private JLabel setUpNumWeeksLabel;
   private JLabel setUpPriceGuidePerWeekLabel;
-  private JButton confirmSetUpButton; 
+  private JButton confirmSetUpButton;
   private JLabel setUpNMCLabel;
   private JLabel backgroundSetUpPage;
   private ImageIcon backgroundImageSetUpPage;
@@ -146,14 +146,14 @@ public class ClimbSafeMainPage extends JFrame {
   private JPanel panel_3;
   private JLabel removeUserLabel;
   private JLabel selectGuideRemovePageLabel;
-  private JComboBox selectGuideRemovePageComboBox; 
-  private JButton deleteGuideButton; 
+  private JComboBox selectGuideRemovePageComboBox;
+  private JButton deleteGuideButton;
   private JLabel selectMemberRemovePageLabel;
-  private JComboBox selectMemberRemovePageComboBox; 
-  private JButton deleteMemberButton; 
+  private JComboBox selectMemberRemovePageComboBox;
+  private JButton deleteMemberButton;
   private JLabel selectEquipmentRemovePageLabel;
-  private JComboBox selectEquipmentRemovePageComboBox; 
-  private JButton deleteEquipmentButton; 
+  private JComboBox selectEquipmentRemovePageComboBox;
+  private JButton deleteEquipmentButton;
   private JLabel removeEquipmentLabel;
   private JLabel backgroundRemovePage;
 
@@ -163,31 +163,31 @@ public class ClimbSafeMainPage extends JFrame {
   JLabel weightEquipmentToAddLabel;
   private JLabel pricePerWeekEquipmentToAddLabel;
   private JLabel addEquipmentLabel;
-  private JButton addEquipmentButton; 
+  private JButton addEquipmentButton;
   private JLabel updateEquipmentLabel;
   private JLabel newEquipmentNameLabel;
   private JLabel newEquipmentWeightLabel;
   private JLabel newEquipmentPricePerWeekLabel;
-  private JButton updateEquipmentButton; 
+  private JButton updateEquipmentButton;
   private JLabel selectEquipmentToUpdateLabel;
-  private JComboBox selectEquipmentToUpdateComboBox; 
+  private JComboBox selectEquipmentToUpdateComboBox;
   private JLabel backgroundEquipmentPage;
 
   // SIXTH TAB BELOW -- ASSIGNMENT AND PAYMENT
   private JPanel panel_5;
   private JLabel selectMemberForPayLabel;
-  private JComboBox selectMemberForPayComboBox; 
-  private JButton payForTheTripButton; 
-  private JButton finishTheTripButton; 
-  private JButton cancelTheTripButton; 
+  private JComboBox selectMemberForPayComboBox;
+  private JButton payForTheTripButton;
+  private JButton finishTheTripButton;
+  private JButton cancelTheTripButton;
   private JLabel autorizationCodeLabel;
   private JLabel payFinishOrCancelTripLabel;
   private JLabel initiateAssignmentsLabel;
-  private JButton initiateAssignmentsForAllMembersButton; 
+  private JButton initiateAssignmentsForAllMembersButton;
   private JLabel selectStartWeekNumberLabel;
-  private JComboBox selectStartWeekNumberComboBox; 
+  private JComboBox selectStartWeekNumberComboBox;
   private JLabel startTripsLabel;
-  private JButton startAllTripsForThisWeekLabel; 
+  private JButton startAllTripsForThisWeekLabel;
   private JLabel backgroundAssignmentPage;
 
   private static final Map<String, String> DATE_PROPS =
@@ -203,9 +203,9 @@ public class ClimbSafeMainPage extends JFrame {
     setResizable(false);
 
     getContentPane().setLayout(null);
-    
-    
-    
+
+
+
     tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
     tabbedPane_1.setBounds(0, 0, 1211, 537);
     getContentPane().add(tabbedPane_1);
@@ -213,7 +213,7 @@ public class ClimbSafeMainPage extends JFrame {
     panel = new JPanel();
     tabbedPane_1.addTab("Update user information", null, panel, null);
     panel.setLayout(null);
-    
+
 
 
     JSeparator separator = new JSeparator();
@@ -231,16 +231,16 @@ public class ClimbSafeMainPage extends JFrame {
     selectMemberToUpdateComboBox.setBounds(210, 276, 189, 27);
     panel.add(selectMemberToUpdateComboBox);
 
-    newMemberEmailTextField = new JTextField();
-    newMemberEmailTextField.setBounds(210, 328, 189, 27);
-    panel.add(newMemberEmailTextField);
-    newMemberEmailTextField.setColumns(10);
+    newMemberWeekTextField = new JTextField();
+    newMemberWeekTextField.setBounds(210, 328, 189, 27);
+    panel.add(newMemberWeekTextField);
+    newMemberWeekTextField.setColumns(10);
 
-    newMemberEmailLabel = new JLabel("New email: ");
-    newMemberEmailLabel.setForeground(Color.WHITE);
-    newMemberEmailLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    newMemberEmailLabel.setBounds(111, 325, 93, 27);
-    panel.add(newMemberEmailLabel);
+    newMemberWeekLabel = new JLabel("New number of weeks: ");
+    newMemberWeekLabel.setForeground(Color.WHITE);
+    newMemberWeekLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    newMemberWeekLabel.setBounds(10, 325, 194, 27);
+    panel.add(newMemberWeekLabel);
 
     newMemberEmergencyNumberLabel = new JLabel("New emergency number:");
     newMemberEmergencyNumberLabel.setForeground(Color.WHITE);
@@ -966,15 +966,15 @@ public class ClimbSafeMainPage extends JFrame {
     backgroundAssignmentPage.setIcon(backgroundImageAssignmentPage);
     backgroundAssignmentPage.setOpaque(true);
     panel_5.add(backgroundAssignmentPage);
-    
-    
+
+
     // ACTION LISTENERS
     memberAddItemButton.addActionListener(this::addMemberButtonActionPerformed);
-    updateMemberButton.addActionListener(this::updateMemberButtonActionPerformed); 
-    updateGuideButton.addActionListener(this::updateGuideButtonActionPerformed); 
-    registerMemberBtn.addActionListener(this::registerMemberButtonActionPerformed); 
-    registerGuideBtn.addActionListener(this::registerGuideButtonActionPerformed); 
-    confirmSetUpButton.addActionListener(this::confirmSetUpButtonActionPerformed); 
+    updateMemberButton.addActionListener(this::updateMemberButtonActionPerformed);
+    updateGuideButton.addActionListener(this::updateGuideButtonActionPerformed);
+    registerMemberBtn.addActionListener(this::registerMemberButtonActionPerformed);
+    registerGuideBtn.addActionListener(this::registerGuideButtonActionPerformed);
+    confirmSetUpButton.addActionListener(this::confirmSetUpButtonActionPerformed);
     deleteGuideButton.addActionListener(this::deleteGuideButtonActionPerformed);
     deleteMemberButton.addActionListener(this::deleteMemberButtonActionPerformed);
     deleteEquipmentButton.addActionListener(this::deleteEquipmentButtonActionPerformed);
@@ -991,14 +991,14 @@ public class ClimbSafeMainPage extends JFrame {
     setSize(backgroundImage.getIconWidth(), backgroundImage.getIconHeight() - offset);
     refreshData();
     setVisible(true);
-   
+
   }
 
   private void refreshData() {
     errorMessage.setText(error);
     if (error == null || error.isEmpty()) {
 
-      newMemberEmailTextField.setText("");
+      newMemberWeekTextField.setText("");
       newMemberEmergencyNumberTextField.setText("");
       newMemberPasswordTextField.setText("");
       newMemberNameTextField.setText("");
@@ -1024,73 +1024,104 @@ public class ClimbSafeMainPage extends JFrame {
       newEquipmentWeightTextField.setText("");
       newEquipmentPricePerWeekTextField.setText("");
       authorizationCodeTextField.setText("");
-      
-      var lists = List.of(selectMemberToUpdateComboBox,
-        selectNewItemsComboBox, selectGuideToUpdateComboBox,
-        selectGuideRemovePageComboBox, selectMemberRemovePageComboBox,
-        selectEquipmentRemovePageComboBox, selectEquipmentToUpdateComboBox,
-        selectMemberForPayComboBox, selectStartWeekNumberComboBox);
-      
+
+      var lists =
+          List.of(selectMemberToUpdateComboBox, selectNewItemsComboBox, selectGuideToUpdateComboBox,
+              selectGuideRemovePageComboBox, selectMemberRemovePageComboBox,
+              selectEquipmentRemovePageComboBox, selectEquipmentToUpdateComboBox,
+              selectMemberForPayComboBox, selectStartWeekNumberComboBox);
+
       lists.forEach(JComboBox::removeAllItems);
-      
+
       // select member to update
       AssignmentController.getMembers().forEach(selectMemberToUpdateComboBox::addItem);
-      
+
       // select items (equipments) when updating member
       AssignmentController.getEquipments().forEach(selectNewItemsComboBox::addItem);
-      
+
       // select guide to update
       AssignmentController.getGuides().forEach(selectGuideToUpdateComboBox::addItem);
-      
+
       // select guide to remove
       AssignmentController.getGuides().forEach(selectGuideRemovePageComboBox::addItem);
-      
+
       // select member to remove
       AssignmentController.getMembers().forEach(selectMemberRemovePageComboBox::addItem);
-      
+
       // select equipment to remove
       AssignmentController.getEquipments().forEach(selectEquipmentRemovePageComboBox::addItem);
-      
+
       // select equipment to update
       AssignmentController.getEquipments().forEach(selectEquipmentToUpdateComboBox::addItem);
-      
+
       // select member to pay
       AssignmentController.getMembers().forEach(selectMemberForPayComboBox::addItem);
-      
+
       // select start week
       AssignmentController.getWeekNbrs().forEach(selectStartWeekNumberComboBox::addItem);
-      
+
       lists.forEach(list -> list.setSelectedIndex(-1));
-      
-      
+
+
     }
-    
-    
+
+
   }
-  
+
   private void addMemberButtonActionPerformed(ActionEvent evt) {
-  
+
   }
-  
+
   private void updateMemberButtonActionPerformed(ActionEvent evt) {
-    
-  }
-  
-  private void updateGuideButtonActionPerformed(ActionEvent evt) {
-    
-  }
-  
-  private void registerMemberButtonActionPerformed(ActionEvent evt) {
-      
+    // clear error message and basic input validation
+    error = "";
+    var selectedMember = (TOMember) selectMemberToUpdateComboBox.getSelectedItem();
+    if (selectedMember == null) {
+      error = "Member needs to be selected to be updated!";
     }
+    String newName = newMemberNameTextField.getText();
+    if (newName.isEmpty()) {
+      error += "Enter a name";
+    }
+    String newPassword = newMemberPasswordTextField.getText();
+    if (newPassword.isEmpty()) {
+      error += "Enter a password";
+    }
+    String newContact = newMemberEmergencyNumberTextField.getText();
+    if (newContact.isEmpty()) {
+      error += "Enter an emergency number";
+    }
+    int newNbrWeek = getNumberFromField(newMemberWeekTextField,
+        "Equipment quantity needs to be a numerical value!");
+    boolean newGuideRequired = memberGuideRequiredRdBtn.isSelected();
+    boolean newHotelRequired = memberHotelRequiredRdBtn.isSelected();
+
+    if (error.isEmpty()) {
+      // call the controller
+      callController(() -> AssignmentController.updateMember(selectedMember.getEmail(), newPassword,
+          newName, newContact, newNbrWeek, newGuideRequired, newHotelRequired));
+    }
+    // update visuals
+    refreshData();
+  }
+
+  private void updateGuideButtonActionPerformed(ActionEvent evt) {
+
+  }
+
+  private void registerMemberButtonActionPerformed(ActionEvent evt) {
+
+
+  }
+
   private void registerGuideButtonActionPerformed(ActionEvent evt) {
-    
+
   }
-  
+
   private void confirmSetUpButtonActionPerformed(ActionEvent evt) {
-    
+
   }
-  
+
   private void deleteGuideButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1104,9 +1135,9 @@ public class ClimbSafeMainPage extends JFrame {
 
     // update visuals
     refreshData();
-    
+
   }
-  
+
   private void deleteMemberButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1123,47 +1154,69 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void deleteEquipmentButtonActionPerformed(ActionEvent evt) {
- // clear error message and basic input validation
+    // clear error message and basic input validation
     error = "";
     var selectedEquipment = (TOEquipment) selectEquipmentRemovePageComboBox.getSelectedItem();
     if (selectedEquipment == null) {
       error = "Equipment needs to be selected to be removed!";
     } else {
       // call the controller
-      callController(() -> ClimbSafeFeatureSet6Controller.deleteEquipment(selectedEquipment.getName()));
+      callController(
+          () -> ClimbSafeFeatureSet6Controller.deleteEquipment(selectedEquipment.getName()));
     }
 
     // update visuals
     refreshData();
   }
-  
+
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
-    
+
   }
 
   private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
+    // clear error message and basic input validation
+    error = "";
+    var selectedMember = (TOMember) selectMemberToUpdateComboBox.getSelectedItem();
+    if (selectedMember == null) {
+      error = "Member needs to be selected to add the item!";
+    }
 
-    
+    var selectedEquipment = (TOEquipment) selectNewItemsComboBox.getSelectedItem();
+    if (selectedEquipment == null) {
+      error = "Equipment needs to be selected to be added!";
+    }
+    int equipmentQuantity = getNumberFromField(memberItemQuantityTextField,
+        "Equipment quantity needs to be a numerical value!");
+
+    if (error.isEmpty()) {
+      // call the controller
+      callController(() -> AssignmentController.tempAssignment(selectedMember, selectedEquipment,
+          equipmentQuantity));
+    }
+
+    // update visuals
+    refreshData();
+
   }
-  
+
   private void payButtonActionPerformed(ActionEvent evt) {
-    
+
   }
-  
+
   private void finishButtonActionPerformed(ActionEvent evt) {
-    
+
   }
-  
+
   private void cancelButtonActionPerformed(ActionEvent evt) {
-    
+
   }
-  
+
   private void initiateActionPerformed(ActionEvent evt) {
-    
+
   }
-  
+
   private void startTripsButtonActionPerformed(ActionEvent evt) {
-    
+
   }
 
   /**
