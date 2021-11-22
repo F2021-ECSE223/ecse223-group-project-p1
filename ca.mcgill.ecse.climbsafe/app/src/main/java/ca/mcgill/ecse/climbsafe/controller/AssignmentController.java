@@ -243,33 +243,4 @@ public class AssignmentController {
     return weekNbrs;
   }
 
-  public static boolean tempAssignment(TOMember member, TOEquipment tempEquipment,
-      Integer quantity) {
-    Member theMember = new Member(member.getEmail(), member.getPassword(), member.getName(),
-        member.getEmergencyContact(), member.getNrWeeks(), member.getGuideRequired(),
-        member.getHotelRequired(), climbSafe);
-
-    theMember.addTemporaryEquipment(tempEquipment.getName(), tempEquipment.getWeight(),
-        tempEquipment.getPricePerWeek(), climbSafe, quantity);
-    return true;
-  }
-
-  public static boolean updateMember(String email, String newPassword, String newName,
-      String newEmergencyContact, int newNrWeeks, boolean newGuideRequired,
-      boolean newHotelRequired) throws InvalidInputException {
-
-    Member theMember = (Member) User.getWithEmail(email);
-    List<String> newItemNames = new ArrayList<String>();
-    List<Integer> newItemQuantities = new ArrayList<Integer>();
-
-    for (TemporaryEquipment equipment : theMember.getTemporaryEquipment()) {
-      newItemNames.add(equipment.getName());
-      newItemQuantities.add(equipment.getQuantity());
-    }
-    ClimbSafeFeatureSet2Controller.updateMember(email, newPassword, newName, newEmergencyContact,
-        newNrWeeks, newGuideRequired, newHotelRequired, newItemNames, newItemQuantities);
-
-
-    return true;
-  }
 }
