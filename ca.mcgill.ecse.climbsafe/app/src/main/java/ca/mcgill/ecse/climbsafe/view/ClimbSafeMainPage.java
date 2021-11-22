@@ -3,15 +3,16 @@ package ca.mcgill.ecse.climbsafe.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
-
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-
+import javax.swing.table.DefaultTableModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
@@ -21,16 +22,20 @@ import ca.mcgill.ecse.climbsafe.view.DateLabelFormatter;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import ca.mcgill.ecse.climbsafe.controller.AssignmentController;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet1Controller;
+import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet2Controller;
+import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet6Controller;
 import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
 import ca.mcgill.ecse.climbsafe.controller.TOGuide;
@@ -48,6 +53,9 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
+import javax.swing.JList;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.TableModel;
 
 public class ClimbSafeMainPage extends JFrame {
   private static final long serialVersionUID = -4426310869335015542L;
@@ -65,8 +73,9 @@ public class ClimbSafeMainPage extends JFrame {
   private JTextField newMemberNameTextField;
   private JTextField memberItemQuantityTextField;
   private JTextField memberRegisterEmailTextField;
-  private JTextField memberRegisterPasswordTextField;
+  private JTextField memberRegisterWeekTextField;
   private JTextField memberRegisterNameTextField;
+  private JTextField memberRegisterPasswordField;
   private JTextField memberRegisterEmergencyContactTextField;
   private JTextField guideRegisterPasswordTextField;
   private JTextField guideRegisterEmailTextField;
@@ -86,6 +95,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JTextField newEquipmentWeightTextField;
   private JTextField newEquipmentPricePerWeekTextField;
   private JTextField authorizationCodeTextField;
+  private JTextField quantityRegisterMemberField;
 
   // FIRST TAB BELOW (except textFields) -- UPDATE PAGE
   private JTabbedPane tabbedPane_1;
@@ -112,6 +122,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel newGuideEmergencyNumberLabel;
   private JLabel newGuideNameLabel;
   private JButton updateGuideButton;
+  private JTable updateMemberEquipmentTable;
   private JLabel background;
 
   // SECOND TAB BELOW (except text fields) -- REGISTER PAGE
@@ -130,7 +141,14 @@ public class ClimbSafeMainPage extends JFrame {
   private JButton registerGuideBtn;
   private JLabel registerAsMemberLabel;
   private JLabel registerAsGuideLabel;
+  private JComboBox selectItemsRegisterMemberComboBox;
+  private JLabel registerMemberRequiredLabel;
+  private JLabel registerMemberPasswordLabel;
   private JLabel backgroundRegisterPage;
+  private JButton addItemRegisterMemberButton;
+  private JLabel selectItemRegisterMemberList;
+  private JLabel quantityRegisterMemberLabel;
+  private JTable itemRegisterMemberTable;
 
   // THIRD TAB BELOW -- SET UP NMC INFO
   private JPanel panel_2;
@@ -192,6 +210,8 @@ public class ClimbSafeMainPage extends JFrame {
 
   private static final Map<String, String> DATE_PROPS =
       Map.of("text.today", "Today", "text.month", "Month", "text.year", "Year");
+  
+  
 
 
   public ClimbSafeMainPage() {
@@ -219,6 +239,12 @@ public class ClimbSafeMainPage extends JFrame {
     JSeparator separator = new JSeparator();
     separator.setBounds(10, 205, 1176, 2);
     panel.add(separator);
+    
+    errorMessage = new JLabel("");
+    errorMessage.setForeground(Color.RED);
+    errorMessage.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessage.setBounds(38, 39, 601, 24);
+    panel.add(errorMessage);
 
     selectMemberToUpdateLabel = new JLabel("Select member: ");
     selectMemberToUpdateLabel.setForeground(Color.WHITE);
@@ -245,29 +271,29 @@ public class ClimbSafeMainPage extends JFrame {
     newMemberEmergencyNumberLabel = new JLabel("New emergency number:");
     newMemberEmergencyNumberLabel.setForeground(Color.WHITE);
     newMemberEmergencyNumberLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    newMemberEmergencyNumberLabel.setBounds(10, 377, 211, 30);
+    newMemberEmergencyNumberLabel.setBounds(409, 323, 211, 30);
     panel.add(newMemberEmergencyNumberLabel);
 
     newMemberEmergencyNumberTextField = new JTextField();
     newMemberEmergencyNumberTextField.setColumns(10);
-    newMemberEmergencyNumberTextField.setBounds(210, 380, 189, 27);
+    newMemberEmergencyNumberTextField.setBounds(623, 328, 189, 27);
     panel.add(newMemberEmergencyNumberTextField);
 
     newMemberPasswordLabel = new JLabel("New password: ");
     newMemberPasswordLabel.setForeground(Color.WHITE);
     newMemberPasswordLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    newMemberPasswordLabel.setBounds(485, 358, 138, 27);
+    newMemberPasswordLabel.setBounds(842, 273, 138, 27);
     panel.add(newMemberPasswordLabel);
 
     newMemberPasswordTextField = new JTextField();
     newMemberPasswordTextField.setColumns(10);
-    newMemberPasswordTextField.setBounds(622, 361, 189, 27);
+    newMemberPasswordTextField.setBounds(623, 276, 189, 27);
     panel.add(newMemberPasswordTextField);
 
     newMemberNameLabel = new JLabel("New name: ");
     newMemberNameLabel.setForeground(Color.WHITE);
     newMemberNameLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    newMemberNameLabel.setBounds(881, 273, 102, 27);
+    newMemberNameLabel.setBounds(494, 273, 102, 27);
     panel.add(newMemberNameLabel);
 
     checkIfAppliesLabel = new JLabel("Check if applies:");
@@ -300,23 +326,23 @@ public class ClimbSafeMainPage extends JFrame {
     selectNewItemsComboBoxUpdatePage = new JLabel("Select new items:");
     selectNewItemsComboBoxUpdatePage.setForeground(Color.WHITE);
     selectNewItemsComboBoxUpdatePage.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    selectNewItemsComboBoxUpdatePage.setBounds(57, 440, 147, 27);
+    selectNewItemsComboBoxUpdatePage.setBounds(51, 389, 147, 27);
     panel.add(selectNewItemsComboBoxUpdatePage);
 
     selectNewItemsComboBox = new JComboBox();
     selectNewItemsComboBox.setEditable(true);
-    selectNewItemsComboBox.setBounds(210, 445, 189, 27);
+    selectNewItemsComboBox.setBounds(210, 389, 189, 27);
     panel.add(selectNewItemsComboBox);
 
     memberItemQuantityLabel = new JLabel("Item quantity: ");
     memberItemQuantityLabel.setForeground(Color.WHITE);
     memberItemQuantityLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    memberItemQuantityLabel.setBounds(494, 441, 124, 27);
+    memberItemQuantityLabel.setBounds(72, 430, 124, 27);
     panel.add(memberItemQuantityLabel);
 
     memberItemQuantityTextField = new JTextField();
     memberItemQuantityTextField.setColumns(10);
-    memberItemQuantityTextField.setBounds(623, 445, 189, 27);
+    memberItemQuantityTextField.setBounds(210, 433, 189, 27);
     panel.add(memberItemQuantityTextField);
 
     memberAddItemButton = new JButton("Add item");
@@ -324,7 +350,7 @@ public class ClimbSafeMainPage extends JFrame {
     memberAddItemButton.setOpaque(true);
     memberAddItemButton.setBackground(SystemColor.activeCaption);
     memberAddItemButton.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-    memberAddItemButton.setBounds(822, 445, 124, 27);
+    memberAddItemButton.setBounds(275, 471, 124, 27);
     memberAddItemButton.setContentAreaFilled(false);
     memberAddItemButton.setOpaque(true);
     panel.add(memberAddItemButton);
@@ -335,7 +361,7 @@ public class ClimbSafeMainPage extends JFrame {
     updateMemberButton.setOpaque(true);
     updateMemberButton.setForeground(SystemColor.desktop);
     updateMemberButton.setFont(new Font("Myanmar Text", Font.BOLD, 17));
-    updateMemberButton.setBounds(984, 410, 189, 62);
+    updateMemberButton.setBounds(984, 420, 189, 62);
     panel.add(updateMemberButton);
 
     updateMemberInformationLabel = new JLabel("UPDATE MEMBER INFORMATION");
@@ -406,12 +432,28 @@ public class ClimbSafeMainPage extends JFrame {
     updateGuideButton.setBounds(984, 114, 189, 62);
     panel.add(updateGuideButton);
 
+
+    updateMemberEquipmentTable = new JTable(
+        new DefaultTableModel(new Object[][] {}, new String[] {"Added equipments", "Quantities"}));
+    updateMemberEquipmentTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    updateMemberEquipmentTable.setFillsViewportHeight(true);
+    updateMemberEquipmentTable.setBounds(494, 424, 318, 58);
+    JScrollPane memberItemContainer = new JScrollPane(updateMemberEquipmentTable);
+    memberItemContainer
+        .setViewportBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+    memberItemContainer.setLocation(457, 382);
+    memberItemContainer.setSize(355, 116);
+    panel.add(memberItemContainer);
+    
+    
+
     background = new JLabel("");
     background.setBounds(0, 0, 1206, 509);
     ImageIcon backgroundImage = new ImageIcon(this.getClass().getResource("/backgroundImage.png"));
     background.setIcon(backgroundImage);
-    background.setOpaque(true);
     panel.add(background);
+    
+    
 
     panel_1 = new JPanel();
     tabbedPane_1.addTab("Register page", null, panel_1, null);
@@ -420,45 +462,45 @@ public class ClimbSafeMainPage extends JFrame {
     memberRegisterEmailLabel = new JLabel("Email:");
     memberRegisterEmailLabel.setForeground(Color.WHITE);
     memberRegisterEmailLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    memberRegisterEmailLabel.setBounds(116, 64, 62, 27);
+    memberRegisterEmailLabel.setBounds(123, 64, 55, 27);
     panel_1.add(memberRegisterEmailLabel);
 
     memberRegisterEmailTextField = new JTextField();
     memberRegisterEmailTextField.setColumns(10);
-    memberRegisterEmailTextField.setBounds(188, 67, 333, 27);
+    memberRegisterEmailTextField.setBounds(188, 67, 199, 27);
     panel_1.add(memberRegisterEmailTextField);
 
-    memberRegisterPasswordLabel = new JLabel("Password:");
+    memberRegisterPasswordLabel = new JLabel("Number of weeks:");
     memberRegisterPasswordLabel.setForeground(Color.WHITE);
     memberRegisterPasswordLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    memberRegisterPasswordLabel.setBounds(92, 125, 86, 27);
+    memberRegisterPasswordLabel.setBounds(25, 111, 153, 27);
     panel_1.add(memberRegisterPasswordLabel);
 
-    memberRegisterPasswordTextField = new JTextField();
-    memberRegisterPasswordTextField.setColumns(10);
-    memberRegisterPasswordTextField.setBounds(188, 128, 333, 27);
-    panel_1.add(memberRegisterPasswordTextField);
+    memberRegisterWeekTextField = new JTextField();
+    memberRegisterWeekTextField.setColumns(10);
+    memberRegisterWeekTextField.setBounds(188, 114, 199, 27);
+    panel_1.add(memberRegisterWeekTextField);
 
     memberRegisterNameLabel = new JLabel("Name: ");
     memberRegisterNameLabel.setForeground(Color.WHITE);
     memberRegisterNameLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    memberRegisterNameLabel.setBounds(643, 63, 62, 27);
+    memberRegisterNameLabel.setBounds(503, 64, 62, 27);
     panel_1.add(memberRegisterNameLabel);
 
     memberRegisterNameTextField = new JTextField();
     memberRegisterNameTextField.setColumns(10);
-    memberRegisterNameTextField.setBounds(704, 67, 333, 27);
+    memberRegisterNameTextField.setBounds(584, 114, 199, 27);
     panel_1.add(memberRegisterNameTextField);
 
     memberRegisterEmergencyContactLabel = new JLabel("Emergency contact: ");
     memberRegisterEmergencyContactLabel.setForeground(Color.WHITE);
     memberRegisterEmergencyContactLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    memberRegisterEmergencyContactLabel.setBounds(542, 125, 163, 27);
+    memberRegisterEmergencyContactLabel.setBounds(411, 114, 163, 27);
     panel_1.add(memberRegisterEmergencyContactLabel);
 
     memberRegisterEmergencyContactTextField = new JTextField();
     memberRegisterEmergencyContactTextField.setColumns(10);
-    memberRegisterEmergencyContactTextField.setBounds(704, 129, 333, 27);
+    memberRegisterEmergencyContactTextField.setBounds(584, 67, 199, 27);
     panel_1.add(memberRegisterEmergencyContactTextField);
 
     memberRegisterGuideRequiredRdBtn = new JRadioButton("Guide Required");
@@ -466,7 +508,7 @@ public class ClimbSafeMainPage extends JFrame {
     memberRegisterGuideRequiredRdBtn.setForeground(Color.WHITE);
     memberRegisterGuideRequiredRdBtn.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 17));
     memberRegisterGuideRequiredRdBtn.setContentAreaFilled(false);
-    memberRegisterGuideRequiredRdBtn.setBounds(246, 183, 162, 23);
+    memberRegisterGuideRequiredRdBtn.setBounds(955, 118, 162, 23);
     panel_1.add(memberRegisterGuideRequiredRdBtn);
 
     memberRegisterHotelRequiredRdBtn = new JRadioButton("Hotel Required");
@@ -474,7 +516,7 @@ public class ClimbSafeMainPage extends JFrame {
     memberRegisterHotelRequiredRdBtn.setForeground(Color.WHITE);
     memberRegisterHotelRequiredRdBtn.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 17));
     memberRegisterHotelRequiredRdBtn.setContentAreaFilled(false);
-    memberRegisterHotelRequiredRdBtn.setBounds(830, 183, 171, 23);
+    memberRegisterHotelRequiredRdBtn.setBounds(955, 162, 153, 23);
     panel_1.add(memberRegisterHotelRequiredRdBtn);
 
     guideRegisterEmailLabel = new JLabel("Email:");
@@ -526,7 +568,7 @@ public class ClimbSafeMainPage extends JFrame {
     registerMemberBtn.setOpaque(true);
     registerMemberBtn.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 17));
     registerMemberBtn.setBackground(new Color(255, 215, 0));
-    registerMemberBtn.setBounds(503, 189, 234, 36);
+    registerMemberBtn.setBounds(930, 210, 224, 49);
     panel_1.add(registerMemberBtn);
 
     registerGuideBtn = new JButton("REGISTER GUIDE");
@@ -540,19 +582,79 @@ public class ClimbSafeMainPage extends JFrame {
     registerAsMemberLabel = new JLabel("REGISTER AS A MEMBER");
     registerAsMemberLabel.setForeground(Color.WHITE);
     registerAsMemberLabel.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 23));
-    registerAsMemberLabel.setBounds(463, 11, 300, 27);
+    registerAsMemberLabel.setBounds(453, 11, 300, 27);
     panel_1.add(registerAsMemberLabel);
 
     registerAsGuideLabel = new JLabel("REGISTER AS A GUIDE");
     registerAsGuideLabel.setForeground(Color.WHITE);
     registerAsGuideLabel.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 23));
-    registerAsGuideLabel.setBounds(483, 270, 272, 27);
+    registerAsGuideLabel.setBounds(465, 290, 272, 27);
     panel_1.add(registerAsGuideLabel);
 
     JSeparator separator_1 = new JSeparator();
     separator_1.setForeground(Color.WHITE);
-    separator_1.setBounds(10, 246, 1176, 2);
+    separator_1.setBounds(10, 277, 1176, 2);
     panel_1.add(separator_1);
+    
+    
+    registerMemberRequiredLabel = new JLabel("Check if applies:");
+    registerMemberRequiredLabel.setForeground(Color.WHITE);
+    registerMemberRequiredLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    registerMemberRequiredLabel.setBounds(815, 111, 138, 27);
+    panel_1.add(registerMemberRequiredLabel);
+    
+    registerMemberPasswordLabel = new JLabel("Password:");
+    registerMemberPasswordLabel.setForeground(Color.WHITE);
+    registerMemberPasswordLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    registerMemberPasswordLabel.setBounds(863, 64, 86, 27);
+    panel_1.add(registerMemberPasswordLabel);
+    
+    memberRegisterPasswordField = new JTextField();
+    memberRegisterPasswordField.setColumns(10);
+    memberRegisterPasswordField.setBounds(955, 67, 199, 27);
+    panel_1.add(memberRegisterPasswordField);
+    
+    selectItemsRegisterMemberComboBox = new JComboBox();
+    selectItemsRegisterMemberComboBox.setEditable(true);
+    selectItemsRegisterMemberComboBox.setBounds(188, 158, 199, 27);
+    panel_1.add(selectItemsRegisterMemberComboBox);
+    
+    selectItemRegisterMemberList = new JLabel("Select items:");
+    selectItemRegisterMemberList.setForeground(Color.WHITE);
+    selectItemRegisterMemberList.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    selectItemRegisterMemberList.setBounds(73, 155, 105, 27);
+    panel_1.add(selectItemRegisterMemberList);
+    
+    quantityRegisterMemberField = new JTextField();
+    quantityRegisterMemberField.setColumns(10);
+    quantityRegisterMemberField.setBounds(188, 199, 199, 27);
+    panel_1.add(quantityRegisterMemberField);
+    
+    quantityRegisterMemberLabel = new JLabel("Quantity:");
+    quantityRegisterMemberLabel.setForeground(Color.WHITE);
+    quantityRegisterMemberLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    quantityRegisterMemberLabel.setBounds(92, 196, 78, 27);
+    panel_1.add(quantityRegisterMemberLabel);
+    
+    addItemRegisterMemberButton = new JButton("Add Item");
+    addItemRegisterMemberButton.setContentAreaFilled(false);
+    addItemRegisterMemberButton.setOpaque(true);
+    addItemRegisterMemberButton.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 17));
+    addItemRegisterMemberButton.setBackground(new Color(255, 204, 102));
+    addItemRegisterMemberButton.setBounds(264, 237, 123, 28);
+    panel_1.add(addItemRegisterMemberButton);
+    
+    itemRegisterMemberTable = new JTable(
+        new DefaultTableModel(new Object[][] {}, new String[] {"Added equipments", "Quantities"}));
+    itemRegisterMemberTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    itemRegisterMemberTable.setFillsViewportHeight(true);
+    itemRegisterMemberTable.setBounds(449, 164, 349, 85);
+    
+    JScrollPane spRegisterMember = new JScrollPane(itemRegisterMemberTable);
+    spRegisterMember.setBounds(483, 157, 300, 106);
+    panel_1.add(spRegisterMember);
+    
+    
 
     backgroundRegisterPage = new JLabel("");
     backgroundRegisterPage.setBounds(0, 0, 1206, 509);
@@ -561,7 +663,8 @@ public class ClimbSafeMainPage extends JFrame {
     backgroundRegisterPage.setIcon(backgroundImageRegisterPage);
     backgroundRegisterPage.setOpaque(true);
     panel_1.add(backgroundRegisterPage);
-
+    
+    
     panel_2 = new JPanel();
     tabbedPane_1.addTab("Set up NMC info", null, panel_2, null);
     panel_2.setLayout(null);
@@ -969,17 +1072,18 @@ public class ClimbSafeMainPage extends JFrame {
 
 
     // ACTION LISTENERS
-    memberAddItemButton.addActionListener(this::addMemberButtonActionPerformed);
+    memberAddItemButton.addActionListener(this::addUpdateEquipmentButtonActionPerformed);
     updateMemberButton.addActionListener(this::updateMemberButtonActionPerformed);
     updateGuideButton.addActionListener(this::updateGuideButtonActionPerformed);
     registerMemberBtn.addActionListener(this::registerMemberButtonActionPerformed);
     registerGuideBtn.addActionListener(this::registerGuideButtonActionPerformed);
+    addItemRegisterMemberButton.addActionListener(this::addItemRegisterMemberActionPerformed);
     confirmSetUpButton.addActionListener(this::confirmSetUpButtonActionPerformed);
     deleteGuideButton.addActionListener(this::deleteGuideButtonActionPerformed);
     deleteMemberButton.addActionListener(this::deleteMemberButtonActionPerformed);
     deleteEquipmentButton.addActionListener(this::deleteEquipmentButtonActionPerformed);
     addEquipmentButton.addActionListener(this::addEquipmentButtonActionPerformed);
-    updateEquipmentButton.addActionListener(this::addUpdateEquipmentButtonActionPerformed);
+    updateEquipmentButton.addActionListener(this::updateEquipmentButtonActionPerformed);
     payForTheTripButton.addActionListener(this::payButtonActionPerformed);
     finishTheTripButton.addActionListener(this::finishButtonActionPerformed);
     cancelTheTripButton.addActionListener(this::cancelButtonActionPerformed);
@@ -1004,9 +1108,10 @@ public class ClimbSafeMainPage extends JFrame {
       newMemberNameTextField.setText("");
       memberItemQuantityTextField.setText("");
       memberRegisterEmailTextField.setText("");
-      memberRegisterPasswordTextField.setText("");
+      memberRegisterWeekTextField.setText("");
       memberRegisterNameTextField.setText("");
       memberRegisterEmergencyContactTextField.setText("");
+      memberRegisterPasswordField.setText("");
       guideRegisterPasswordTextField.setText("");
       guideRegisterEmailTextField.setText("");
       guideRegisterNameTextField.setText("");
@@ -1024,12 +1129,28 @@ public class ClimbSafeMainPage extends JFrame {
       newEquipmentWeightTextField.setText("");
       newEquipmentPricePerWeekTextField.setText("");
       authorizationCodeTextField.setText("");
+      quantityRegisterMemberField.setText("");
+      
+      DefaultTableModel updateMemberEquipmentModel =
+          (DefaultTableModel) updateMemberEquipmentTable.getModel();
+      
+      for(int i = 0; i< updateMemberEquipmentModel.getRowCount()-2; i++) {
+          updateMemberEquipmentModel.removeRow(i+1);
+      }
+      
+      updateMemberEquipmentModel =
+          (DefaultTableModel) itemRegisterMemberTable.getModel();
+      
+      for(int i = 0; i< updateMemberEquipmentModel.getRowCount()-2; i++) {
+        updateMemberEquipmentModel.removeRow(i+1);
+    }
 
       var lists =
           List.of(selectMemberToUpdateComboBox, selectNewItemsComboBox, selectGuideToUpdateComboBox,
               selectGuideRemovePageComboBox, selectMemberRemovePageComboBox,
               selectEquipmentRemovePageComboBox, selectEquipmentToUpdateComboBox,
-              selectMemberForPayComboBox, selectStartWeekNumberComboBox);
+              selectMemberForPayComboBox, selectStartWeekNumberComboBox, 
+              selectItemsRegisterMemberComboBox);
 
       lists.forEach(JComboBox::removeAllItems);
 
@@ -1059,6 +1180,10 @@ public class ClimbSafeMainPage extends JFrame {
 
       // select start week
       AssignmentController.getWeekNbrs().forEach(selectStartWeekNumberComboBox::addItem);
+      
+      // select equipment for new member
+      AssignmentController.getEquipments().forEach(selectItemsRegisterMemberComboBox::addItem);
+     
 
       lists.forEach(list -> list.setSelectedIndex(-1));
 
@@ -1067,6 +1192,24 @@ public class ClimbSafeMainPage extends JFrame {
 
 
   }
+
+  private void refreshUpdateMemberEquipment() {
+    
+    errorMessage.setText(error);
+    if (error == null || error.isEmpty()) {
+      memberItemQuantityTextField.setText("");
+      
+
+      
+      selectItemsRegisterMemberComboBox.removeAllItems();
+
+      // select member to update
+      AssignmentController.getEquipments().forEach(selectItemsRegisterMemberComboBox::addItem);
+    }
+
+
+  }
+  
 
   private void addMemberButtonActionPerformed(ActionEvent evt) {
 
@@ -1095,11 +1238,30 @@ public class ClimbSafeMainPage extends JFrame {
         "Equipment quantity needs to be a numerical value!");
     boolean newGuideRequired = memberGuideRequiredRdBtn.isSelected();
     boolean newHotelRequired = memberHotelRequiredRdBtn.isSelected();
+    
+    DefaultTableModel updateMemberEquipmentModel =
+        (DefaultTableModel) updateMemberEquipmentTable.getModel();
+
+    List<String> newItemNames = new ArrayList<String>();
+    for (int i = 0; i < updateMemberEquipmentModel.getRowCount(); i++) { // Loop through the rows
+      // Record the 5th column value (index 4)
+      String currentName = (String) (updateMemberEquipmentModel.getValueAt(i, 0));
+      newItemNames.add(currentName);
+    }
+
+    List<Integer> newItemQuantities = new ArrayList<Integer>();
+    for (int i = 0; i < updateMemberEquipmentModel.getRowCount(); i++) { // Loop through the rows
+      // Record the 5th column value (index 4)
+      int currentQuantity = (int) (updateMemberEquipmentModel.getValueAt(i, 1));
+      newItemQuantities.add(currentQuantity);
+    }
+
 
     if (error.isEmpty()) {
       // call the controller
-      callController(() -> AssignmentController.updateMember(selectedMember.getEmail(), newPassword,
-          newName, newContact, newNbrWeek, newGuideRequired, newHotelRequired));
+      callController(() -> ClimbSafeFeatureSet2Controller.updateMember(selectedMember.getEmail(),
+          newPassword, newName, newContact, newNbrWeek, newGuideRequired, newHotelRequired,
+          newItemNames, newItemQuantities));
     }
     // update visuals
     refreshData();
@@ -1116,6 +1278,11 @@ public class ClimbSafeMainPage extends JFrame {
 
   private void registerGuideButtonActionPerformed(ActionEvent evt) {
 
+  }
+  
+  private void addItemRegisterMemberActionPerformed(ActionEvent evt) {
+
+    
   }
 
   private void confirmSetUpButtonActionPerformed(ActionEvent evt) {
@@ -1171,16 +1338,12 @@ public class ClimbSafeMainPage extends JFrame {
 
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
 
+    
   }
 
   private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
-    var selectedMember = (TOMember) selectMemberToUpdateComboBox.getSelectedItem();
-    if (selectedMember == null) {
-      error = "Member needs to be selected to add the item!";
-    }
-
     var selectedEquipment = (TOEquipment) selectNewItemsComboBox.getSelectedItem();
     if (selectedEquipment == null) {
       error = "Equipment needs to be selected to be added!";
@@ -1189,13 +1352,20 @@ public class ClimbSafeMainPage extends JFrame {
         "Equipment quantity needs to be a numerical value!");
 
     if (error.isEmpty()) {
-      // call the controller
-      callController(() -> AssignmentController.tempAssignment(selectedMember, selectedEquipment,
-          equipmentQuantity));
+      DefaultTableModel updateMemberEquipmentModel =
+          (DefaultTableModel) updateMemberEquipmentTable.getModel();
+      // add equipment to jlist
+      updateMemberEquipmentModel
+          .addRow(new Object[] {selectedEquipment.getName(), equipmentQuantity});;
+
     }
 
     // update visuals
-    refreshData();
+    refreshUpdateMemberEquipment();
+
+  }
+  
+  private void updateEquipmentButtonActionPerformed(ActionEvent evt) {
 
   }
 
