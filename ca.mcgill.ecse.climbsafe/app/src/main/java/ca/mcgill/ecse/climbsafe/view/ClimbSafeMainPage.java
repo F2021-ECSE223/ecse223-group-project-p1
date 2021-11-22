@@ -1210,7 +1210,55 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
 
+  /**
+   * Registers a member using information of email, password, name, contact, number of weeks,
+   * guideRequired, hotelRequied, item names and quantities. 
+   * @param evt
+   */
+
+
   private void registerMemberButtonActionPerformed(ActionEvent evt) {
+	  error="";
+	  String email= memberRegisterEmailTextField.getText();
+	  if(email.isEmpty()) {
+		  error="Enter an email";
+	  }
+	  String password= memberRegisterPasswordField.getText();
+	  if(password.isEmpty()) {
+		  error="Enter a password";
+	  }
+	  String name= memberRegisterNameTextField.getText();
+	  if(name.isEmpty()) {
+		  error="Enter a name";
+	  }
+	  
+	  String emergencyContact= memberRegisterContactTextField.getText();
+	  if(emergencyContact.isEmpty()) {
+		  error="Enter an emergency number";
+	  }
+	  int nrWeeks= getNumberFromField(memberRegisterWeekTextField, "Number of weeks needs to be a numerical value!");
+	  boolean guideRequired= memberGuideRequiredRdBtn.isSelected(); //true if guide is selected
+	  boolean hotelRequired= memberHotelRequiredRdBtn.isSelected(); //true if hotel is selected
+	  
+	  
+	  DefaultTableModel memberItemTable= (DefaultTableModel) itemRegisterMemberTable.getModel();
+	  List<String> itemNames= new ArrayList<String>(); //iterates through the list to get the names
+	  for(int i=0; i<memberItemTable.getRowCount(); i++) {
+		  String current= (String) memberItemTable.getValueAt(i, 0);
+		  itemNames.add(current);
+	  }
+	  List<Integer> itemQuantities= new ArrayList<Integer>();  //iterates through the list to get the quantities
+	  for(int i=0; i<memberItemTable.getRowCount(); i++) { 
+		  int quantity=(int)(memberItemTable.getValueAt(i, 1));
+		  itemQuantities.add(quantity);
+	  }
+	  
+	  error = error.trim();
+	    if (error.isEmpty()) { //if there are no errors
+	    	//Calls the controller
+	    	callController(() -> ClimbSafeFeatureSet2Controller.registerMember(email, password, name, emergencyContact, nrWeeks, guideRequired, hotelRequired, itemNames, itemQuantities));
+	    }
+	    refreshData(); //updates the visual
     
   }
 
@@ -1271,7 +1319,37 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
 
+  /**
+   * Registers a guide using information of email, password, name and contact
+   * @param evt
+   */
+
   private void registerGuideButtonActionPerformed(ActionEvent evt) {
+	  error="";
+	  String email= guideRegisterEmailTextField.getText();
+	  if(email.isEmpty()) {
+		  error += "Enter an email";
+	  }
+	  String password= guideRegisterPasswordTextField.getText();  
+      if(password.isEmpty()) {
+    	error += "Enter a password";
+      }
+      String name= guideRegisterNameTextField.getText();
+      if(name.isEmpty()) {
+    	  error += "Enter a name";
+      }
+      String emergencyContact= guideRegisterEmergencyContactTextField.getText();
+      if(emergencyContact.isEmpty()) {
+    	  error += "Enter an emergency number";
+      }
+      
+      error=error.trim();
+      if(error.isEmpty()) {
+    	  //Calls the controller if there are no errors
+    	  callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(email, password, name, emergencyContact));
+      }
+      
+      refreshData(); //updates the visual
     
 
   }
