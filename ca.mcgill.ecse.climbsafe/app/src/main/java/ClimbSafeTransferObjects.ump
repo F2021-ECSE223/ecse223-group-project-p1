@@ -43,3 +43,11 @@ class TOEquipment{
   Integer pricePerWeek;
 
 }
+
+  class TOBookableItem{
+  name;
+  @Override public String toString() {
+    return name;
+  }
+
+}
