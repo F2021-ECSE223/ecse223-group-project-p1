@@ -1419,7 +1419,19 @@ public class ClimbSafeMainPage extends JFrame {
 
   }
 
-  private void addItemRegisterMemberActionPerformed(ActionEvent evt) {
+ private void addItemRegisterMemberActionPerformed(ActionEvent evt) {
+	  error="";
+	  var selectedItem= (TOEquipment) selectItemsRegisterMemberComboBox.getSelectedItem();
+	  if(selectedItem==null) {
+		  error="An item needs to be selected to be added!";
+	  }
+	  int itemQuantity = getNumberFromField(memberItemQuantityTextField,
+		        "The item quantity needs to be a numerical value!");
+	  if (error.isEmpty()) {
+		  DefaultTableModel memberItemTable= (DefaultTableModel) itemRegisterMemberTable.getModel();
+		  memberItemTable.addRow(new Object[] {selectedItem.getName(), itemQuantity});
+	  }
+	  refreshRegisterMemberItem(); //update visual
     
 
   }
