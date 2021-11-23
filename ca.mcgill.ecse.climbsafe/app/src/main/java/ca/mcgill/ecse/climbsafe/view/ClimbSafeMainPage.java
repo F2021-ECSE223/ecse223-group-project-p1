@@ -1210,7 +1210,7 @@ public class ClimbSafeMainPage extends JFrame {
       AssignmentController.getMembers().forEach(selectMemberToUpdateComboBox::addItem);
 
       // select items (equipments) when updating member
-      AssignmentController.getEquipments().forEach(selectNewItemsComboBox::addItem);
+      AssignmentController.getItems().forEach(selectNewItemsComboBox::addItem);
 
       // select guide to update
       AssignmentController.getGuides().forEach(selectGuideToUpdateComboBox::addItem);
@@ -1234,7 +1234,7 @@ public class ClimbSafeMainPage extends JFrame {
       AssignmentController.getWeekNbrs().forEach(selectStartWeekNumberComboBox::addItem);
 
       // select equipment for new member
-      AssignmentController.getEquipments().forEach(selectItemsRegisterMemberComboBox::addItem);
+      AssignmentController.getItems().forEach(selectItemsRegisterMemberComboBox::addItem);
 
 
       lists.forEach(list -> list.setSelectedIndex(-1));
@@ -1245,7 +1245,7 @@ public class ClimbSafeMainPage extends JFrame {
 
   }
 
-  private void refreshUpdateMemberEquipment() {
+  private void refreshUpdateMemberItem() {
 
     errorMessage.setText(error);
     if (error == null || error.isEmpty()) {
@@ -1256,12 +1256,13 @@ public class ClimbSafeMainPage extends JFrame {
       selectItemsRegisterMemberComboBox.removeAllItems();
 
       // select member to update
-      AssignmentController.getEquipments().forEach(selectItemsRegisterMemberComboBox::addItem);
+      AssignmentController.getItems().forEach(selectItemsRegisterMemberComboBox::addItem);
     }
 
 
   }
-  private void refreshRegisterMemberEquipment() {
+
+  private void refreshRegisterMemberItem() {
     errorMessage.setText(error);
     if (error == null || error.isEmpty()) {
       quantityRegisterMemberField.setText("");
@@ -1270,10 +1271,9 @@ public class ClimbSafeMainPage extends JFrame {
       selectNewItemsComboBox.removeAllItems();
 
       // select member to update
-      AssignmentController.getEquipments().forEach(selectNewItemsComboBox::addItem);
+      AssignmentController.getItems().forEach(selectNewItemsComboBox::addItem);
     }
   }
-
 
   /**
    * Registers a member using information of email, password, name, contact, number of weeks,
