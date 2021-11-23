@@ -1556,8 +1556,22 @@ public class ClimbSafeMainPage extends JFrame {
    
   }
 
+  /**
+   * Starts the trip given a valid week number.
+   */
+
   private void startTripsButtonActionPerformed(ActionEvent evt) {
+	  error="";
+	  var selectedItem= selectStartWeekNumberComboBox.getSelectedItem();
+	  if(selectedItem==null) {
+		  error="A week number needs to be selected to start the trip!";
+	  }
+	  if(error.isEmpty()) {
+		  callController(()-> AssignmentController.startTrips((Integer) selectedItem));
+	  }
+	  refreshData();
   }
+
 
   /**
    * Returns the number from the given text field if present, otherwise appends error string to the
