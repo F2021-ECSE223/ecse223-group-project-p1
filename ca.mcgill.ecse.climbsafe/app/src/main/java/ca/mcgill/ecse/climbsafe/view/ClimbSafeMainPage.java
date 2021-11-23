@@ -39,6 +39,7 @@ import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet3Controller;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet4Controller;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet6Controller;
 import ca.mcgill.ecse.climbsafe.controller.InvalidInputException;
+import ca.mcgill.ecse.climbsafe.controller.TOAssignment;
 import ca.mcgill.ecse.climbsafe.controller.TOGuide;
 import ca.mcgill.ecse.climbsafe.controller.TOMember;
 import ca.mcgill.ecse.climbsafe.controller.TOBookableItem;
@@ -58,6 +59,7 @@ import java.sql.Date;
 import javax.swing.JList;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableModel;
+import javax.swing.JScrollBar;
 
 public class ClimbSafeMainPage extends JFrame {
   private static final long serialVersionUID = -4426310869335015542L;
@@ -209,6 +211,12 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel startTripsLabel;
   private JButton startAllTripsForThisWeekLabel;
   private JLabel backgroundAssignmentPage;
+
+  // SEVENTH TAB BELOW -- VIEW ASSIGNMENTS
+  private JPanel panel_6;
+  private JTable viewAssignmentTable;
+  private JLabel viewAssignmentLabel;
+  private JLabel backgroundViewtPage;
 
   private static final Map<String, String> DATE_PROPS =
       Map.of("text.today", "Today", "text.month", "Month", "text.year", "Year");
@@ -1071,6 +1079,37 @@ public class ClimbSafeMainPage extends JFrame {
     backgroundAssignmentPage.setOpaque(true);
     panel_5.add(backgroundAssignmentPage);
 
+    panel_6 = new JPanel();
+    panel_6.setToolTipText("");
+    tabbedPane_1.addTab("View assignments", null, panel_6, null);
+    panel_6.setLayout(null);
+
+
+    viewAssignmentTable = new JTable(new DefaultTableModel(new Object[][] {},
+        new String[] {"Member email", "Member name", "Guide email", "Guide name", "Hotel name",
+            "Start week", "End week", "Total guide cost", "Total equipment cost"}));
+    viewAssignmentTable.setBackground(SystemColor.window);
+    viewAssignmentTable.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    viewAssignmentTable.setFillsViewportHeight(true);
+    JScrollPane scrollPane = new JScrollPane(viewAssignmentTable);
+    scrollPane.setBounds(54, 109, 1097, 304);
+    panel_6.add(scrollPane);
+
+    viewAssignmentLabel = new JLabel("VIEW ASSIGNMENTS");
+    viewAssignmentLabel.setForeground(Color.WHITE);
+    viewAssignmentLabel.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 23));
+    viewAssignmentLabel.setBounds(470, 38, 265, 27);
+    panel_6.add(viewAssignmentLabel);
+
+    backgroundViewtPage = new JLabel("");
+    backgroundViewtPage.setBounds(0, 0, 1206, 509);
+    ImageIcon backgroundImageViewPage =
+        new ImageIcon(this.getClass().getResource("/backgroundImage.png"));
+    backgroundViewtPage.setIcon(backgroundImageAssignmentPage);
+    backgroundViewtPage.setOpaque(true);
+    panel_6.add(backgroundViewtPage);
+
+
 
     // ACTION LISTENERS
     memberAddItemButton.addActionListener(this::addUpdateEquipmentButtonActionPerformed);
@@ -1139,10 +1178,24 @@ public class ClimbSafeMainPage extends JFrame {
         updateMemberEquipmentModel.removeRow(i + 1);
       }
 
-      updateMemberEquipmentModel = (DefaultTableModel) itemRegisterMemberTable.getModel();
+      DefaultTableModel registerMemberEquipmentModel =
+          (DefaultTableModel) itemRegisterMemberTable.getModel();
 
-      for (int i = 0; i < updateMemberEquipmentModel.getRowCount() - 2; i++) {
-        updateMemberEquipmentModel.removeRow(i + 1);
+      for (int i = 0; i < registerMemberEquipmentModel.getRowCount() - 2; i++) {
+        registerMemberEquipmentModel.removeRow(i + 1);
+      }
+
+      DefaultTableModel viewAssignmentModel = (DefaultTableModel) viewAssignmentTable.getModel();
+
+      for (int i = 0; i < viewAssignmentModel.getRowCount() - 2; i++) {
+        viewAssignmentModel.removeRow(i + 1);
+      }
+
+      for (TOAssignment assignment : ClimbSafeFeatureSet6Controller.getAssignments()) {
+        viewAssignmentModel.addRow(new Object[] {assignment.getMemberEmail(),
+            assignment.getMemberName(), assignment.getGuideEmail(), assignment.getGuideName(),
+            assignment.getHotelName(), assignment.getStartWeek(), assignment.getEndWeek(),
+            assignment.getTotalCostForGuide(), assignment.getTotalCostForEquipment()});
       }
 
       var lists = List.of(selectMemberToUpdateComboBox, selectNewItemsComboBox,
