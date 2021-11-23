@@ -235,6 +235,21 @@ public class AssignmentController {
     }
     return equipments;
   }
+  
+    public static List<TOBookableItem> getItems() {
+    var items = new ArrayList<TOBookableItem>();
+    // adding all equipments
+    for (var equipment : climbSafe.getEquipment()) {
+      items.add(
+          new TOBookableItem(equipment.getName()));
+    }
+    // adding all bundles
+    for(var bundle: climbSafe.getBundles()) {
+      items.add(
+          new TOBookableItem(bundle.getName()));
+    }
+    return items;
+  }
 
   public static List<Integer> getWeekNbrs() {
     var weekNbrs = new ArrayList<Integer>();
