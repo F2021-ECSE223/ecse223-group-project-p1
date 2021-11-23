@@ -1282,7 +1282,7 @@ public class ClimbSafeMainPage extends JFrame {
       error += "Enter an emergency number";
     }
     int newNbrWeek = getNumberFromField(newMemberWeekTextField,
-        "Equipment quantity needs to be a numerical value!");
+        "The number of weeks needs to be a numerical value!");
     boolean newGuideRequired = memberGuideRequiredRdBtn.isSelected();
     boolean newHotelRequired = memberHotelRequiredRdBtn.isSelected();
 
