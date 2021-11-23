@@ -1480,28 +1480,27 @@ public class ClimbSafeMainPage extends JFrame {
 
   }
 
-  private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
+    private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
-    var selectedEquipment = (TOEquipment) selectNewItemsComboBox.getSelectedItem();
-    if (selectedEquipment == null) {
-      error = "Equipment needs to be selected to be added!";
+    var selectedItem = (TOBookableItem) selectNewItemsComboBox.getSelectedItem();
+    if (selectedItem == null) {
+      error = "An item needs to be selected to be added!";
     }
-    int equipmentQuantity = getNumberFromField(memberItemQuantityTextField,
-        "Equipment quantity needs to be a numerical value!");
+    int itemQuantity = getNumberFromField(memberItemQuantityTextField,
+        "The item quantity needs to be a numerical value!");
 
     if (error.isEmpty()) {
       DefaultTableModel updateMemberEquipmentModel =
           (DefaultTableModel) updateMemberEquipmentTable.getModel();
-      // add equipment to jlist
+      // adding item to table model
       updateMemberEquipmentModel
-          .addRow(new Object[] {selectedEquipment.getName(), equipmentQuantity});;
+          .addRow(new Object[] {selectedItem.getName(), itemQuantity});;
 
     }
 
     // update visuals
-    refreshUpdateMemberEquipment();
-
+    refreshUpdateMemberItem();
   }
 
   private void updateEquipmentButtonActionPerformed(ActionEvent evt) {
