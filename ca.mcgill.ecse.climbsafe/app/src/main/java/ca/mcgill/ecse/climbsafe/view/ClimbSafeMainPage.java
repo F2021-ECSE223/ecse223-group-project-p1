@@ -1208,6 +1208,18 @@ public class ClimbSafeMainPage extends JFrame {
 
 
   }
+  private void refreshRegisterMemberEquipment() {
+    errorMessage.setText(error);
+    if (error == null || error.isEmpty()) {
+      quantityRegisterMemberField.setText("");
+
+
+      selectNewItemsComboBox.removeAllItems();
+
+      // select member to update
+      AssignmentController.getEquipments().forEach(selectNewItemsComboBox::addItem);
+    }
+  }
 
 
   /**
