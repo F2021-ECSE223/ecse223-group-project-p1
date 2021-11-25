@@ -1506,7 +1506,26 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void confirmSetUpButtonActionPerformed(ActionEvent evt) {
-    
+	  String nw = setUpNumWeeksTextField.getText();
+	  String pricePerGuideString=setUpPriceGuidePerWeekLabel.getText();
+	  error="";
+	  if (nw.isBlank() && pricePerGuideString.isBlank())
+	  {
+		error="Can't set a blank number of weeks or Price per guide";  
+	  }
+	  else {
+		  try {
+			 Integer nbrOfWeeks=Integer.valueOf(nw);
+			 Integer priceperGuide=Integer.valueOf(pricePerGuideString);
+		     callController(() -> ClimbSafeFeatureSet1Controller.setup((Date)NMCDatePicker.getModel().getValue(), nbrOfWeeks, priceperGuide));
+		  }
+		  catch(Exception e)
+		  {
+			  error = "Input should be integers, not strings";
+		  }
+	  }
+	    refreshData();
+
   }
 
   private void deleteGuideButtonActionPerformed(ActionEvent evt) {
@@ -1615,12 +1634,39 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void payButtonActionPerformed(ActionEvent evt) {
-    
-  }
+    error = "";
+    var member = (TOMember)selectMemberForPayComboBox.getSelectedItem();
+    String auth=authorizationCodeTextField.getText();
+    if (auth==null)
+    {
+    	error="Authorization code cannot be null";
+    }
+    if (member==null)
+    {
+    	error="A member has to be selected first";
+    }
+    if (error.isEmpty())
+    {
+    	 callController(
+    	          () -> AssignmentController.payment(member.getEmail(), auth));
+    }
+    refreshData();
+    }
 
   private void finishButtonActionPerformed(ActionEvent evt) {
-    
-  }
+	  error = "";
+	    var member = (TOMember)selectMemberForPayComboBox.getSelectedItem();
+	    if (member==null)
+	    {
+	    	error="A member has to be selected first";
+	    }
+	    if (error.isEmpty())
+	    {
+	    	 callController(
+	    	          () -> AssignmentController.finishTrip(member.getEmail()));
+	    }
+	    refreshData();
+	    }
 
   private void cancelButtonActionPerformed(ActionEvent evt) {
     
