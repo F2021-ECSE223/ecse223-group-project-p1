@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse.climbsafe.controller;
 
-// line 26 "../../../../../ClimbSafeTransferObjects.ump"
+// line 25 "../../../../../ClimbSafeTransferObjects.ump"
 public class TOMember
 {
 
@@ -145,7 +145,7 @@ public class TOMember
 
 
   @Override
-  // line 36 "../../../../../ClimbSafeTransferObjects.ump"
+  // line 35 "../../../../../ClimbSafeTransferObjects.ump"
    public String toString(){
     return email;
   }

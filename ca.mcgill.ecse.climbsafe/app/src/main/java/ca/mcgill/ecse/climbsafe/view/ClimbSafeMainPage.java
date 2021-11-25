@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -66,10 +67,9 @@ public class ClimbSafeMainPage extends JFrame {
   // tabs
   JTabbedPane tabbedPane = new JTabbedPane();
 
-  // element for error message
-  private JLabel errorMessage = new JLabel();
 
   // All text fields are listed here
+  private JLabel currentErrorMessage;
   private String error = "";
   private JTextField newMemberWeekTextField;
   private JTextField newMemberEmergencyNumberTextField;
@@ -101,7 +101,8 @@ public class ClimbSafeMainPage extends JFrame {
   private JTextField authorizationCodeTextField;
   private JTextField quantityRegisterMemberField;
 
-  // FIRST TAB BELOW (except textFields) -- UPDATE PAGE
+  // FIRST TAB BELOW (except textFields) -- UPDATE PAGE 
+  private JLabel errorMessageTab1 = new JLabel(); // element for error message 
   private JTabbedPane tabbedPane_1;
   private JPanel panel;
   private JLabel selectMemberToUpdateLabel;
@@ -130,6 +131,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel background;
 
   // SECOND TAB BELOW (except text fields) -- REGISTER PAGE
+  private JLabel errorMessageTab2 = new JLabel(); // element for error message
   private JPanel panel_1;
   private JLabel memberRegisterEmailLabel;
   private JLabel memberRegisterPasswordLabel;
@@ -155,6 +157,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JTable itemRegisterMemberTable;
 
   // THIRD TAB BELOW -- SET UP NMC INFO
+  private JLabel errorMessageTab3 = new JLabel(); // element for error message
   private JPanel panel_2;
   private JLabel setUpStartdateLabel;
   private JLabel setUpNumWeeksLabel;
@@ -165,6 +168,7 @@ public class ClimbSafeMainPage extends JFrame {
   private ImageIcon backgroundImageSetUpPage;
 
   // FOURTH TAB BELOW -- REMOVE USER OR EQUIPMENT
+  private JLabel errorMessageTab4 = new JLabel(); // element for error message
   private JPanel panel_3;
   private JLabel removeUserLabel;
   private JLabel selectGuideRemovePageLabel;
@@ -180,6 +184,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel backgroundRemovePage;
 
   // FIFTH TAB BELOW -- ADD OR UPDATE EQUIPMENT
+  private JLabel errorMessageTab5 = new JLabel(); // element for error message
   private JPanel panel_4;
   private JLabel nameEquipmentToAddLabel;
   JLabel weightEquipmentToAddLabel;
@@ -196,6 +201,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel backgroundEquipmentPage;
 
   // SIXTH TAB BELOW -- ASSIGNMENT AND PAYMENT
+  private JLabel errorMessageTab6 = new JLabel(); // element for error message
   private JPanel panel_5;
   private JLabel selectMemberForPayLabel;
   private JComboBox selectMemberForPayComboBox;
@@ -213,6 +219,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel backgroundAssignmentPage;
 
   // SEVENTH TAB BELOW -- VIEW ASSIGNMENTS
+  private JLabel errorMessageTab7 = new JLabel(); // element for error message
   private JPanel panel_6;
   private JTable viewAssignmentTable;
   private JLabel viewAssignmentLabel;
@@ -228,9 +235,31 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void initComponents() {
-    errorMessage.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessage.getFont().getSize()));
+	  
+	  
+    errorMessageTab1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab1.getFont().getSize()));
+    setResizable(false);
+    
+    errorMessageTab2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab2.getFont().getSize()));
+    setResizable(false);
+    
+    errorMessageTab3.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab3.getFont().getSize()));
+    setResizable(false);
+    
+    errorMessageTab4.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab4.getFont().getSize()));
+    setResizable(false);
+    
+    errorMessageTab5.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab5.getFont().getSize()));
+    setResizable(false);
+    
+    errorMessageTab6.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab6.getFont().getSize()));
+    setResizable(false);
+    
+    errorMessageTab7.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab7.getFont().getSize()));
     setResizable(false);
 
+    currentErrorMessage = errorMessageTab1;
+    
     getContentPane().setLayout(null);
 
 
@@ -249,11 +278,12 @@ public class ClimbSafeMainPage extends JFrame {
     separator.setBounds(10, 205, 1176, 2);
     panel.add(separator);
 
-    errorMessage = new JLabel("");
-    errorMessage.setForeground(Color.RED);
-    errorMessage.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
-    errorMessage.setBounds(38, 39, 601, 24);
-    panel.add(errorMessage);
+    errorMessageTab1 = new JLabel("");
+    errorMessageTab1.setForeground(Color.RED);
+    errorMessageTab1.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab1.setBounds(38, 39, 601, 24);
+    panel.add(errorMessageTab1);
+        
 
     selectMemberToUpdateLabel = new JLabel("Select member: ");
     selectMemberToUpdateLabel.setForeground(Color.WHITE);
@@ -467,6 +497,12 @@ public class ClimbSafeMainPage extends JFrame {
     panel_1 = new JPanel();
     tabbedPane_1.addTab("Register page", null, panel_1, null);
     panel_1.setLayout(null);
+    
+    errorMessageTab2 = new JLabel("");
+    errorMessageTab2.setForeground(Color.RED);
+    errorMessageTab2.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab2.setBounds(38, 39, 601, 24);
+    panel_1.add(errorMessageTab2);
 
     memberRegisterEmailLabel = new JLabel("Email:");
     memberRegisterEmailLabel.setForeground(Color.WHITE);
@@ -678,6 +714,12 @@ public class ClimbSafeMainPage extends JFrame {
     tabbedPane_1.addTab("Set up NMC info", null, panel_2, null);
     panel_2.setLayout(null);
 
+    errorMessageTab3 = new JLabel("");
+    errorMessageTab3.setForeground(Color.RED);
+    errorMessageTab3.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab3.setBounds(38, 39, 601, 24);
+    panel_2.add(errorMessageTab3);
+    
     setUpStartdateLabel = new JLabel("Start date:");
     setUpStartdateLabel.setForeground(Color.WHITE);
     setUpStartdateLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
@@ -756,6 +798,12 @@ public class ClimbSafeMainPage extends JFrame {
     panel_3 = new JPanel();
     tabbedPane_1.addTab("Remove user or equipment", null, panel_3, null);
     panel_3.setLayout(null);
+    
+    errorMessageTab4 = new JLabel("");
+    errorMessageTab4.setForeground(Color.RED);
+    errorMessageTab4.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab4.setBounds(38, 39, 601, 24);
+    panel_3.add(errorMessageTab4);
 
     removeUserLabel = new JLabel("REMOVE USER");
     removeUserLabel.setForeground(Color.WHITE);
@@ -842,6 +890,12 @@ public class ClimbSafeMainPage extends JFrame {
     panel_4 = new JPanel();
     tabbedPane_1.addTab("Add or update equipment", null, panel_4, null);
     panel_4.setLayout(null);
+    
+    errorMessageTab5 = new JLabel("");
+    errorMessageTab5.setForeground(Color.RED);
+    errorMessageTab5.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab5.setBounds(38, 39, 601, 24);
+    panel_4.add(errorMessageTab5);
 
     nameEquipmentToAddLabel = new JLabel("Name:");
     nameEquipmentToAddLabel.setForeground(Color.WHITE);
@@ -964,6 +1018,12 @@ public class ClimbSafeMainPage extends JFrame {
     panel_5 = new JPanel();
     tabbedPane_1.addTab("Assignment and payment", null, panel_5, null);
     panel_5.setLayout(null);
+    
+    errorMessageTab6 = new JLabel("");
+    errorMessageTab6.setForeground(Color.RED);
+    errorMessageTab6.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab6.setBounds(38, 39, 601, 24);
+    panel_5.add(errorMessageTab6);
 
     selectMemberForPayLabel = new JLabel("Select member:");
     selectMemberForPayLabel.setForeground(Color.WHITE);
@@ -1083,6 +1143,12 @@ public class ClimbSafeMainPage extends JFrame {
     panel_6.setToolTipText("");
     tabbedPane_1.addTab("View assignments", null, panel_6, null);
     panel_6.setLayout(null);
+    
+    errorMessageTab7 = new JLabel("");
+    errorMessageTab7.setForeground(Color.RED);
+    errorMessageTab7.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
+    errorMessageTab7.setBounds(38, 39, 601, 24);
+    panel_6.add(errorMessageTab7);
 
 
     viewAssignmentTable = new JTable(new DefaultTableModel(new Object[][] {},
@@ -1139,7 +1205,7 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void refreshData() {
-    errorMessage.setText(error);
+    currentErrorMessage.setText(error);
     if (error == null || error.isEmpty()) {
 
       newMemberWeekTextField.setText("");
@@ -1246,8 +1312,7 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void refreshUpdateMemberItem() {
-
-    errorMessage.setText(error);
+    currentErrorMessage.setText(error);
     if (error == null || error.isEmpty()) {
       memberItemQuantityTextField.setText("");
 
@@ -1262,8 +1327,8 @@ public class ClimbSafeMainPage extends JFrame {
 
   }
 
-  private void refreshRegisterMemberItem() {
-    errorMessage.setText(error);
+  private void refreshRegisterMemberItem() {	  
+    currentErrorMessage.setText(error);  
     if (error == null || error.isEmpty()) {
       quantityRegisterMemberField.setText("");
 
@@ -1323,6 +1388,7 @@ public class ClimbSafeMainPage extends JFrame {
 	    	//Calls the controller
 	    	callController(() -> ClimbSafeFeatureSet2Controller.registerMember(email, password, name, emergencyContact, nrWeeks, guideRequired, hotelRequired, itemNames, itemQuantities));
 	    }
+	    currentErrorMessage = errorMessageTab2;
 	    refreshData(); //updates the visual
     
   }
@@ -1375,12 +1441,14 @@ public class ClimbSafeMainPage extends JFrame {
           newPassword, newName, newContact, newNbrWeek, newGuideRequired, newHotelRequired,
           newItemNames, newItemQuantities));
     }
+    currentErrorMessage = errorMessageTab1; //Assign THE currentErrorMessage to the errorMessage of the tab the trigger element is comprised in.
     // update visuals
     refreshData();
   }
 
   private void updateGuideButtonActionPerformed(ActionEvent evt) {
     
+	  //to add after refresh: currentErrorMessage = errorMessageTab1;
   }
 
 
@@ -1413,7 +1481,7 @@ public class ClimbSafeMainPage extends JFrame {
     	  //Calls the controller if there are no errors
     	  callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(email, password, name, emergencyContact));
       }
-      
+      currentErrorMessage = errorMessageTab2;
       refreshData(); //updates the visual
     
 
@@ -1431,6 +1499,7 @@ public class ClimbSafeMainPage extends JFrame {
 		  DefaultTableModel memberItemTable= (DefaultTableModel) itemRegisterMemberTable.getModel();
 		  memberItemTable.addRow(new Object[] {selectedItem.getName(), itemQuantity});
 	  }
+	  currentErrorMessage = errorMessageTab2;
 	  refreshRegisterMemberItem(); //update visual
     
 
@@ -1450,7 +1519,8 @@ public class ClimbSafeMainPage extends JFrame {
       // call the controller
       callController(() -> ClimbSafeFeatureSet1Controller.deleteGuide(selectedGuide.getEmail()));
     }
-
+    
+    currentErrorMessage = errorMessageTab4;
     // update visuals
     refreshData();
 
@@ -1467,6 +1537,7 @@ public class ClimbSafeMainPage extends JFrame {
       callController(() -> ClimbSafeFeatureSet1Controller.deleteMember(selectedMember.getEmail()));
     }
 
+    currentErrorMessage = errorMessageTab4;
     // update visuals
     refreshData();
   }
@@ -1482,14 +1553,15 @@ public class ClimbSafeMainPage extends JFrame {
       callController(
           () -> ClimbSafeFeatureSet6Controller.deleteEquipment(selectedEquipment.getName()));
     }
-
+    currentErrorMessage = errorMessageTab4;
     // update visuals
     refreshData();
   }
 
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
     
-
+	//To be implemented
+	  
   }
 
     private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
@@ -1511,6 +1583,7 @@ public class ClimbSafeMainPage extends JFrame {
 
     }
 
+    currentErrorMessage = errorMessageTab1;
     // update visuals
     refreshUpdateMemberItem();
   }
@@ -1537,6 +1610,7 @@ public class ClimbSafeMainPage extends JFrame {
               newName, newWeight, newPrice));
     }
     
+    currentErrorMessage = errorMessageTab5;
     refreshData();
   }
 
@@ -1569,6 +1643,7 @@ public class ClimbSafeMainPage extends JFrame {
 	  if(error.isEmpty()) {
 		  callController(()-> AssignmentController.startTrips((Integer) selectedItem));
 	  }
+	  currentErrorMessage = errorMessageTab6;
 	  refreshData();
   }
 
