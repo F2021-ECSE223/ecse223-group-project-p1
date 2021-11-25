@@ -1672,8 +1672,10 @@ public class ClimbSafeMainPage extends JFrame {
     
   }
 
-  private void initiateActionPerformed(ActionEvent evt) {
-   
+ private void initiateActionPerformed(ActionEvent evt) {
+	  callController(
+	          () -> AssignmentController.initiateAssignmentForAllMembers());
+	    refreshData();
   }
 
   /**
