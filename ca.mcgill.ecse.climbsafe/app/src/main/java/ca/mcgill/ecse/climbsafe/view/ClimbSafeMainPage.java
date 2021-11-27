@@ -2,24 +2,18 @@ package ca.mcgill.ecse.climbsafe.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
-import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.SqlDateModel;
-import org.jdatepicker.impl.UtilDateModel;
 
-import ca.mcgill.ecse.climbsafe.view.DateLabelFormatter;
-import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
+
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,11 +22,9 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
 import ca.mcgill.ecse.climbsafe.controller.AssignmentController;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet1Controller;
 import ca.mcgill.ecse.climbsafe.controller.ClimbSafeFeatureSet2Controller;
@@ -45,32 +37,24 @@ import ca.mcgill.ecse.climbsafe.controller.TOGuide;
 import ca.mcgill.ecse.climbsafe.controller.TOMember;
 import ca.mcgill.ecse.climbsafe.controller.TOBookableItem;
 import ca.mcgill.ecse.climbsafe.controller.TOEquipment;
-import javax.swing.JPasswordField;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import java.awt.Component;
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import javax.swing.JList;
 import javax.swing.border.BevelBorder;
-import javax.swing.table.TableModel;
-import javax.swing.JScrollBar;
+
 
 public class ClimbSafeMainPage extends JFrame {
   private static final long serialVersionUID = -4426310869335015542L;
   // tabs
   JTabbedPane tabbedPane = new JTabbedPane();
-
+  private String error = "";
 
   // All text fields are listed here
   private JLabel currentErrorMessage;
-  private String error = "";
+
   private JTextField newMemberWeekTextField;
   private JTextField newMemberEmergencyNumberTextField;
   private JTextField newMemberPasswordTextField;
@@ -89,7 +73,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JTextField setUpNumWeeksTextField;
   private JDatePickerImpl NMCDatePicker;
   private JTextField setUpPriceGuidePerWeekTextField;
-  private JTextField newGuideEmailTextField;
+  private JTextField newGuidePasswordTextField;
   private JTextField newGuideEmergencyNumberTextField;
   private JTextField newGuideNameTextField;
   private JTextField nameEquipmentToAddTextField;
@@ -101,8 +85,8 @@ public class ClimbSafeMainPage extends JFrame {
   private JTextField authorizationCodeTextField;
   private JTextField quantityRegisterMemberField;
 
-  // FIRST TAB BELOW (except textFields) -- UPDATE PAGE 
-  private JLabel errorMessageTab1 = new JLabel(); // element for error message 
+  // FIRST TAB BELOW (except textFields) -- UPDATE PAGE
+  private JLabel errorMessageTab1 = new JLabel(); // element for error message
   private JTabbedPane tabbedPane_1;
   private JPanel panel;
   private JLabel selectMemberToUpdateLabel;
@@ -122,7 +106,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel updateMemberInformationLabel;
   private JLabel updateGuideInformationLabel;
   private JLabel selectGuideToUpdateLabel;
-  private JLabel newGuideEmailLabel;
+  private JLabel newGuidePasswordLabel;
   private JComboBox selectGuideToUpdateComboBox;
   private JLabel newGuideEmergencyNumberLabel;
   private JLabel newGuideNameLabel;
@@ -187,7 +171,7 @@ public class ClimbSafeMainPage extends JFrame {
   private JLabel errorMessageTab5 = new JLabel(); // element for error message
   private JPanel panel_4;
   private JLabel nameEquipmentToAddLabel;
-  JLabel weightEquipmentToAddLabel;
+  private JLabel weightEquipmentToAddLabel;
   private JLabel pricePerWeekEquipmentToAddLabel;
   private JLabel addEquipmentLabel;
   private JButton addEquipmentButton;
@@ -232,34 +216,44 @@ public class ClimbSafeMainPage extends JFrame {
 
   public ClimbSafeMainPage() {
     initComponents();
+    refreshData();
+    refreshUpdateMemberItem();
+    refreshRegisterMemberItem();
   }
 
   private void initComponents() {
-	  
-	  
-    errorMessageTab1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab1.getFont().getSize()));
+
+
+    errorMessageTab1
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab1.getFont().getSize()));
     setResizable(false);
-    
-    errorMessageTab2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab2.getFont().getSize()));
+
+    errorMessageTab2
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab2.getFont().getSize()));
     setResizable(false);
-    
-    errorMessageTab3.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab3.getFont().getSize()));
+
+    errorMessageTab3
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab3.getFont().getSize()));
     setResizable(false);
-    
-    errorMessageTab4.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab4.getFont().getSize()));
+
+    errorMessageTab4
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab4.getFont().getSize()));
     setResizable(false);
-    
-    errorMessageTab5.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab5.getFont().getSize()));
+
+    errorMessageTab5
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab5.getFont().getSize()));
     setResizable(false);
-    
-    errorMessageTab6.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab6.getFont().getSize()));
+
+    errorMessageTab6
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab6.getFont().getSize()));
     setResizable(false);
-    
-    errorMessageTab7.setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab7.getFont().getSize()));
+
+    errorMessageTab7
+        .setFont(new Font(Font.SANS_SERIF, Font.BOLD, errorMessageTab7.getFont().getSize()));
     setResizable(false);
 
     currentErrorMessage = errorMessageTab1;
-    
+
     getContentPane().setLayout(null);
 
 
@@ -283,7 +277,7 @@ public class ClimbSafeMainPage extends JFrame {
     errorMessageTab1.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
     errorMessageTab1.setBounds(38, 39, 601, 24);
     panel.add(errorMessageTab1);
-        
+
 
     selectMemberToUpdateLabel = new JLabel("Select member: ");
     selectMemberToUpdateLabel.setForeground(Color.WHITE);
@@ -421,21 +415,21 @@ public class ClimbSafeMainPage extends JFrame {
     selectGuideToUpdateLabel.setBounds(131, 71, 110, 27);
     panel.add(selectGuideToUpdateLabel);
 
-    newGuideEmailLabel = new JLabel("New email: ");
-    newGuideEmailLabel.setForeground(Color.WHITE);
-    newGuideEmailLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
-    newGuideEmailLabel.setBounds(148, 129, 93, 27);
-    panel.add(newGuideEmailLabel);
+    newGuidePasswordLabel = new JLabel("New password: ");
+    newGuidePasswordLabel.setForeground(Color.WHITE);
+    newGuidePasswordLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
+    newGuidePasswordLabel.setBounds(109, 129, 132, 27);
+    panel.add(newGuidePasswordLabel);
 
     selectGuideToUpdateComboBox = new JComboBox();
     selectGuideToUpdateComboBox.setEditable(true);
     selectGuideToUpdateComboBox.setBounds(247, 74, 189, 27);
     panel.add(selectGuideToUpdateComboBox);
 
-    newGuideEmailTextField = new JTextField();
-    newGuideEmailTextField.setColumns(10);
-    newGuideEmailTextField.setBounds(247, 132, 189, 27);
-    panel.add(newGuideEmailTextField);
+    newGuidePasswordTextField = new JTextField();
+    newGuidePasswordTextField.setColumns(10);
+    newGuidePasswordTextField.setBounds(247, 132, 189, 27);
+    panel.add(newGuidePasswordTextField);
 
     newGuideEmergencyNumberLabel = new JLabel("New emergency number:");
     newGuideEmergencyNumberLabel.setForeground(Color.WHITE);
@@ -497,7 +491,7 @@ public class ClimbSafeMainPage extends JFrame {
     panel_1 = new JPanel();
     tabbedPane_1.addTab("Register page", null, panel_1, null);
     panel_1.setLayout(null);
-    
+
     errorMessageTab2 = new JLabel("");
     errorMessageTab2.setForeground(Color.RED);
     errorMessageTab2.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
@@ -717,9 +711,9 @@ public class ClimbSafeMainPage extends JFrame {
     errorMessageTab3 = new JLabel("");
     errorMessageTab3.setForeground(Color.RED);
     errorMessageTab3.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
-    errorMessageTab3.setBounds(38, 39, 601, 24);
+    errorMessageTab3.setBounds(37, 83, 601, 24);
     panel_2.add(errorMessageTab3);
-    
+
     setUpStartdateLabel = new JLabel("Start date:");
     setUpStartdateLabel.setForeground(Color.WHITE);
     setUpStartdateLabel.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 17));
@@ -798,11 +792,11 @@ public class ClimbSafeMainPage extends JFrame {
     panel_3 = new JPanel();
     tabbedPane_1.addTab("Remove user or equipment", null, panel_3, null);
     panel_3.setLayout(null);
-    
+
     errorMessageTab4 = new JLabel("");
     errorMessageTab4.setForeground(Color.RED);
     errorMessageTab4.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
-    errorMessageTab4.setBounds(38, 39, 601, 24);
+    errorMessageTab4.setBounds(38, 55, 601, 24);
     panel_3.add(errorMessageTab4);
 
     removeUserLabel = new JLabel("REMOVE USER");
@@ -890,11 +884,11 @@ public class ClimbSafeMainPage extends JFrame {
     panel_4 = new JPanel();
     tabbedPane_1.addTab("Add or update equipment", null, panel_4, null);
     panel_4.setLayout(null);
-    
+
     errorMessageTab5 = new JLabel("");
     errorMessageTab5.setForeground(Color.RED);
     errorMessageTab5.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
-    errorMessageTab5.setBounds(38, 39, 601, 24);
+    errorMessageTab5.setBounds(38, 54, 601, 24);
     panel_4.add(errorMessageTab5);
 
     nameEquipmentToAddLabel = new JLabel("Name:");
@@ -1018,7 +1012,7 @@ public class ClimbSafeMainPage extends JFrame {
     panel_5 = new JPanel();
     tabbedPane_1.addTab("Assignment and payment", null, panel_5, null);
     panel_5.setLayout(null);
-    
+
     errorMessageTab6 = new JLabel("");
     errorMessageTab6.setForeground(Color.RED);
     errorMessageTab6.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
@@ -1143,11 +1137,11 @@ public class ClimbSafeMainPage extends JFrame {
     panel_6.setToolTipText("");
     tabbedPane_1.addTab("View assignments", null, panel_6, null);
     panel_6.setLayout(null);
-    
+
     errorMessageTab7 = new JLabel("");
     errorMessageTab7.setForeground(Color.RED);
     errorMessageTab7.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 16));
-    errorMessageTab7.setBounds(38, 39, 601, 24);
+    errorMessageTab7.setBounds(56, 76, 601, 24);
     panel_6.add(errorMessageTab7);
 
 
@@ -1201,7 +1195,6 @@ public class ClimbSafeMainPage extends JFrame {
     setSize(backgroundImage.getIconWidth(), backgroundImage.getIconHeight() - offset);
     refreshData();
     setVisible(true);
-
   }
 
   private void refreshData() {
@@ -1225,7 +1218,7 @@ public class ClimbSafeMainPage extends JFrame {
       setUpStartAnchorDateTextField.setText("");
       setUpNumWeeksTextField.setText("");
       setUpPriceGuidePerWeekTextField.setText("");
-      newGuideEmailTextField.setText("");
+      newGuidePasswordTextField.setText("");
       newGuideEmergencyNumberTextField.setText("");
       newGuideNameTextField.setText("");
       nameEquipmentToAddTextField.setText("");
@@ -1304,11 +1297,7 @@ public class ClimbSafeMainPage extends JFrame {
 
 
       lists.forEach(list -> list.setSelectedIndex(-1));
-
-
     }
-
-
   }
 
   private void refreshUpdateMemberItem() {
@@ -1323,12 +1312,10 @@ public class ClimbSafeMainPage extends JFrame {
       // select member to update
       AssignmentController.getItems().forEach(selectItemsRegisterMemberComboBox::addItem);
     }
-
-
   }
 
-  private void refreshRegisterMemberItem() {	  
-    currentErrorMessage.setText(error);  
+  private void refreshRegisterMemberItem() {
+    currentErrorMessage.setText(error);
     if (error == null || error.isEmpty()) {
       quantityRegisterMemberField.setText("");
 
@@ -1342,55 +1329,58 @@ public class ClimbSafeMainPage extends JFrame {
 
   /**
    * Registers a member using information of email, password, name, contact, number of weeks,
-   * guideRequired, hotelRequied, item names and quantities. 
+   * guideRequired, hotelRequied, item names and quantities.
+   * 
    * @param evt
    */
 
 
   private void registerMemberButtonActionPerformed(ActionEvent evt) {
-	  error="";
-	  String email= memberRegisterEmailTextField.getText();
-	  if(email.isEmpty()) {
-		  error="Enter an email";
-	  }
-	  String password= memberRegisterPasswordField.getText();
-	  if(password.isEmpty()) {
-		  error="Enter a password";
-	  }
-	  String name= memberRegisterNameTextField.getText();
-	  if(name.isEmpty()) {
-		  error="Enter a name";
-	  }
-	  
-	  String emergencyContact= memberRegisterContactTextField.getText();
-	  if(emergencyContact.isEmpty()) {
-		  error="Enter an emergency number";
-	  }
-	  int nrWeeks= getNumberFromField(memberRegisterWeekTextField, "Number of weeks needs to be a numerical value!");
-	  boolean guideRequired= memberGuideRequiredRdBtn.isSelected(); //true if guide is selected
-	  boolean hotelRequired= memberHotelRequiredRdBtn.isSelected(); //true if hotel is selected
-	  
-	  
-	  DefaultTableModel memberItemTable= (DefaultTableModel) itemRegisterMemberTable.getModel();
-	  List<String> itemNames= new ArrayList<String>(); //iterates through the list to get the names
-	  for(int i=0; i<memberItemTable.getRowCount(); i++) {
-		  String current= (String) memberItemTable.getValueAt(i, 0);
-		  itemNames.add(current);
-	  }
-	  List<Integer> itemQuantities= new ArrayList<Integer>();  //iterates through the list to get the quantities
-	  for(int i=0; i<memberItemTable.getRowCount(); i++) { 
-		  int quantity=(int)(memberItemTable.getValueAt(i, 1));
-		  itemQuantities.add(quantity);
-	  }
-	  
-	  error = error.trim();
-	    if (error.isEmpty()) { //if there are no errors
-	    	//Calls the controller
-	    	callController(() -> ClimbSafeFeatureSet2Controller.registerMember(email, password, name, emergencyContact, nrWeeks, guideRequired, hotelRequired, itemNames, itemQuantities));
-	    }
-	    currentErrorMessage = errorMessageTab2;
-	    refreshData(); //updates the visual
-    
+    error = "";
+    String email = memberRegisterEmailTextField.getText();
+    if (email.isEmpty()) {
+      error = "Enter an email";
+    }
+    String password = memberRegisterPasswordField.getText();
+    if (password.isEmpty()) {
+      error += "Enter a password";
+    }
+    String name = memberRegisterNameTextField.getText();
+    if (name.isEmpty()) {
+      error += "Enter a name";
+    }
+
+    String emergencyContact = memberRegisterContactTextField.getText();
+    if (emergencyContact.isEmpty()) {
+      error += "Enter an emergency number";
+    }
+    int nrWeeks = getNumberFromField(memberRegisterWeekTextField,
+        "Number of weeks needs to be a numerical value!");
+    boolean guideRequired = memberGuideRequiredRdBtn.isSelected(); // true if guide is selected
+    boolean hotelRequired = memberHotelRequiredRdBtn.isSelected(); // true if hotel is selected
+
+
+    DefaultTableModel memberItemTable = (DefaultTableModel) itemRegisterMemberTable.getModel();
+    List<String> itemNames = new ArrayList<String>(); // iterates through the list to get the names
+    for (int i = 0; i < memberItemTable.getRowCount(); i++) {
+      String current = (String) memberItemTable.getValueAt(i, 0);
+      itemNames.add(current);
+    }
+    List<Integer> itemQuantities = new ArrayList<Integer>(); // iterates through the list to get the
+                                                             // quantities
+    for (int i = 0; i < memberItemTable.getRowCount(); i++) {
+      int quantity = (int) (memberItemTable.getValueAt(i, 1));
+      itemQuantities.add(quantity);
+    }
+
+    error = error.trim();
+    if (error.isEmpty()) { // if there are no errors
+      // Calls the controller
+      callController(() -> ClimbSafeFeatureSet2Controller.registerMember(email, password, name,
+          emergencyContact, nrWeeks, guideRequired, hotelRequired, itemNames, itemQuantities));
+    }
+    currentErrorMessage = errorMessageTab2;
+    refreshData(); // updates the visual
   }
 
   private void updateMemberButtonActionPerformed(ActionEvent evt) {
@@ -1441,91 +1431,88 @@ public class ClimbSafeMainPage extends JFrame {
           newPassword, newName, newContact, newNbrWeek, newGuideRequired, newHotelRequired,
           newItemNames, newItemQuantities));
     }
-    currentErrorMessage = errorMessageTab1; //Assign THE currentErrorMessage to the errorMessage of the tab the trigger element is comprised in.
+    currentErrorMessage = errorMessageTab1; // Assign THE currentErrorMessage to the errorMessage of
+                                            // the tab the trigger element is comprised in.
     // update visuals
     refreshData();
   }
 
   private void updateGuideButtonActionPerformed(ActionEvent evt) {
-    
-	  //to add after refresh: currentErrorMessage = errorMessageTab1;
+
+    // to add after refresh: currentErrorMessage = errorMessageTab1;
   }
 
 
   /**
    * Registers a guide using information of email, password, name and contact
+   * 
    * @param evt
    */
 
   private void registerGuideButtonActionPerformed(ActionEvent evt) {
-	  error="";
-	  String email= guideRegisterEmailTextField.getText();
-	  if(email.isEmpty()) {
-		  error += "Enter an email";
-	  }
-	  String password= guideRegisterPasswordTextField.getText();  
-      if(password.isEmpty()) {
-    	error += "Enter a password";
-      }
-      String name= guideRegisterNameTextField.getText();
-      if(name.isEmpty()) {
-    	  error += "Enter a name";
-      }
-      String emergencyContact= guideRegisterEmergencyContactTextField.getText();
-      if(emergencyContact.isEmpty()) {
-    	  error += "Enter an emergency number";
-      }
-      
-      error=error.trim();
-      if(error.isEmpty()) {
-    	  //Calls the controller if there are no errors
-    	  callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(email, password, name, emergencyContact));
-      }
-      currentErrorMessage = errorMessageTab2;
-      refreshData(); //updates the visual
-    
+    error = "";
+    String email = guideRegisterEmailTextField.getText();
+    if (email.isEmpty()) {
+      error += "Enter an email";
+    }
+    String password = guideRegisterPasswordTextField.getText();
+    if (password.isEmpty()) {
+      error += "Enter a password";
+    }
+    String name = guideRegisterNameTextField.getText();
+    if (name.isEmpty()) {
+      error += "Enter a name";
+    }
+    String emergencyContact = guideRegisterEmergencyContactTextField.getText();
+    if (emergencyContact.isEmpty()) {
+      error += "Enter an emergency number";
+    }
 
+    error = error.trim();
+    if (error.isEmpty()) {
+      // Calls the controller if there are no errors
+      callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(email, password, name,
+          emergencyContact));
+    }
+    currentErrorMessage = errorMessageTab2;
+    refreshData(); // updates the visual
   }
 
- private void addItemRegisterMemberActionPerformed(ActionEvent evt) {
-	  error="";
-	  var selectedItem= (TOEquipment) selectItemsRegisterMemberComboBox.getSelectedItem();
-	  if(selectedItem==null) {
-		  error="An item needs to be selected to be added!";
-	  }
-	  int itemQuantity = getNumberFromField(memberItemQuantityTextField,
-		        "The item quantity needs to be a numerical value!");
-	  if (error.isEmpty()) {
-		  DefaultTableModel memberItemTable= (DefaultTableModel) itemRegisterMemberTable.getModel();
-		  memberItemTable.addRow(new Object[] {selectedItem.getName(), itemQuantity});
-	  }
-	  currentErrorMessage = errorMessageTab2;
-	  refreshRegisterMemberItem(); //update visual
-    
+  private void addItemRegisterMemberActionPerformed(ActionEvent evt) {
+    error = "";
+    var selectedItem = (TOBookableItem) selectItemsRegisterMemberComboBox.getSelectedItem();
+    if (selectedItem == null) {
+      error = "An item needs to be selected to be added!";
+    }
+    int itemQuantity = getNumberFromField(memberItemQuantityTextField,
+        "The item quantity needs to be a numerical value!");
 
+    error = error.trim();
+    if (error.isEmpty()) {
+      DefaultTableModel memberItemTable = (DefaultTableModel) itemRegisterMemberTable.getModel();
+      memberItemTable.addRow(new Object[] {selectedItem.getName(), itemQuantity});
+    }
+    currentErrorMessage = errorMessageTab2;
+    refreshRegisterMemberItem(); // update visual
   }
 
   private void confirmSetUpButtonActionPerformed(ActionEvent evt) {
-	  String nw = setUpNumWeeksTextField.getText();
-	  String pricePerGuideString=setUpPriceGuidePerWeekLabel.getText();
-	  error="";
-	  if (nw.isBlank() && pricePerGuideString.isBlank())
-	  {
-		error="Can't set a blank number of weeks or Price per guide";  
-	  }
-	  else {
-		  try {
-			 Integer nbrOfWeeks=Integer.valueOf(nw);
-			 Integer priceperGuide=Integer.valueOf(pricePerGuideString);
-		     callController(() -> ClimbSafeFeatureSet1Controller.setup((Date)NMCDatePicker.getModel().getValue(), nbrOfWeeks, priceperGuide));
-		  }
-		  catch(Exception e)
-		  {
-			  error = "Input should be integers, not strings";
-		  }
-	  }
-	    refreshData();
+    error = "";
 
+    int nbrOfWeeks = getNumberFromField(setUpNumWeeksTextField,
+        "The number of weeks needs to be a numerical value!");
+
+    int priceperGuide = getNumberFromField(setUpPriceGuidePerWeekTextField,
+        "The price for a guide needs to be a numerical value!");
+
+    error = error.trim();
+    if (error.isEmpty()) {
+      callController(() -> ClimbSafeFeatureSet1Controller
+          .setup((Date) NMCDatePicker.getModel().getValue(), nbrOfWeeks, priceperGuide));
+
+    }
+    currentErrorMessage = errorMessageTab3;
+    refreshData();
   }
 
   private void deleteGuideButtonActionPerformed(ActionEvent evt) {
@@ -1538,11 +1525,10 @@ public class ClimbSafeMainPage extends JFrame {
       // call the controller
       callController(() -> ClimbSafeFeatureSet1Controller.deleteGuide(selectedGuide.getEmail()));
     }
-    
+
     currentErrorMessage = errorMessageTab4;
     // update visuals
     refreshData();
-
   }
 
   private void deleteMemberButtonActionPerformed(ActionEvent evt) {
@@ -1578,12 +1564,12 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
-    
-	//To be implemented
-	  
+
+    // To be implemented
+
   }
 
-    private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
+  private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
     var selectedItem = (TOBookableItem) selectNewItemsComboBox.getSelectedItem();
@@ -1593,12 +1579,12 @@ public class ClimbSafeMainPage extends JFrame {
     int itemQuantity = getNumberFromField(memberItemQuantityTextField,
         "The item quantity needs to be a numerical value!");
 
+    error = error.trim();
     if (error.isEmpty()) {
       DefaultTableModel updateMemberEquipmentModel =
           (DefaultTableModel) updateMemberEquipmentTable.getModel();
       // adding item to table model
-      updateMemberEquipmentModel
-          .addRow(new Object[] {selectedItem.getName(), itemQuantity});;
+      updateMemberEquipmentModel.addRow(new Object[] {selectedItem.getName(), itemQuantity});;
 
     }
 
@@ -1609,13 +1595,13 @@ public class ClimbSafeMainPage extends JFrame {
 
   private void updateEquipmentButtonActionPerformed(ActionEvent evt) {
     error = "";
-    var selectedItem = (TOEquipment) selectEquipmentToUpdateComboBox.getSelectedItem();
-    if (selectedItem == null) {
+    var selectedEquipment = (TOEquipment) selectEquipmentToUpdateComboBox.getSelectedItem();
+    if (selectedEquipment == null) {
       error = "An item needs to be selected to be updated!";
     }
     var newName = newEquipmentNameTextField.getText();
     if (newName.isEmpty()) {
-      error = "Enter a name";
+      error += "Enter a name";
     }
     int newWeight = getNumberFromField(newEquipmentWeightTextField,
         "The weight needs to be a numerical value!");
@@ -1624,58 +1610,52 @@ public class ClimbSafeMainPage extends JFrame {
         "The price needs to be a numerical value!");
     error = error.trim();
     if (error.isEmpty()) {
-      callController(
-          () -> ClimbSafeFeatureSet4Controller.updateEquipment(selectedItem.getName(), 
-              newName, newWeight, newPrice));
+      callController(() -> ClimbSafeFeatureSet4Controller
+          .updateEquipment(selectedEquipment.getName(), newName, newWeight, newPrice));
     }
-    
+
     currentErrorMessage = errorMessageTab5;
     refreshData();
   }
 
   private void payButtonActionPerformed(ActionEvent evt) {
     error = "";
-    var member = (TOMember)selectMemberForPayComboBox.getSelectedItem();
-    String auth=authorizationCodeTextField.getText();
-    if (auth==null)
-    {
-    	error="Authorization code cannot be null";
+    var member = (TOMember) selectMemberForPayComboBox.getSelectedItem();
+    if (member == null) {
+      error = "A member has to be selected first";
     }
-    if (member==null)
-    {
-    	error="A member has to be selected first";
+    String code = authorizationCodeTextField.getText();
+    if (code.isEmpty()) {
+      error += "Authorization code cannot be null";
     }
-    if (error.isEmpty())
-    {
-    	 callController(
-    	          () -> AssignmentController.payment(member.getEmail(), auth));
+
+    if (error.isEmpty()) {
+      callController(() -> AssignmentController.payment(member.getEmail(), code));
     }
+    currentErrorMessage = errorMessageTab6;
     refreshData();
-    }
-
-  private void finishButtonActionPerformed(ActionEvent evt) {
-	  error = "";
-	    var member = (TOMember)selectMemberForPayComboBox.getSelectedItem();
-	    if (member==null)
-	    {
-	    	error="A member has to be selected first";
-	    }
-	    if (error.isEmpty())
-	    {
-	    	 callController(
-	    	          () -> AssignmentController.finishTrip(member.getEmail()));
-	    }
-	    refreshData();
-	    }
-
-  private void cancelButtonActionPerformed(ActionEvent evt) {
-    
   }
 
- private void initiateActionPerformed(ActionEvent evt) {
-	  callController(
-	          () -> AssignmentController.initiateAssignmentForAllMembers());
-	    refreshData();
+  private void finishButtonActionPerformed(ActionEvent evt) {
+    error = "";
+    var member = (TOMember) selectMemberForPayComboBox.getSelectedItem();
+    if (member == null) {
+      error = "A member has to be selected first";
+    }
+    if (error.isEmpty()) {
+      callController(() -> AssignmentController.finishTrip(member.getEmail()));
+    }
+    currentErrorMessage = errorMessageTab6;
+    refreshData();
+  }
+
+  private void cancelButtonActionPerformed(ActionEvent evt) {
+
+  }
+
+  private void initiateActionPerformed(ActionEvent evt) {
+    callController(() -> AssignmentController.initiateAssignmentForAllMembers());
+    refreshData();
   }
 
   /**
@@ -1683,16 +1663,16 @@ public class ClimbSafeMainPage extends JFrame {
    */
 
   private void startTripsButtonActionPerformed(ActionEvent evt) {
-	  error="";
-	  var selectedItem= selectStartWeekNumberComboBox.getSelectedItem();
-	  if(selectedItem==null) {
-		  error="A week number needs to be selected to start the trip!";
-	  }
-	  if(error.isEmpty()) {
-		  callController(()-> AssignmentController.startTrips((Integer) selectedItem));
-	  }
-	  currentErrorMessage = errorMessageTab6;
-	  refreshData();
+    error = "";
+    var selectedItem = selectStartWeekNumberComboBox.getSelectedItem();
+    if (selectedItem == null) {
+      error = "A week number needs to be selected to start the trip!";
+    }
+    if (error.isEmpty()) {
+      callController(() -> AssignmentController.startTrips((Integer) selectedItem));
+    }
+    currentErrorMessage = errorMessageTab6;
+    refreshData();
   }
 
 
