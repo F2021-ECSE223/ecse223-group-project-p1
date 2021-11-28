@@ -1438,8 +1438,43 @@ public class ClimbSafeMainPage extends JFrame {
   }
 
   private void updateGuideButtonActionPerformed(ActionEvent evt) {
+	  error = "";
+	  var selectGuide = (TOGuide) selectGuideToUpdateComboBox.getSelectedItem();
+	  if(selectGuide == null) {
+		  error = "Guide needs to be selected to be updated";
+	  }
+	  
+	  String newName = newGuideNameTextField.getText();
+	  if(newName.isEmpty()) {
+		  error+="Enter a name";
+	  }
+	  String newEmail = newGuideEmailTextField.getText();
+	  
+	  if(newEmail.isEmpty()){
+		  error+="Enter an email";
+	  }
+	  
+	  String newPassword = newGuidePasswordTextField.getText();
+	  if(newPassword.isEmpty()){
+		  error+="Enter a password";
+	  }
+	  
+	  String newEmergencyContact = newGuideEmergencyNumberTextField.getText();
+	  if(newEmergencyContact.isEmpty()) {
+		  error+="Enter an emergency number";
+	  }
+	  
+	  error = error.trim();
+	  if(error.isEmpty()) {
+    	  //Calls the controller if there are no errors
+    	  callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(newEmail, newPassword, newName, newEmergencyContact));
+      }
+	  
+      currentErrorMessage = errorMessageTab2;
+      refreshData();
+	  
+	  
 
-    // to add after refresh: currentErrorMessage = errorMessageTab1;
   }
 
 
@@ -1565,7 +1600,30 @@ public class ClimbSafeMainPage extends JFrame {
 
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
 
-    // To be implemented
+    error = "";
+	  var selectedEquipment = (TOEquipment) selectNewItemsComboBox.getSelectedItem();
+	    if (selectedEquipment == null) {
+	      error = "Equipment needs to be selected to be added!";
+	    }
+
+	  String name = nameEquipmentToAddTextField.getText();
+	   if (name.isEmpty()) {
+		   error = "Enter a name";
+	   }
+	  String weight = weightEquipmentToAddTextField.getText();
+	   if(weight.isEmpty()) {
+		   error = "Enter a weight";
+	   } 
+	  
+	  String price = getNumberFromField(pricePerWeekEquipmentToAdd, );
+	   if (price.isEmpty()) {
+		   error = "Enter a price";
+	   }
+	   if (error.isEmpty()) {
+		   callController(() -> ClimbSafeFeatureSet4Controller.addEquipment(name, Integer.parseInt(weight), Integer.parseInt(price)));
+	   }
+	   refreshData();
+
 
   }
 
