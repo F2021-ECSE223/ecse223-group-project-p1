@@ -1,20 +1,19 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.31.1.5860.78bb27cc6 modeling language!*/
 
-package ca.mcgill.ecse.climbsafe.model;
-import java.io.Serializable;
-import java.util.*;
+package ca.mcgill.ecse.climbsafe.controller;
 
-// line 40 "../../../../../ClimbSafePersistence.ump"
-// line 33 "../../../../../ClimbSafe.ump"
-public abstract class NamedUser extends User implements Serializable
+// line 18 "../../../../../ClimbSafeTransferObjects.ump"
+public class TOGuide
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //NamedUser Attributes
+  //TOGuide Attributes
+  private String email;
+  private String password;
   private String name;
   private String emergencyContact;
 
@@ -22,9 +21,10 @@ public abstract class NamedUser extends User implements Serializable
   // CONSTRUCTOR
   //------------------------
 
-  public NamedUser(String aEmail, String aPassword, String aName, String aEmergencyContact)
+  public TOGuide(String aEmail, String aPassword, String aName, String aEmergencyContact)
   {
-    super(aEmail, aPassword);
+    email = aEmail;
+    password = aPassword;
     name = aName;
     emergencyContact = aEmergencyContact;
   }
@@ -32,6 +32,22 @@ public abstract class NamedUser extends User implements Serializable
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setEmail(String aEmail)
+  {
+    boolean wasSet = false;
+    email = aEmail;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setPassword(String aPassword)
+  {
+    boolean wasSet = false;
+    password = aPassword;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setName(String aName)
   {
@@ -49,6 +65,16 @@ public abstract class NamedUser extends User implements Serializable
     return wasSet;
   }
 
+  public String getEmail()
+  {
+    return email;
+  }
+
+  public String getPassword()
+  {
+    return password;
+  }
+
   public String getName()
   {
     return name;
@@ -60,23 +86,13 @@ public abstract class NamedUser extends User implements Serializable
   }
 
   public void delete()
-  {
-    super.delete();
+  {}
+
+
+  @Override
+  // line 24 "../../../../../ClimbSafeTransferObjects.ump"
+   public String toString(){
+    return email;
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "," +
-            "emergencyContact" + ":" + getEmergencyContact()+ "]";
-  }  
-  //------------------------
-  // DEVELOPER CODE - PROVIDED AS-IS
-  //------------------------
-  
-  // line 43 "../../../../../ClimbSafePersistence.ump"
-  private static final long serialVersionUID = 4L ;
-
-  
 }

@@ -1,7 +1,8 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
 
-
+import java.util.ArrayList;
+import java.util.List;
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
@@ -28,7 +29,7 @@ public class AssignmentController {
     }
 
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -46,8 +47,7 @@ public class AssignmentController {
    * throws an exception.
    * 
    * @author Haroun Guessous
-   * @param email
-   * @param paymentAuthorizationCode
+   * @param member
    * @throws InvalidInputException
    */
   public static void payment(String email, String paymentAuthorizationCode)
@@ -80,7 +80,7 @@ public class AssignmentController {
     assignment.setPaymentAuthorizationCode(paymentAuthorizationCode);
     assignment.pay();
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -94,7 +94,10 @@ public class AssignmentController {
    * @param startingWeekNb
    * @throws InvalidInputException
    */
-  public static void startTrips(Integer startingWeekNb) throws InvalidInputException { 
+  public static void startTrips(Integer startingWeekNb) throws InvalidInputException { // start all
+                                                                                       // trips for
+                                                                                       // a specific
+                                                                                       // week
     // retrieves all the members
     for (var member : climbSafe.getMembers()) {
       var memberAssignment = member.getAssignment();
@@ -108,7 +111,7 @@ public class AssignmentController {
             || memberAssignment.getAssignmentStatusFullName().equals("Assigned")) {
           memberAssignment.startTrip();
           try {
-            ClimbSafePersistence.save();
+            ClimbSafePersistence.save(climbSafe);
           } catch (RuntimeException e) {
             throw new InvalidInputException(e.getMessage());
           }
@@ -127,9 +130,10 @@ public class AssignmentController {
    * This method finished the trip for a Member "member".
    * 
    * @author Atreyi Srivastava, Asma Gandour
-   * @param email
+   * 
    * @throws InvalidInputException
    */
+
   public static void finishTrip(String email) throws InvalidInputException {
     Member member = (Member) User.getWithEmail(email);
     if (member == null) {
@@ -157,7 +161,7 @@ public class AssignmentController {
     assignment.finishTrip();
 
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -167,9 +171,10 @@ public class AssignmentController {
    * This method cancels the trip for a Member "member".
    * 
    * @author Mohammad Shaheer Bilal
-   * @param email
+   * 
    * @throws InvalidInputException
    */
+
   public static void cancelTrip(String email) throws InvalidInputException {
     Member member = (Member) User.getWithEmail(email);
     if (member == null) {
@@ -194,12 +199,60 @@ public class AssignmentController {
       member.setRefundPercentage(10);
     }
 
-
     assignment.cancelTrip();
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
   }
+
+  public static List<TOMember> getMembers() {
+    var members = new ArrayList<TOMember>();
+    for (var member : climbSafe.getMembers()) {
+      members.add(new TOMember(member.getEmail(), member.getPassword(), member.getName(),
+          member.getEmergencyContact(), member.getNrWeeks(), member.getGuideRequired(),
+          member.getHotelRequired()));
+    }
+    return members;
+  }
+
+  public static List<TOGuide> getGuides() {
+    var guides = new ArrayList<TOGuide>();
+    for (var guide : climbSafe.getGuides()) {
+      guides.add(new TOGuide(guide.getEmail(), guide.getPassword(), guide.getName(),
+          guide.getEmergencyContact()));
+    }
+    return guides;
+  }
+
+  public static List<TOEquipment> getEquipments() {
+    var equipments = new ArrayList<TOEquipment>();
+    for (var equipment : climbSafe.getEquipment()) {
+      equipments.add(
+          new TOEquipment(equipment.getName(), equipment.getWeight(), equipment.getPricePerWeek()));
+    }
+    return equipments;
+  }
+
+  public static List<TOBookableItem> getItems() {
+    var items = new ArrayList<TOBookableItem>();
+    // adding all equipments
+    for (var equipment : climbSafe.getEquipment()) {
+      items.add(new TOBookableItem(equipment.getName()));
+    }
+    // adding all bundles
+    for (var bundle : climbSafe.getBundles()) {
+      items.add(new TOBookableItem(bundle.getName()));
+    }
+    return items;
+  }
+
+  public static List<Integer> getWeekNbrs() {
+    var weekNbrs = new ArrayList<Integer>();
+    for (int i = 1; i < climbSafe.getNrWeeks() + 1; i++)
+      weekNbrs.add(i);
+    return weekNbrs;
+  }
+
 }

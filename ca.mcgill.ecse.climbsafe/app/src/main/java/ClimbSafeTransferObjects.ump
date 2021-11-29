@@ -14,3 +14,45 @@ class TOAssignment {
   authorizationCode;
   Integer refundedPercentageAmount;
 }
+
+class TOGuide{
+	email;
+	password;
+  name;
+  emergencyContact;
+  @Override public String toString() {
+    return email;
+  }
+}
+
+class TOMember{
+	email;
+	password;
+  name;
+  emergencyContact;
+  
+    Integer nrWeeks;
+  Boolean guideRequired;
+  Boolean hotelRequired;
+  @Override public String toString() {
+    return email;
+  }
+}
+
+
+class TOEquipment{
+  name;
+  Integer weight;
+  Integer pricePerWeek;
+  @Override public String toString() {
+    return name;
+  }
+  
+  }
+  class TOBookableItem{
+  name;
+  @Override public String toString() {
+    return name;
+  }
+
+}

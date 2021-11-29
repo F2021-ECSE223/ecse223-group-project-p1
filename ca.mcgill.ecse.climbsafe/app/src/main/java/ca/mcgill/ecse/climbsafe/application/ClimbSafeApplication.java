@@ -3,8 +3,10 @@
  */
 package ca.mcgill.ecse.climbsafe.application;
 
+import java.awt.EventQueue;
 import java.sql.Date;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
+import ca.mcgill.ecse.climbsafe.view.ClimbSafePage;
 
 public class ClimbSafeApplication {
   private static ClimbSafe climbSafe;
@@ -14,7 +16,7 @@ public class ClimbSafeApplication {
   }
 
   public static void main(String[] args) {
-    System.out.println(new ClimbSafeApplication().getGreeting());
+    EventQueue.invokeLater(ClimbSafePage::new);
   }
 
   public static ClimbSafe getClimbSafe() {
@@ -22,7 +24,7 @@ public class ClimbSafeApplication {
       // these attributes are default, you should set them later with the setters
       climbSafe = new ClimbSafe(new Date(0), 0, 0);
     }
-    
+
     return climbSafe;
   }
 }
