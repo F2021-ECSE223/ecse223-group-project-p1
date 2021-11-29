@@ -1437,7 +1437,7 @@ public class ClimbSafeMainPage extends JFrame {
     refreshData();
   }
 
-  private void updateGuideButtonActionPerformed(ActionEvent evt) {
+   private void updateGuideButtonActionPerformed(ActionEvent evt) {
 	  error = "";
 	  var selectGuide = (TOGuide) selectGuideToUpdateComboBox.getSelectedItem();
 	  if(selectGuide == null) {
@@ -1448,11 +1448,7 @@ public class ClimbSafeMainPage extends JFrame {
 	  if(newName.isEmpty()) {
 		  error+="Enter a name";
 	  }
-	  String newEmail = newGuideEmailTextField.getText();
-	  
-	  if(newEmail.isEmpty()){
-		  error+="Enter an email";
-	  }
+
 	  
 	  String newPassword = newGuidePasswordTextField.getText();
 	  if(newPassword.isEmpty()){
@@ -1467,7 +1463,7 @@ public class ClimbSafeMainPage extends JFrame {
 	  error = error.trim();
 	  if(error.isEmpty()) {
     	  //Calls the controller if there are no errors
-    	  callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(newEmail, newPassword, newName, newEmergencyContact));
+    	  callController(() -> ClimbSafeFeatureSet3Controller.updateGuide(selectGuide.getEmail(), newPassword, newName, newEmergencyContact));
       }
 	  
       currentErrorMessage = errorMessageTab2;
@@ -1597,7 +1593,7 @@ public class ClimbSafeMainPage extends JFrame {
     // update visuals
     refreshData();
   }
-
+	
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
 
     error = "";
@@ -1610,17 +1606,13 @@ public class ClimbSafeMainPage extends JFrame {
 	   if (name.isEmpty()) {
 		   error = "Enter a name";
 	   }
-	  String weight = weightEquipmentToAddTextField.getText();
-	   if(weight.isEmpty()) {
-		   error = "Enter a weight";
-	   } 
+	   int weight = getNumberFromField(weightEquipmentToAddTextField, "The weight needs to be a numerical value!");
+	 
 	  
-	  String price = getNumberFromField(pricePerWeekEquipmentToAdd, );
-	   if (price.isEmpty()) {
-		   error = "Enter a price";
-	   }
+	  int price = getNumberFromField(pricePerWeekEquipmentToAddTextField, "The price per week needs to be a numerical value!");
+	   
 	   if (error.isEmpty()) {
-		   callController(() -> ClimbSafeFeatureSet4Controller.addEquipment(name, Integer.parseInt(weight), Integer.parseInt(price)));
+		   callController(() -> ClimbSafeFeatureSet4Controller.addEquipment(name, weight, price));
 	   }
 	   refreshData();
 
@@ -1707,9 +1699,21 @@ public class ClimbSafeMainPage extends JFrame {
     refreshData();
   }
 
-  private void cancelButtonActionPerformed(ActionEvent evt) {
+    private void cancelButtonActionPerformed(ActionEvent evt) {
+	  error = "";
+	  var member = (TOMember) selectMemberForPayComboBox.getSelectedItem();
+	  if (member == null) {
+	    error = "A member has to be selected first";
+	  }
+	  
+	  if (error.isEmpty()) {
+		  callController(()-> AssignmentController.cancelTrip(member.getEmail()));
+	  }
+	  
+	  refreshData();
 
   }
+
 
   private void initiateActionPerformed(ActionEvent evt) {
     callController(() -> AssignmentController.initiateAssignmentForAllMembers());
