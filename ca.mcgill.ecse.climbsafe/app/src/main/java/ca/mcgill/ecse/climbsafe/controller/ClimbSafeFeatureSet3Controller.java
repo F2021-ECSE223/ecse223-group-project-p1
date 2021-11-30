@@ -1,5 +1,8 @@
 package ca.mcgill.ecse.climbsafe.controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
@@ -19,6 +22,14 @@ public class ClimbSafeFeatureSet3Controller {
    * @author Atreyi Srivastava
    * 
    */
+  
+  public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+		    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+  
+  public static boolean validate(String emailStr) {
+      Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+      return matcher.find();
+}
 
   public static void registerGuide(String email, String password, String name,
       String emergencyContact) throws InvalidInputException {
@@ -67,7 +78,7 @@ public class ClimbSafeFeatureSet3Controller {
     }
 
 
-    if (!(email.equals(name.toLowerCase() + "@email.com"))) {
+    if (!validate(email)) {
       throw new InvalidInputException("Invalid email");
     }
 
