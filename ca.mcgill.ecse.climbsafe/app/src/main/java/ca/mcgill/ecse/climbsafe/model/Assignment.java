@@ -5,8 +5,8 @@ package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 
 // line 70 "../../../../../ClimbSafeStates.ump"
-// line 107 "../../../../../ClimbSafePersistence.ump"
-// line 94 "../../../../../ClimbSafe.ump"
+// line 155 "../../../../../ClimbSafePersistence.ump"
+// line 77 "../../../../../ClimbSafe.ump"
 public class Assignment implements Serializable
 {
 
@@ -367,7 +367,7 @@ public class Assignment implements Serializable
     }
   }
 
-  // line 102 "../../../../../ClimbSafe.ump"
+  // line 85 "../../../../../ClimbSafe.ump"
    public int getTotalCostForGuide(){
     int totalCostForGuide = 0;
 	 
@@ -383,7 +383,7 @@ public class Assignment implements Serializable
 	  return totalCostForGuide;
   }
 
-  // line 117 "../../../../../ClimbSafe.ump"
+  // line 100 "../../../../../ClimbSafe.ump"
    public int getTotalCostForEquipment(){
     double totalCostForEquipment = 0;
 	 int nbrWeek = this.getMember().getNrWeeks();
@@ -451,7 +451,7 @@ public class Assignment implements Serializable
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 110 "../../../../../ClimbSafePersistence.ump"
+  // line 159 "../../../../../ClimbSafePersistence.ump"
   private static final long serialVersionUID = 11L ;
 
   

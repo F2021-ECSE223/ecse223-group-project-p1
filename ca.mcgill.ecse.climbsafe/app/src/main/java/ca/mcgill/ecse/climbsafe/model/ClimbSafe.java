@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.*;
 
 // line 3 "../../../../../ClimbSafePersistence.ump"
-// line 8 "../../../../../ClimbSafe.ump"
+// line 6 "../../../../../ClimbSafe.ump"
 public class ClimbSafe implements Serializable
 {
 
@@ -1014,11 +1014,31 @@ public class ClimbSafe implements Serializable
     
   }
 
-  // line 9 "../../../../../ClimbSafePersistence.ump"
+  // line 10 "../../../../../ClimbSafePersistence.ump"
    public void reinitialize(){
-    User.reinitializeUniqueEmail(this.getAdministrator(), this.getGuides(), this.getMembers());
-    BookableItem.reinitializeUniqueName(this.getEquipment(), this.getBundles());
-    Hotel.reinitializeUniqueName(this.getHotels());
+    List<User> users = new ArrayList<User>();
+	  users.add((User) this.getAdministrator());
+	  
+	  for(Guide guide: this.getGuides()){
+	  	users.add((User) guide);
+	  }
+	  
+	  for(Member member: this.getMembers()){
+	  	users.add((User) member);
+	  }
+	  User.reinitializeUniqueEmail(users);
+	  
+	  List<BookableItem> items = new ArrayList<BookableItem>();
+	  for(Equipment equipment: this.getEquipment()){
+	  	items.add((BookableItem) equipment);
+	  }
+	  
+	  for(EquipmentBundle bundle: this.getBundles()){
+	  	items.add((BookableItem) bundle);
+	  }
+	  BookableItem.reinitializeUniqueName(items);
+	  
+	  Hotel.reinitializeUniqueName(this.getHotels());
   }
 
 
