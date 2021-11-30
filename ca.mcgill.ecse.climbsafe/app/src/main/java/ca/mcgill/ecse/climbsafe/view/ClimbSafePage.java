@@ -1517,7 +1517,7 @@ public class ClimbSafePage extends JFrame {
     if (selectedItem == null) {
       error = "An item needs to be selected to be added!";
     }
-    int itemQuantity = getNumberFromField(memberItemQuantityTextField,
+    int itemQuantity = getNumberFromField(quantityRegisterMemberField,
         "The item quantity needs to be a numerical value!");
 
     error = error.trim();
