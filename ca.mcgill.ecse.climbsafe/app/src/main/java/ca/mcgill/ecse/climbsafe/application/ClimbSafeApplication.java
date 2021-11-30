@@ -18,6 +18,7 @@ public class ClimbSafeApplication {
   }
 
   public static ClimbSafe getClimbSafe() {
+    ClimbSafePersistence.setFilename("ClimbSafeDemo.data");
     if (climbSafe == null) {
    // these attributes are default, you should set them later with the setters
       climbSafe = ClimbSafePersistence.load();
