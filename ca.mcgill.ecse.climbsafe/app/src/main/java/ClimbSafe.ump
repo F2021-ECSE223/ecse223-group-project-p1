@@ -1,7 +1,5 @@
 namespace ca.mcgill.ecse.climbsafe.model;
 
-external interface Serializable {}
-
 use ClimbSafeStates.ump;
 use ClimbSafePersistence.ump;
 
@@ -39,6 +37,7 @@ class NamedUser {
 
 class Guide {
   isA NamedUser;
+  
 }
 
 class Member {
@@ -46,16 +45,10 @@ class Member {
   Integer nrWeeks;
   Boolean guideRequired;
   Boolean hotelRequired;
-}
-
-associationClass BookedItem {
-  Integer quantity;
-  * Member member;
-  * BookableItem item;
-
-  depend java.io.Serializable;
-  isA Serializable;
-  private static final long serialVersionUID = 12L;
+  
+  
+  
+  
 }
 
 class BookableItem {
@@ -74,16 +67,6 @@ class EquipmentBundle {
   Integer discount;
 }
 
-associationClass BundleItem {
-  Integer quantity;
-  * EquipmentBundle bundle;
-  * Equipment equipment;
-
-  depend java.io.Serializable;
-  isA Serializable;
-  private static final long serialVersionUID = 13L;
-}
-
 class Hotel {
   unique name;
   address;
@@ -98,7 +81,7 @@ class Assignment {
   * -- 0..1 Guide guide;
   * -- 0..1 Hotel hotel;
   
-  public int getTotalCostForGuide(){
+    public int getTotalCostForGuide(){
 	 int totalCostForGuide = 0;
 	 
 	 // If no guide, then total cost = 0
