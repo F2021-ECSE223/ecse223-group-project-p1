@@ -7,7 +7,6 @@ import ca.mcgill.ecse.climbsafe.application.ClimbSafeApplication;
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.model.Guide;
 import ca.mcgill.ecse.climbsafe.model.Member;
-import ca.mcgill.ecse.climbsafe.model.TemporaryEquipment;
 import ca.mcgill.ecse.climbsafe.model.User;
 import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
 
