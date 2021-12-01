@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-
-
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -38,8 +35,6 @@ import ca.mcgill.ecse.climbsafe.controller.TOMember;
 import ca.mcgill.ecse.climbsafe.controller.TOBookableItem;
 import ca.mcgill.ecse.climbsafe.controller.TOEquipment;
 import javax.swing.ImageIcon;
-
-
 import javax.swing.JPanel;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
@@ -1235,20 +1230,20 @@ public class ClimbSafePage extends JFrame {
       DefaultTableModel updateMemberEquipmentModel =
           (DefaultTableModel) updateMemberEquipmentTable.getModel();
 
-      for (int i = 0; i < updateMemberEquipmentModel.getRowCount(); i++) {
+      for (int i = updateMemberEquipmentModel.getRowCount()-1; i>=0; i--) {
         updateMemberEquipmentModel.removeRow(i);
       }
 
       DefaultTableModel registerMemberEquipmentModel =
           (DefaultTableModel) itemRegisterMemberTable.getModel();
 
-      for (int i = 0; i < registerMemberEquipmentModel.getRowCount(); i++) {
+      for (int i = registerMemberEquipmentModel.getRowCount() -1;i>=0 ;i--) {
         registerMemberEquipmentModel.removeRow(i);
       }
 
       DefaultTableModel viewAssignmentModel = (DefaultTableModel) viewAssignmentTable.getModel();
 
-      for (int i = 0; i < viewAssignmentModel.getRowCount(); i++) {
+      for (int i = viewAssignmentModel.getRowCount()-1; i>=0; i--) {
         viewAssignmentModel.removeRow(i);
       }
 
