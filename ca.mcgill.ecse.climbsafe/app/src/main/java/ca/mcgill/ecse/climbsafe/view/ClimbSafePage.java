@@ -1393,7 +1393,7 @@ public class ClimbSafePage extends JFrame {
    * guideRequired, hotelRequied, item names and quantities.
    * 
    * @param evt
-   * @author
+   * @author Atreyi Srivastava
    */
   private void registerMemberButtonActionPerformed(ActionEvent evt) {
     error = "";
@@ -1588,7 +1588,7 @@ public class ClimbSafePage extends JFrame {
   /**
    * Registers a guide using information of email, password, name and contact
    * 
-   * @author 
+   * @author Atreyi Srivastava
    * @param evt
    */
   private void registerGuideButtonActionPerformed(ActionEvent evt) {
@@ -1633,6 +1633,11 @@ public class ClimbSafePage extends JFrame {
     currentErrorMessage = errorMessageTab2;
     refreshData(); // updates the visual
   }
+  
+  /**
+  * Adds the Items selected while registering a member
+  * @author Atreyi Srivastava
+  */
 
   private void addItemRegisterMemberActionPerformed(ActionEvent evt) {
     error = "";
