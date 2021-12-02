@@ -257,10 +257,6 @@ public class BundleItem implements Serializable
   //------------------------
   
   // line 136 ../../../../../ClimbSafePersistence.ump
-<<<<<<< Updated upstream
   private static final long serialVersionUID = 13L;
-=======
-  private static final long serialVersionUID = 2335406876029412133L;
->>>>>>> Stashed changes
   
 }

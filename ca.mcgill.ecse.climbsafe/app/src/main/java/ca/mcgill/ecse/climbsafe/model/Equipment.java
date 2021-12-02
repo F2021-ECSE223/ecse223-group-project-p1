@@ -224,11 +224,7 @@ public class Equipment extends BookableItem implements Serializable
   //------------------------
   
   // line 118 "../../../../../ClimbSafePersistence.ump"
-<<<<<<< Updated upstream
   private static final long serialVersionUID = 8L ;
-=======
-  private static final long serialVersionUID = -7403804652654467836L ;
->>>>>>> Stashed changes
 
   
 }

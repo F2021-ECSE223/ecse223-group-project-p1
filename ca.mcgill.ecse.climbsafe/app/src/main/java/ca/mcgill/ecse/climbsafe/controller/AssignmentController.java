@@ -29,7 +29,7 @@ public class AssignmentController {
     }
 
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -80,7 +80,7 @@ public class AssignmentController {
     assignment.setPaymentAuthorizationCode(paymentAuthorizationCode);
     assignment.pay();
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -111,7 +111,7 @@ public class AssignmentController {
             || memberAssignment.getAssignmentStatusFullName().equals("Assigned")) {
           memberAssignment.startTrip();
           try {
-            ClimbSafePersistence.save();
+            ClimbSafePersistence.save(climbSafe);
           } catch (RuntimeException e) {
             throw new InvalidInputException(e.getMessage());
           }
@@ -161,7 +161,7 @@ public class AssignmentController {
     assignment.finishTrip();
 
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -201,7 +201,7 @@ public class AssignmentController {
 
     assignment.cancelTrip();
     try {
-      ClimbSafePersistence.save();
+      ClimbSafePersistence.save(climbSafe);
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
@@ -234,18 +234,16 @@ public class AssignmentController {
     }
     return equipments;
   }
-  
-    public static List<TOBookableItem> getItems() {
+
+  public static List<TOBookableItem> getItems() {
     var items = new ArrayList<TOBookableItem>();
     // adding all equipments
     for (var equipment : climbSafe.getEquipment()) {
-      items.add(
-          new TOBookableItem(equipment.getName()));
+      items.add(new TOBookableItem(equipment.getName()));
     }
     // adding all bundles
-    for(var bundle: climbSafe.getBundles()) {
-      items.add(
-          new TOBookableItem(bundle.getName()));
+    for (var bundle : climbSafe.getBundles()) {
+      items.add(new TOBookableItem(bundle.getName()));
     }
     return items;
   }
