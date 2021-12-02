@@ -4,6 +4,14 @@
 package ca.mcgill.ecse.climbsafe.application;
 
 import java.awt.EventQueue;
+
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ComponentUI;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
 import ca.mcgill.ecse.climbsafe.view.ClimbSafePage;
@@ -13,6 +21,22 @@ public class ClimbSafeApplication {
 
 
   public static void main(String[] args) {
+	  
+	  try {
+	      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	      
+	    } catch (UnsupportedLookAndFeelException e) {
+	    	
+	    } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     
     EventQueue.invokeLater(ClimbSafePage::new);
   }
