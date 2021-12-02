@@ -10,9 +10,6 @@ class TOAssignment {
   Integer endWeek;
   Integer totalCostForGuide;
   Integer totalCostForEquipment;
-  status;
-  authorizationCode;
-  Integer refundedPercentageAmount;
 }
 
 class TOGuide{
@@ -44,11 +41,9 @@ class TOEquipment{
   name;
   Integer weight;
   Integer pricePerWeek;
-  @Override public String toString() {
-    return name;
-  }
-  
-  }
+
+}
+
   class TOBookableItem{
   name;
   @Override public String toString() {

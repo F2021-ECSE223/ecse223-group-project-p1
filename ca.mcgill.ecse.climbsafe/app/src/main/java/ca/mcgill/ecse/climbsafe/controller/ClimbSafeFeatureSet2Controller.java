@@ -111,7 +111,7 @@ public class ClimbSafeFeatureSet2Controller {
           var bookableItem = BookableItem.getWithName(itemNames.get(i));
           member.addBookedItem(itemQuantities.get(i), climbSafe, bookableItem);
         }
-        ClimbSafePersistence.save(climbSafe);
+        ClimbSafePersistence.save();
       } catch (RuntimeException e) {
         throw new InvalidInputException(e.getMessage());
       }
@@ -182,13 +182,13 @@ public class ClimbSafeFeatureSet2Controller {
       }
       member.addBookedItem(newItemQuantities.get(i), climbSafe, bookableItem);
     }
-
+    
     try {
-      ClimbSafePersistence.save(climbSafe);
+      ClimbSafePersistence.save();
     } catch (RuntimeException e) {
       throw new InvalidInputException(e.getMessage());
     }
-
-
+    
+    
   }
 }

@@ -114,7 +114,11 @@ public abstract class User implements Serializable
   //------------------------
   
   // line 41 "../../../../../ClimbSafePersistence.ump"
+<<<<<<< Updated upstream
   private static final long serialVersionUID = 2L ;
+=======
+  private static final long serialVersionUID = 2315072607928790501L ;
+>>>>>>> Stashed changes
 
   
 }

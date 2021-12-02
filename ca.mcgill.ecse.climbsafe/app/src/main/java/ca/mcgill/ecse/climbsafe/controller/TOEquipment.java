@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse.climbsafe.controller;
 
-// line 43 "../../../../../ClimbSafeTransferObjects.ump"
+// line 40 "../../../../../ClimbSafeTransferObjects.ump"
 public class TOEquipment
 {
 
@@ -74,10 +74,11 @@ public class TOEquipment
   {}
 
 
-  @Override
-  // line 48 "../../../../../ClimbSafeTransferObjects.ump"
-   public String toString(){
-    return name;
+  public String toString()
+  {
+    return super.toString() + "["+
+            "name" + ":" + getName()+ "," +
+            "weight" + ":" + getWeight()+ "," +
+            "pricePerWeek" + ":" + getPricePerWeek()+ "]";
   }
-
 }

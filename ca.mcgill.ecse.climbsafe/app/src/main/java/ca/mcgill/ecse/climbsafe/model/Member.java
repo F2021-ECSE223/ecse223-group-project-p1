@@ -5,7 +5,11 @@ package ca.mcgill.ecse.climbsafe.model;
 import java.io.Serializable;
 import java.util.*;
 
+<<<<<<< Updated upstream
 // line 1 "../../../../../ClimbSafeStates.ump"
+=======
+// line 2 "../../../../../ClimbSafeStates.ump"
+>>>>>>> Stashed changes
 // line 80 "../../../../../ClimbSafePersistence.ump"
 // line 43 "../../../../../ClimbSafe.ump"
 public class Member extends NamedUser implements Serializable
@@ -352,7 +356,11 @@ public class Member extends NamedUser implements Serializable
   //------------------------
   
   // line 83 "../../../../../ClimbSafePersistence.ump"
+<<<<<<< Updated upstream
   private static final long serialVersionUID = 6L ;
+=======
+  private static final long serialVersionUID = 2045406856025012133L ;
+>>>>>>> Stashed changes
 
   
 }

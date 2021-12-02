@@ -3,7 +3,7 @@
 
 package ca.mcgill.ecse.climbsafe.controller;
 
-// line 52 "../../../../../ClimbSafeTransferObjects.ump"
+// line 47 "../../../../../ClimbSafeTransferObjects.ump"
 public class TOBookableItem
 {
 
@@ -45,7 +45,7 @@ public class TOBookableItem
 
 
   @Override
-  // line 55 "../../../../../ClimbSafeTransferObjects.ump"
+  // line 50 "../../../../../ClimbSafeTransferObjects.ump"
    public String toString(){
     return name;
   }

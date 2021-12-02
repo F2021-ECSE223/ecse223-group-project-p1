@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+<<<<<<< Updated upstream
 import javax.swing.plaf.ComponentUI;
 
 import com.formdev.flatlaf.FlatDarkLaf;
@@ -14,11 +15,23 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
 import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
+=======
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import ca.mcgill.ecse.climbsafe.model.ClimbSafe;
+import ca.mcgill.ecse.climbsafe.persistence.ClimbSafePersistence;
+import ca.mcgill.ecse.climbsafe.view.ClimbSafeMainPage;
+>>>>>>> Stashed changes
 import ca.mcgill.ecse.climbsafe.view.ClimbSafePage;
 
 public class ClimbSafeApplication {
-  private static ClimbSafe climbSafe;
+	
+	
+public static final boolean DARK_MODE = true;
+private static ClimbSafe climbSafe;
 
+<<<<<<< Updated upstream
 
   public static void main(String[] args) {
 	  
@@ -40,14 +53,33 @@ public class ClimbSafeApplication {
     
     EventQueue.invokeLater(ClimbSafePage::new);
   }
+=======
+  public String getGreeting() {
+    return "Hello World!"; 
+  }
+
+  public static void main(String[] args) {
+	    // start UI with dark mode, otherwise default mode
+	   /* try {
+	      UIManager.setLookAndFeel(DARK_MODE ? new FlatDarkLaf() : new FlatLightLaf());
+	    } catch (UnsupportedLookAndFeelException e) {
+	      // Use regular Swing theme if FlatLaf is unavailable
+	    }*/
+	    EventQueue.invokeLater(ClimbSafeMainPage::new);
+	  }
+>>>>>>> Stashed changes
 
   public static ClimbSafe getClimbSafe() {
     ClimbSafePersistence.setFilename("ClimbSafeDemo.data");
     if (climbSafe == null) {
+<<<<<<< Updated upstream
    // these attributes are default, you should set them later with the setters
+=======
+      // these attributes are default, you should set them later with the setters
+>>>>>>> Stashed changes
       climbSafe = ClimbSafePersistence.load();
     }
-
+    
     return climbSafe;
   }
 }
