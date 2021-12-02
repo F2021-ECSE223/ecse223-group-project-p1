@@ -1726,6 +1726,10 @@ public class ClimbSafePage extends JFrame {
 
     int price = getNumberFromField(pricePerWeekEquipmentToAddTextField,
         "The price per week needs to be a numerical value!");
+    
+    if(!validateEquipmentName(name)) {
+    	error = "Enter a valid equipment name!";
+    }
 
     if (error.isEmpty()) {      	
       callController(() -> ClimbSafeFeatureSet4Controller.addEquipment(name, weight, price));
@@ -1925,11 +1929,11 @@ public class ClimbSafePage extends JFrame {
 	    }
 	}
   
-  public static boolean firstName( String firstName ) {
+  private static boolean firstName( String firstName ) {
       return firstName.matches( "[A-Z][a-z]*" );
    }
    // validate last name
-   public static boolean lastName( String lastName ) {
+   private static boolean lastName( String lastName ) {
       return lastName.matches( "[A-Z]([ '-]+[a-z])*" ) || lastName.matches( "[A-Z][a-z]*" );
    }
   
@@ -1944,7 +1948,11 @@ public class ClimbSafePage extends JFrame {
 	   return matcher.matches();
    }
    
-   public static void infoBox(String infoMessage, String titleBar)
+   private boolean validateEquipmentName(String name) {	
+		return name.matches( "[A-Z][a-z]*" ) || name.matches("[a-z]*");		   
+   }
+   
+   private static void infoBox(String infoMessage, String titleBar)
    {
        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
    }
