@@ -295,8 +295,8 @@ public class ClimbSafePage extends JFrame {
 
     selectMemberToUpdateComboBox = new JComboBox();
     selectMemberToUpdateComboBox.setEditable(false);
-    selectMemberToUpdateComboBox.setBackground(Color.red);
-    
+    selectMemberToUpdateComboBox.setBackground(Color.WHITE);
+
     selectMemberToUpdateComboBox.setBounds(210, 276, 189, 27);
     panel.add(selectMemberToUpdateComboBox);
 
@@ -477,23 +477,23 @@ public class ClimbSafePage extends JFrame {
 
 
     updateMemberEquipmentTable = new JTable(
-        new DefaultTableModel(new Object[][] {}, new String[] {"Added equipments", "Quantities"})){
-    	public boolean isCellEditable(int row, int column) {
-            return false;
-        }
+        new DefaultTableModel(new Object[][] {}, new String[] {"Added items", "Quantities"})) {
+      public boolean isCellEditable(int row, int column) {
+        return false;
+      }
     };
     updateMemberEquipmentTable.setBackground(SystemColor.window);
     updateMemberEquipmentTable.setFont(new Font("Baskerville", Font.PLAIN, 12));
     updateMemberEquipmentTable.setFillsViewportHeight(true);
     updateMemberEquipmentTable.setBorder(null);
     updateMemberEquipmentTable.setShowGrid(false);
-    updateMemberEquipmentTable.setBounds(494, 424, 318, 58);   
-    JScrollPane memberItemContainer = new JScrollPane(updateMemberEquipmentTable); 
+    updateMemberEquipmentTable.setBounds(494, 424, 318, 58);
+    JScrollPane memberItemContainer = new JScrollPane(updateMemberEquipmentTable);
     var updateMemberEquipmentTableOffset = 15;
-    memberItemContainer.setBounds(457,382, 355, 116); 
-    panel.add(memberItemContainer);    
-    
-    
+    memberItemContainer.setBounds(457, 382, 355, 116);
+    panel.add(memberItemContainer);
+
+
     background = new JLabel("");
     background.setBounds(0, 0, 1206, 509);
     ImageIcon backgroundImage = new ImageIcon(this.getClass().getResource("/backgroundImage.png"));
@@ -698,12 +698,12 @@ public class ClimbSafePage extends JFrame {
     panel_1.add(addItemRegisterMemberButton);
 
     itemRegisterMemberTable = new JTable(
-        new DefaultTableModel(new Object[][] {}, new String[] {"Added equipments", "Quantities"}));
+        new DefaultTableModel(new Object[][] {}, new String[] {"Added items", "Quantities"}));
     itemRegisterMemberTable.setFont(new Font("Baskerville", Font.PLAIN, 12));
     itemRegisterMemberTable.setFillsViewportHeight(true);
     itemRegisterMemberTable.setBounds(449, 164, 349, 85);
     itemRegisterMemberTable.setShowGrid(false);
-    
+
 
     JScrollPane spRegisterMember = new JScrollPane(itemRegisterMemberTable);
     spRegisterMember.setBounds(483, 157, 300, 106);
@@ -1160,22 +1160,21 @@ public class ClimbSafePage extends JFrame {
     errorMessageTab7.setBounds(56, 76, 601, 24);
     panel_6.add(errorMessageTab7);
 
-    //VIEW ASSIGNMENT TABLE
+    // VIEW ASSIGNMENT TABLE
 
     viewAssignmentTable = new JTable(new DefaultTableModel(new Object[][] {},
         new String[] {"Member email", "Member name", "Guide email", "Guide name", "Hotel name",
-            "Start week", "End week", "Total guide cost", "Total equipment cost", 
-            "Status", "Authorization code", "Refund percentage"}))
-    {
-    	public boolean isCellEditable(int row, int column) {
-            return false;
-        }
+            "Start week", "End week", "Total guide cost", "Total equipment cost", "Status",
+            "Authorization code", "Refund percentage"})) {
+      public boolean isCellEditable(int row, int column) {
+        return false;
+      }
     };
     viewAssignmentTable.setBackground(SystemColor.window);
     viewAssignmentTable.setFont(new Font("Baskerville", Font.PLAIN, 12));
     viewAssignmentTable.setFillsViewportHeight(true);
     viewAssignmentTable.setBorder(null);
-    viewAssignmentTable.setShowGrid(false);    
+    viewAssignmentTable.setShowGrid(false);
     viewAssignmentTable.getColumnModel().getColumn(0).setPreferredWidth(120);
     viewAssignmentTable.getColumnModel().getColumn(1).setPreferredWidth(120);
     viewAssignmentTable.getColumnModel().getColumn(2).setPreferredWidth(120);
@@ -1190,16 +1189,17 @@ public class ClimbSafePage extends JFrame {
     viewAssignmentTable.getColumnModel().getColumn(11).setPreferredWidth(120);
 
     int viewAssignmentTableOffset = 450;
-    viewAssignmentTable.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
+    viewAssignmentTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     JScrollPane scrollPane = new JScrollPane(viewAssignmentTable);
-    scrollPane.setBounds(10, 109, backgroundImage.getIconWidth()-40, backgroundImage.getIconHeight() - viewAssignmentTableOffset);  
-    //scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-    //scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);   
+    scrollPane.setBounds(10, 109, backgroundImage.getIconWidth() - 40,
+        backgroundImage.getIconHeight() - viewAssignmentTableOffset);
+    // scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+    // scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
     panel_6.add(scrollPane);
-    
-    //END VIEW ASSIGNMENT TABLE
-   
-    
+
+    // END VIEW ASSIGNMENT TABLE
+
+
     viewAssignmentLabel = new JLabel("VIEW ASSIGNMENTS");
     viewAssignmentLabel.setForeground(Color.WHITE);
     viewAssignmentLabel.setFont(new Font("Sitka Text", Font.BOLD | Font.ITALIC, 23));
@@ -1242,6 +1242,11 @@ public class ClimbSafePage extends JFrame {
     setVisible(true);
   }
 
+  /**
+   * This method resets text fields and item tables and updates comboboxes and the assignment table.
+   * 
+   * @author Asma Gandour
+   */
   private void refreshData() {
     currentErrorMessage.setText(error);
     if (error == null || error.isEmpty()) {
@@ -1278,20 +1283,20 @@ public class ClimbSafePage extends JFrame {
       DefaultTableModel updateMemberEquipmentModel =
           (DefaultTableModel) updateMemberEquipmentTable.getModel();
 
-      for (int i = updateMemberEquipmentModel.getRowCount()-1; i>=0; i--) {
+      for (int i = updateMemberEquipmentModel.getRowCount() - 1; i >= 0; i--) {
         updateMemberEquipmentModel.removeRow(i);
       }
 
       DefaultTableModel registerMemberEquipmentModel =
           (DefaultTableModel) itemRegisterMemberTable.getModel();
 
-      for (int i = registerMemberEquipmentModel.getRowCount() -1;i>=0 ;i--) {
+      for (int i = registerMemberEquipmentModel.getRowCount() - 1; i >= 0; i--) {
         registerMemberEquipmentModel.removeRow(i);
       }
 
       DefaultTableModel viewAssignmentModel = (DefaultTableModel) viewAssignmentTable.getModel();
 
-      for (int i = viewAssignmentModel.getRowCount()-1; i>=0; i--) {
+      for (int i = viewAssignmentModel.getRowCount() - 1; i >= 0; i--) {
         viewAssignmentModel.removeRow(i);
       }
 
@@ -1348,12 +1353,15 @@ public class ClimbSafePage extends JFrame {
     successStatus = false;
   }
 
-  private void refreshUpdateMemberItem() {
+  /**
+   * This method resets the quantity field and updates the item combobox in the register panel.
+   * 
+   * @author Asma Gandour
+   */
+  private void refreshRegisterMemberItem() {
     currentErrorMessage.setText(error);
     if (error == null || error.isEmpty()) {
-      memberItemQuantityTextField.setText("");
-
-
+      quantityRegisterMemberField.setText("");
 
       selectItemsRegisterMemberComboBox.removeAllItems();
 
@@ -1362,11 +1370,15 @@ public class ClimbSafePage extends JFrame {
     }
   }
 
-  private void refreshRegisterMemberItem() {
+  /**
+   * This method resets the quantity field and updates the item combobox in the update panel.
+   * 
+   * @author Asma Gandour
+   */
+  private void refreshUpdateMemberItem() {
     currentErrorMessage.setText(error);
     if (error == null || error.isEmpty()) {
-      quantityRegisterMemberField.setText("");
-
+      memberItemQuantityTextField.setText("");
 
       selectNewItemsComboBox.removeAllItems();
 
@@ -1381,9 +1393,8 @@ public class ClimbSafePage extends JFrame {
    * guideRequired, hotelRequied, item names and quantities.
    * 
    * @param evt
+   * @author
    */
-
-
   private void registerMemberButtonActionPerformed(ActionEvent evt) {
     error = "";
     String email = memberRegisterEmailTextField.getText();
@@ -1398,23 +1409,23 @@ public class ClimbSafePage extends JFrame {
     if (name.isEmpty()) {
       error += "Enter a name!";
     }
-    
+
     String[] parsedName = name.split(" ");
-    if(parsedName.length != 2 ) {
-    	error += "Please enter only the first and last name!"; 	
-    } else if(!firstName(parsedName[0]) || !lastName(parsedName[1])) {
-    	error += "Please enter a valid name!";   	
-    } 
+    if (parsedName.length != 2) {
+      error += "Please enter only the first and last name!";
+    } else if (!firstName(parsedName[0]) || !lastName(parsedName[1])) {
+      error += "Please enter a valid name!";
+    }
 
     String emergencyContact = memberRegisterContactTextField.getText();
     if (emergencyContact.isEmpty()) {
       error += "Enter an emergency number!";
     }
-    
-    if(!validateNumber(emergencyContact)) {
-    	error += "Please enter a valid number!";
+
+    if (!validateNumber(emergencyContact)) {
+      error += "Please enter a valid number!";
     }
-    
+
     int nrWeeks = getNumberFromField(memberRegisterWeekTextField,
         "Number of weeks needs to be a numerical value!");
     boolean guideRequired = memberGuideRequiredRdBtn.isSelected(); // true if guide is selected
@@ -1434,20 +1445,27 @@ public class ClimbSafePage extends JFrame {
       itemQuantities.add(quantity);
     }
 
-    error = error.trim();   
+    error = error.trim();
     if (error.isEmpty()) {
-      // if there are no errors       	
+      // if there are no errors
       callController(() -> ClimbSafeFeatureSet2Controller.registerMember(email, password, name,
-          emergencyContact, nrWeeks, guideRequired, hotelRequired, itemNames, itemQuantities)); 
-      if(successStatus == true) {
-    	  infoBox("Member successfully registered!", "Success");
-      }      
-    }   
-    
+          emergencyContact, nrWeeks, guideRequired, hotelRequired, itemNames, itemQuantities));
+      if (successStatus == true) {
+        infoBox("Member successfully registered!", "Success");
+      }
+    }
+
     currentErrorMessage = errorMessageTab2;
     refreshData(); // updates the visual
   }
 
+  /**
+   * This method updates the selected member with the new data
+   * if the strings and numbers entered are valid
+   * 
+   * @author Asma Gandour
+   * @param evt
+   */
   private void updateMemberButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1463,23 +1481,23 @@ public class ClimbSafePage extends JFrame {
     if (newName.isEmpty()) {
       error = "Enter a name!";
     }
-    
+
     String[] parsedName = newName.split(" ");
-    if(parsedName.length != 2 ) {
-    	error += "Please enter only the first and last name!"; 	
-    } else if(!firstName(parsedName[0]) || !lastName(parsedName[1])) {
-    	error += "Please enter a valid name!";   	
-    } 
+    if (parsedName.length != 2) {
+      error += "Please enter only the first and last name!";
+    } else if (!firstName(parsedName[0]) || !lastName(parsedName[1])) {
+      error += "Please enter a valid name!";
+    }
 
     String newContact = newMemberEmergencyNumberTextField.getText();
     if (newContact.isEmpty()) {
-      error += "Enter an emergency number!";     
+      error += "Enter an emergency number!";
     }
-    
-    if(!validateNumber(newContact)) {
-    	error += "Please enter a valid number!";
+
+    if (!validateNumber(newContact)) {
+      error += "Please enter a valid number!";
     }
-    
+
     int newNbrWeek = getNumberFromField(newMemberWeekTextField,
         "The number of weeks needs to be a numerical value!");
     boolean newGuideRequired = memberGuideRequiredRdBtn.isSelected();
@@ -1503,13 +1521,13 @@ public class ClimbSafePage extends JFrame {
     }
 
     error = error.trim();
-    if (error.isEmpty()) {      
+    if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet2Controller.updateMember(selectedMember.getEmail(),
           newName, newPassword, newContact, newNbrWeek, newGuideRequired, newHotelRequired,
           newItemNames, newItemQuantities));
-      	  if(successStatus == true) {
-      		infoBox("Member successfully updated!", "Success");
-      	  }
+      if (successStatus == true) {
+        infoBox("Member successfully updated!", "Success");
+      }
     }
     currentErrorMessage = errorMessageTab1; // Assign THE currentErrorMessage to the errorMessage of
                                             // the tab the trigger element is comprised in.
@@ -1528,13 +1546,13 @@ public class ClimbSafePage extends JFrame {
     if (newName.isEmpty()) {
       error += "Enter a name!";
     }
-    
+
     String[] parsedName = newName.split(" ");
-    if(parsedName.length != 2 ) {
-    	error += "Please enter only the first and last name!"; 	
-    } else if(!firstName(parsedName[0]) || !lastName(parsedName[1])) {
-    	error += "Please enter a valid name!";  	
-    } 
+    if (parsedName.length != 2) {
+      error += "Please enter only the first and last name!";
+    } else if (!firstName(parsedName[0]) || !lastName(parsedName[1])) {
+      error += "Please enter a valid name!";
+    }
 
 
     String newPassword = newGuidePasswordTextField.getText();
@@ -1546,22 +1564,22 @@ public class ClimbSafePage extends JFrame {
     if (newEmergencyContact.isEmpty()) {
       error += "Enter an emergency number!";
     }
-    
-    if(!validateNumber(newEmergencyContact)) {
-    	error += "Please enter a valid number!";
+
+    if (!validateNumber(newEmergencyContact)) {
+      error += "Please enter a valid number!";
     }
-    
+
 
     error = error.trim();
-    if (error.isEmpty()) {     
+    if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet3Controller.updateGuide(selectGuide.getEmail(),
           newPassword, newName, newEmergencyContact));
-      if(successStatus == true) {
-    	  infoBox("Guide successfully updated!", "Success");
+      if (successStatus == true) {
+        infoBox("Guide successfully updated!", "Success");
       }
     }
 
-    
+
     currentErrorMessage = errorMessageTab1;
     refreshData();
   }
@@ -1570,9 +1588,9 @@ public class ClimbSafePage extends JFrame {
   /**
    * Registers a guide using information of email, password, name and contact
    * 
+   * @author 
    * @param evt
    */
-
   private void registerGuideButtonActionPerformed(ActionEvent evt) {
     error = "";
     String email = guideRegisterEmailTextField.getText();
@@ -1587,29 +1605,29 @@ public class ClimbSafePage extends JFrame {
     if (name.isEmpty()) {
       error += "Enter a name!";
     }
-    
+
     String[] parsedName = name.split(" ");
-    if(parsedName.length != 2 ) {
-    	error += "Please enter only the first and last name!"; 	
-    } else if(!firstName(parsedName[0]) || !lastName(parsedName[1])) {
-    	error += "Please enter a valid name!";  	
-    } 
-    
+    if (parsedName.length != 2) {
+      error += "Please enter only the first and last name!";
+    } else if (!firstName(parsedName[0]) || !lastName(parsedName[1])) {
+      error += "Please enter a valid name!";
+    }
+
     String emergencyContact = guideRegisterEmergencyContactTextField.getText();
     if (emergencyContact.isEmpty()) {
       error += "Enter an emergency number!";
     }
-    
-    if(!validateNumber(emergencyContact)) {
-    	error += "Please enter a valid number!";
+
+    if (!validateNumber(emergencyContact)) {
+      error += "Please enter a valid number!";
     }
 
     error = error.trim();
-    if (error.isEmpty()) {     
+    if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet3Controller.registerGuide(email, password, name,
           emergencyContact));
-      if(successStatus == true) {
-    	  infoBox("Guide successfully registered!", "Success");
+      if (successStatus == true) {
+        infoBox("Guide successfully registered!", "Success");
       }
     }
     currentErrorMessage = errorMessageTab2;
@@ -1644,11 +1662,11 @@ public class ClimbSafePage extends JFrame {
         "The price for a guide needs to be a numerical value!");
 
     error = error.trim();
-    if (error.isEmpty()) {      	
+    if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet1Controller
           .setup((Date) NMCDatePicker.getModel().getValue(), nbrOfWeeks, priceperGuide));
-      if(successStatus == true) {
-    	  infoBox("Set up successful!", "Success");
+      if (successStatus == true) {
+        infoBox("Set up successful!", "Success");
       }
 
     }
@@ -1656,6 +1674,14 @@ public class ClimbSafePage extends JFrame {
     refreshData();
   }
 
+  
+  /**
+   * This method deletes the selected guide by calling
+   *  the controller method deleteGuide the guide's email.
+   * 
+   * @author Asma Gandour
+   * @param evt
+   */
   private void deleteGuideButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1665,9 +1691,9 @@ public class ClimbSafePage extends JFrame {
     } else {
       // call the controller
       callController(() -> ClimbSafeFeatureSet1Controller.deleteGuide(selectedGuide.getEmail()));
-      if(successStatus == true) {
-  		  infoBox("Guide successfully deleted!", "Success");
-  	  }
+      if (successStatus == true) {
+        infoBox("Guide successfully deleted!", "Success");
+      }
     }
 
     currentErrorMessage = errorMessageTab4;
@@ -1675,6 +1701,13 @@ public class ClimbSafePage extends JFrame {
     refreshData();
   }
 
+  /**
+   * This method deletes the selected member by calling
+   *  the controller method deleteMember the member's email.
+   * 
+   * @author Asma Gandour
+   * @param evt
+   */
   private void deleteMemberButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1684,9 +1717,9 @@ public class ClimbSafePage extends JFrame {
     } else {
       // call the controller
       callController(() -> ClimbSafeFeatureSet1Controller.deleteMember(selectedMember.getEmail()));
-      if(successStatus == true) {
-  		  infoBox("Member successfully deleted!", "Success");
-  	  }
+      if (successStatus == true) {
+        infoBox("Member successfully deleted!", "Success");
+      }
     }
 
     currentErrorMessage = errorMessageTab4;
@@ -1694,6 +1727,13 @@ public class ClimbSafePage extends JFrame {
     refreshData();
   }
 
+  /**
+   * This method deletes the selected equipment by calling
+   *  the controller method deleteEquipment the equipment's name.
+   * 
+   * @author Asma Gandour
+   * @param evt
+   */
   private void deleteEquipmentButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1704,9 +1744,9 @@ public class ClimbSafePage extends JFrame {
       // call the controller
       callController(
           () -> ClimbSafeFeatureSet6Controller.deleteEquipment(selectedEquipment.getName()));
-      	  if(successStatus == true) {
-      		  infoBox("Equipment successfully deleted!", "Success");
-      	  }
+      if (successStatus == true) {
+        infoBox("Equipment successfully deleted!", "Success");
+      }
     }
     currentErrorMessage = errorMessageTab4;
     // update visuals
@@ -1726,22 +1766,28 @@ public class ClimbSafePage extends JFrame {
 
     int price = getNumberFromField(pricePerWeekEquipmentToAddTextField,
         "The price per week needs to be a numerical value!");
-    
-    if(!validateEquipmentName(name)) {
-    	error = "Enter a valid equipment name!";
+
+    if (!validateEquipmentName(name)) {
+      error = "Enter a valid equipment name!";
     }
 
-    if (error.isEmpty()) {      	
+    if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet4Controller.addEquipment(name, weight, price));
-      if(successStatus == true) {
-    	  infoBox("Equipment successfully added!", "Success");
+      if (successStatus == true) {
+        infoBox("Equipment successfully added!", "Success");
       }
     }
     currentErrorMessage = errorMessageTab5;
     refreshData();
-
   }
 
+  /**
+   * This method updates the item table in the update panel
+   * with the selected item and the quantity entered.
+   * 
+   * @author Asma Gandour
+   * @param evt
+   */
   private void addUpdateEquipmentButtonActionPerformed(ActionEvent evt) {
     // clear error message and basic input validation
     error = "";
@@ -1766,8 +1812,14 @@ public class ClimbSafePage extends JFrame {
     refreshUpdateMemberItem();
   }
 
+  /**
+   * This method updates the selected equipment with
+   * the new data if the strings and numbers entered are valid.
+   * 
+   * @author Asma Gandour
+   * @param evt
+   */
   private void updateEquipmentButtonActionPerformed(ActionEvent evt) {
-	  	  
     error = "";
     var selectedEquipment = (TOEquipment) selectEquipmentToUpdateComboBox.getSelectedItem();
     if (selectedEquipment == null) {
@@ -1783,11 +1835,11 @@ public class ClimbSafePage extends JFrame {
     int newPrice = getNumberFromField(newEquipmentPricePerWeekTextField,
         "The price needs to be a numerical value!");
     error = error.trim();
-    if (error.isEmpty()) {	
+    if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet4Controller
           .updateEquipment(selectedEquipment.getName(), newName, newWeight, newPrice));
-      if(successStatus == true) {
-    	  infoBox("Equipment successfully updated!", "Success");
+      if (successStatus == true) {
+        infoBox("Equipment successfully updated!", "Success");
       }
     }
 
@@ -1806,10 +1858,10 @@ public class ClimbSafePage extends JFrame {
       error += "Authorization code cannot be null!";
     }
 
-    if (error.isEmpty()) {       	
+    if (error.isEmpty()) {
       callController(() -> AssignmentController.payment(member.getEmail(), code));
-      if(successStatus == true) {
-    	  infoBox("Payment successful!", "Success");
+      if (successStatus == true) {
+        infoBox("Payment successful!", "Success");
       }
     }
     currentErrorMessage = errorMessageTab6;
@@ -1822,10 +1874,10 @@ public class ClimbSafePage extends JFrame {
     if (member == null) {
       error = "A member has to be selected first!";
     }
-    if (error.isEmpty()) {       	
+    if (error.isEmpty()) {
       callController(() -> AssignmentController.finishTrip(member.getEmail()));
-      if(successStatus == true) {
-    	  infoBox("Trip successfully finished!", "Success");
+      if (successStatus == true) {
+        infoBox("Trip successfully finished!", "Success");
       }
     }
     currentErrorMessage = errorMessageTab6;
@@ -1839,16 +1891,15 @@ public class ClimbSafePage extends JFrame {
       error = "A member has to be selected first!";
     }
 
-    if (error.isEmpty()) {       	
+    if (error.isEmpty()) {
       callController(() -> AssignmentController.cancelTrip(member.getEmail()));
-      if(successStatus == true) {
-    	  infoBox("Assignment canceled!", "Success");
+      if (successStatus == true) {
+        infoBox("Assignment canceled!", "Success");
       }
     }
 
     currentErrorMessage = errorMessageTab6;
     refreshData();
-
   }
 
   private void initiateActionPerformed(ActionEvent evt) {
@@ -1857,20 +1908,23 @@ public class ClimbSafePage extends JFrame {
     refreshData();
   }
 
+
   /**
    * Starts the trip given a valid week number.
+   * 
+   * @author 
+   * @param evt
    */
-
   private void startTripsButtonActionPerformed(ActionEvent evt) {
     error = "";
     var selectedItem = selectStartWeekNumberComboBox.getSelectedItem();
     if (selectedItem == null) {
       error = "A week number needs to be selected to start the trip!";
     }
-    if (error.isEmpty()) {       	
+    if (error.isEmpty()) {
       callController(() -> AssignmentController.startTrips((Integer) selectedItem));
-      if(successStatus == true) {
-    	  infoBox("Trips correctly initiated!", "Success");
+      if (successStatus == true) {
+        infoBox("Trips correctly initiated!", "Success");
       }
     }
     currentErrorMessage = errorMessageTab6;
@@ -1879,8 +1933,10 @@ public class ClimbSafePage extends JFrame {
 
 
   /**
-   * Returns the number from the given text field if present, otherwise appends error string to the
-   * given message.
+   * From BtmsPage.java
+   * 
+   * Returns the number from the given text field if present, 
+   * otherwise appends error string to the given message.
    */
   private int getNumberFromField(JTextField field, String errorMessage) {
     try {
@@ -1893,6 +1949,8 @@ public class ClimbSafePage extends JFrame {
 
 
   /**
+   * From BtmsPage.java
+   * 
    * Calls the controller and sets the error message.
    *
    * @param executable a controller call preceded by "() -> "
@@ -1900,7 +1958,7 @@ public class ClimbSafePage extends JFrame {
   private String callController(Executable executable) {
     try {
       executable.execute();
-      successStatus = true;     
+      successStatus = true;
     } catch (InvalidInputException e) {
       error = e.getMessage();
       return error;
@@ -1909,58 +1967,56 @@ public class ClimbSafePage extends JFrame {
     }
     return "";
   }
-  
+
   public JFrame getInstance() {
-	  return this;
+    return this;
   }
 
   public void resizeColumnWidth(JTable table) {
-	    final TableColumnModel columnModel = table.getColumnModel();
-	    for (int column = 0; column < table.getColumnCount(); column++) {
-	        int width = 15; // Min width
-	        for (int row = 0; row < table.getRowCount(); row++) {
-	            TableCellRenderer renderer = table.getCellRenderer(row, column);
-	            Component comp = table.prepareRenderer(renderer, row, column);
-	            width = Math.max(comp.getPreferredSize().width +1 , width);
-	        }
-	        if(width > 200)
-	            width=200;
-	        columnModel.getColumn(column).setPreferredWidth(width);
-	    }
-	}
-  
-  private static boolean firstName( String firstName ) {
-      return firstName.matches( "[A-Z][a-z]*" );
-   }
-   // validate last name
-   private static boolean lastName( String lastName ) {
-      return lastName.matches( "[A-Z]([ '-]+[a-z])*" ) || lastName.matches( "[A-Z][a-z]*" );
-   }
-  
-   private static boolean validateNumber(String number) {
-	   String patterns 
-	      = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$" 
-	      + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$" 
-	      + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
-	   
-	   Pattern pattern = Pattern.compile(patterns);	   
-	   Matcher matcher = pattern.matcher(number);
-	   return matcher.matches();
-   }
-   
-   private boolean validateEquipmentName(String name) {	
-		return name.matches( "[A-Z][a-z]*" ) || name.matches("[a-z]*");		   
-   }
-   
-   private static void infoBox(String infoMessage, String titleBar)
-   {
-       JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
-   }
-   
+    final TableColumnModel columnModel = table.getColumnModel();
+    for (int column = 0; column < table.getColumnCount(); column++) {
+      int width = 15; // Min width
+      for (int row = 0; row < table.getRowCount(); row++) {
+        TableCellRenderer renderer = table.getCellRenderer(row, column);
+        Component comp = table.prepareRenderer(renderer, row, column);
+        width = Math.max(comp.getPreferredSize().width + 1, width);
+      }
+      if (width > 200)
+        width = 200;
+      columnModel.getColumn(column).setPreferredWidth(width);
+    }
+  }
+
+  private static boolean firstName(String firstName) {
+    return firstName.matches("[A-Z][a-z]*");
+  }
+
+  // validate last name
+  private static boolean lastName(String lastName) {
+    return lastName.matches("[A-Z]([ '-]+[a-z])*") || lastName.matches("[A-Z][a-z]*");
+  }
+
+  private static boolean validateNumber(String number) {
+    String patterns = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
+        + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
+        + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
+
+    Pattern pattern = Pattern.compile(patterns);
+    Matcher matcher = pattern.matcher(number);
+    return matcher.matches();
+  }
+
+  private boolean validateEquipmentName(String name) {
+    return name.matches("[A-Z][a-z]*") || name.matches("[a-z]*");
+  }
+
+  private static void infoBox(String infoMessage, String titleBar) {
+    JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar,
+        JOptionPane.INFORMATION_MESSAGE);
+  }
+
   @FunctionalInterface
   interface Executable {
     public void execute() throws Throwable;
   }
 }
-
-
