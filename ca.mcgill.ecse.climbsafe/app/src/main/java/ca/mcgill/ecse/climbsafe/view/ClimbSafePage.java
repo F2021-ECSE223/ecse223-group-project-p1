@@ -1541,7 +1541,13 @@ public class ClimbSafePage extends JFrame {
     // update visuals
     refreshData();
   }
-
+/**
+   * This method updates the selected guide with the new data
+   * if the strings and numbers entered are valid
+   * 
+   * @author Mohammad Shaheer Bilal 
+   * @param evt
+   */
   private void updateGuideButtonActionPerformed(ActionEvent evt) {
     error = "";
     var selectGuide = (TOGuide) selectGuideToUpdateComboBox.getSelectedItem();
@@ -1764,7 +1770,13 @@ public class ClimbSafePage extends JFrame {
     // update visuals
     refreshData();
   }
-
+   /**
+   * This method adds an equipment by calling
+   *  the controller method addEquipment and passes name, weight and price as input.
+   * 
+   * @author Mohammad Shaheer Bilal 
+   * @param evt
+   */
   private void addEquipmentButtonActionPerformed(ActionEvent evt) {
     error = "";
 
@@ -1895,7 +1907,13 @@ public class ClimbSafePage extends JFrame {
     currentErrorMessage = errorMessageTab6;
     refreshData();
   }
-
+/**
+   * This method cancels an assigment assigned to a member
+   * by calling the controller method cancelTrip with the members email as input
+   * 
+   * @author Mohammad Shaheer Bilal 
+   * @param evt
+   */
   private void cancelButtonActionPerformed(ActionEvent evt) {
     error = "";
     var member = (TOMember) selectMemberForPayComboBox.getSelectedItem();
