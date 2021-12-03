@@ -203,10 +203,10 @@ public class Guide extends NamedUser implements Serializable
    */
   // line 33 "../../../../../ClimbSafeStates.ump"
    public boolean performAssignmentToMembers(){
-    Integer startWeek = 1;
-		Integer endWeek;
-		for(Member member: climbSafe.getMembers()){
-
+    
+		for(Member member: climbSafe.getMembers()){			
+			Integer startWeek = 1;
+			Integer endWeek;
 			if(member.getAssignment() == null){
 				if(!member.isGuideRequired()){
 
@@ -226,10 +226,7 @@ public class Guide extends NamedUser implements Serializable
 						addAssignment(assignment);
 						climbSafe.addAssignment(assignment);
 						member.getAssignment().toggleStatus();
-
-
 					}
-
 				}
 			}
 		}
