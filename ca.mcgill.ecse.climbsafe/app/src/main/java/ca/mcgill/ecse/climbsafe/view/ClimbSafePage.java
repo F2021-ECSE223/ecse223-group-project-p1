@@ -1986,11 +1986,9 @@ public class ClimbSafePage extends JFrame {
 
 
   /**
-   * From BtmsPage.java
-   * 
-   * Calls the controller and sets the error message.
-   *
-   * @param executable a controller call preceded by "() -> "
+   * @author Alexandre Chiasera
+   * !! Code found on stack Overflow -- method unused
+   * @param String infoMessage String titleBar
    */
   public void resizeColumnWidth(JTable table) {
     final TableColumnModel columnModel = table.getColumnModel();
@@ -2011,11 +2009,21 @@ public class ClimbSafePage extends JFrame {
     return firstName.matches("[A-Z][a-z]*");
   }
 
+  /**
+   * @author Alexandre Chiasera
+   * !! regular expression found on stack Overflow
+   * @param String infoMessage String titleBar
+   */
   // validate last name
   private static boolean lastName(String lastName) {
     return lastName.matches("[A-Z]([ '-]+[a-z])*") || lastName.matches("[A-Z][a-z]*");
   }
-
+  
+  /**
+   * @author Alexandre Chiasera
+   * !! regex found on stack Overflow
+   * @param String infoMessage String titleBar
+   */
   private static boolean validateNumber(String number) {
     String patterns = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
         + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
@@ -2026,6 +2034,11 @@ public class ClimbSafePage extends JFrame {
     return matcher.matches();
   }
 
+  /**
+   * @author Alexandre Chiasera
+   * 
+   * @param String infoMessage String titleBar
+   */
   private boolean validateEquipmentName(String name) {
     return name.matches("[A-Z][a-z]*") || name.matches("[a-z]*");
   }
@@ -2033,8 +2046,8 @@ public class ClimbSafePage extends JFrame {
 
   /**
    * @author Alexandre Chiasera
-   *
-   * @param  
+   * !! Code asked to a friend outside of McGill
+   * @param String infoMessage String titleBar
    */
   private static void infoBox(String infoMessage, String titleBar) {
     JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar,
