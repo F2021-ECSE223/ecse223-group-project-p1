@@ -59,7 +59,7 @@ public class ClimbSafeFeatureSet6Controller {
     var assignments = new ArrayList<TOAssignment>();
     String status;
     for (var assignment : climbSafe.getAssignments()) {
-      if(assignment.getMember().getMemberStatusFullName().equals("Banned")) {
+      if(assignment.getMember().getMemberStatusFullName().equals("Banned") && !assignment.getAssignmentStatusFullName().equals("Cancelled")) {
         status = "Banned";
       }else {
         status = assignment.getAssignmentStatusFullName();
