@@ -1924,7 +1924,7 @@ public class ClimbSafePage extends JFrame {
   /**
    * Starts the trip given a valid week number.
    * 
-   * @author 
+   * @author Atreyi Srivastava
    * @param evt
    */
   private void startTripsButtonActionPerformed(ActionEvent evt) {
