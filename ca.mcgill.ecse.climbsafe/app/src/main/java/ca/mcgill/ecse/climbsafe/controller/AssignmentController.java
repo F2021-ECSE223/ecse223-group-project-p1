@@ -103,9 +103,6 @@ public class AssignmentController {
       var memberAssignment = member.getAssignment();
       if (memberAssignment.getStartWeek() <= startingWeekNb
           && startingWeekNb <= memberAssignment.getEndWeek()) {
-        if (member.getMemberStatusFullName().equals("Banned")) {
-          throw new InvalidInputException("Cannot start the trip due to a ban");
-        }
         // if at initial state then start the trip otherwise check for other conditions
         if (memberAssignment.getAssignmentStatusFullName().equals("Paid")
             || memberAssignment.getAssignmentStatusFullName().equals("Assigned")) {
@@ -115,9 +112,6 @@ public class AssignmentController {
           } catch (RuntimeException e) {
             throw new InvalidInputException(e.getMessage());
           }
-        }
-        if (memberAssignment.getAssignmentStatusFullName().equals("Cancelled")) {
-          throw new InvalidInputException("Cannot start a trip which has been cancelled");
         }
         if (memberAssignment.getAssignmentStatusFullName().equals("Finished")) {
           throw new InvalidInputException("Cannot start a trip which has finished");
