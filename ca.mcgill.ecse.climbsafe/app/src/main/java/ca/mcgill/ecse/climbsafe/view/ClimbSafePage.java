@@ -229,6 +229,13 @@ public class ClimbSafePage extends JFrame {
     refreshRegisterMemberItem();
   }
 
+  /**
+   * This method creates the UI design of the application
+   * by adding Java Swing components to each panel.
+   * 
+   * @author 
+   * reviewed by Asma Gandour
+   */
   private void initComponents() {
 
 
@@ -1917,7 +1924,7 @@ public class ClimbSafePage extends JFrame {
   /**
    * Starts the trip given a valid week number.
    * 
-   * @author Atreyi Srivastava
+   * @author 
    * @param evt
    */
   private void startTripsButtonActionPerformed(ActionEvent evt) {
