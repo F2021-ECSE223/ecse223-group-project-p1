@@ -6,6 +6,10 @@ import java.util.Calendar;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
+/**
+ * Class taken from the BTMS System
+ * 
+ */
 public class DateLabelFormatter extends AbstractFormatter {
 
   private static final long serialVersionUID = -2169252224419341678L;
@@ -27,5 +31,4 @@ public class DateLabelFormatter extends AbstractFormatter {
 
     return "";
   }
-
 }

@@ -233,7 +233,7 @@ public class ClimbSafePage extends JFrame {
    * This method creates the UI design of the application
    * by adding Java Swing components to each panel.
    * 
-   * @author 
+   * @author Alexandre Chiasera
    * reviewed by Asma Gandour
    */
   private void initComponents() {
