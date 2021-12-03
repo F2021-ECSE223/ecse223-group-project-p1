@@ -7,7 +7,7 @@ import java.util.Calendar;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 
 /**
- * Class taken from the BTMS System
+ * From BTMS.view.DeleteLabelFormatter
  * 
  */
 public class DateLabelFormatter extends AbstractFormatter {
