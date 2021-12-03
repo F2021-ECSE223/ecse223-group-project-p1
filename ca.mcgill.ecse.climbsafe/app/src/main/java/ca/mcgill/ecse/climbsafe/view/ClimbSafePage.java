@@ -1669,7 +1669,12 @@ public class ClimbSafePage extends JFrame {
     currentErrorMessage = errorMessageTab2;
     refreshRegisterMemberItem(); // update visual
   }
-
+  /**
+   * This method confirms that the setup action button was performed
+   * 
+   * @author Haroun Guessous
+   * @param evt
+   */
   private void confirmSetUpButtonActionPerformed(ActionEvent evt) {
     error = "";
 
@@ -1870,7 +1875,12 @@ public class ClimbSafePage extends JFrame {
     currentErrorMessage = errorMessageTab5;
     refreshData();
   }
-
+  /**
+   * This method confirms that the pay action button was performed
+   * 
+   * @author Haroun Guessous
+   * @param evt
+   */
   private void payButtonActionPerformed(ActionEvent evt) {
     error = "";
     var member = (TOMember) selectMemberForPayComboBox.getSelectedItem();
@@ -1891,7 +1901,12 @@ public class ClimbSafePage extends JFrame {
     currentErrorMessage = errorMessageTab6;
     refreshData();
   }
-
+  /**
+   * This method confirms that the finish button action was performed
+   * 
+   * @author Haroun Guessous
+   * @param evt
+   */
   private void finishButtonActionPerformed(ActionEvent evt) {
     error = "";
     var member = (TOMember) selectMemberForPayComboBox.getSelectedItem();
@@ -1931,7 +1946,12 @@ public class ClimbSafePage extends JFrame {
     currentErrorMessage = errorMessageTab6;
     refreshData();
   }
-
+  /**
+   * This method confirms that the initiate action button was performed
+   * 
+   * @author Haroun Guessous
+   * @param evt
+   */
   private void initiateActionPerformed(ActionEvent evt) {
     callController(() -> AssignmentController.initiateAssignmentForAllMembers());
     currentErrorMessage = errorMessageTab6;
