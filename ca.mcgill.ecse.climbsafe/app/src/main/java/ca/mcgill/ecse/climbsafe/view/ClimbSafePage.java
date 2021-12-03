@@ -1984,6 +1984,14 @@ public class ClimbSafePage extends JFrame {
     return this;
   }
 
+
+  /**
+   * From BtmsPage.java
+   * 
+   * Calls the controller and sets the error message.
+   *
+   * @param executable a controller call preceded by "() -> "
+   */
   public void resizeColumnWidth(JTable table) {
     final TableColumnModel columnModel = table.getColumnModel();
     for (int column = 0; column < table.getColumnCount(); column++) {
@@ -2022,6 +2030,12 @@ public class ClimbSafePage extends JFrame {
     return name.matches("[A-Z][a-z]*") || name.matches("[a-z]*");
   }
 
+
+  /**
+   * @author Alexandre Chiasera
+   *
+   * @param  
+   */
   private static void infoBox(String infoMessage, String titleBar) {
     JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar,
         JOptionPane.INFORMATION_MESSAGE);
