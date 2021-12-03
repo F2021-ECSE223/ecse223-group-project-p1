@@ -1435,8 +1435,8 @@ public class ClimbSafePage extends JFrame {
 
     int nrWeeks = getNumberFromField(memberRegisterWeekTextField,
         "Number of weeks needs to be a numerical value!");
-    boolean guideRequired = memberGuideRequiredRdBtn.isSelected(); // true if guide is selected
-    boolean hotelRequired = memberHotelRequiredRdBtn.isSelected(); // true if hotel is selected
+    boolean guideRequired = memberRegisterGuideRequiredRdBtn.isSelected(); // true if guide is selected
+    boolean hotelRequired = memberRegisterHotelRequiredRdBtn.isSelected(); // true if hotel is selected
 
 
     DefaultTableModel memberItemTable = (DefaultTableModel) itemRegisterMemberTable.getModel();
@@ -1530,7 +1530,7 @@ public class ClimbSafePage extends JFrame {
     error = error.trim();
     if (error.isEmpty()) {
       callController(() -> ClimbSafeFeatureSet2Controller.updateMember(selectedMember.getEmail(),
-          newName, newPassword, newContact, newNbrWeek, newGuideRequired, newHotelRequired,
+          newPassword, newName,  newContact, newNbrWeek, newGuideRequired, newHotelRequired,
           newItemNames, newItemQuantities));
       if (successStatus == true) {
         infoBox("Member successfully updated!", "Success");
