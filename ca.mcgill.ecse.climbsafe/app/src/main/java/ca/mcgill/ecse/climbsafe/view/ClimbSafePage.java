@@ -1429,7 +1429,7 @@ public class ClimbSafePage extends JFrame {
       error += "Enter an emergency number!";
     }
 
-    if (!validateNumber(emergencyContact)) {
+    if (!validateNumber(emergencyContact) && !emergencyContact.isEmpty()) {
       error += "Please enter a valid number!";
     }
 
@@ -1501,7 +1501,7 @@ public class ClimbSafePage extends JFrame {
       error += "Enter an emergency number!";
     }
 
-    if (!validateNumber(newContact)) {
+    if (!validateNumber(newContact) && !newContact.isEmpty()) {
       error += "Please enter a valid number!";
     }
 
@@ -1578,7 +1578,7 @@ public class ClimbSafePage extends JFrame {
       error += "Enter an emergency number!";
     }
 
-    if (!validateNumber(newEmergencyContact)) {
+    if (!validateNumber(newEmergencyContact) && !newEmergencyContact.isEmpty()) {
       error += "Please enter a valid number!";
     }
 
@@ -1631,7 +1631,7 @@ public class ClimbSafePage extends JFrame {
       error += "Enter an emergency number!";
     }
 
-    if (!validateNumber(emergencyContact)) {
+    if (!validateNumber(emergencyContact) && !emergencyContact.isEmpty()) {
       error += "Please enter a valid number!";
     }
 
